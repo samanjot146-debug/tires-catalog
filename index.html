@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>President Tire & Wheels - Tire Search</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 28px 16px 50px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00FF7F;
+      font-size: 38px;
+      font-weight: 700;
+      margin: 8px 0 10px;
+    }
+
+    .subtext {
+      text-align: center;
+      color: #bdbdbd;
+      font-size: 15px;
+      margin-bottom: 24px;
+    }
+
+    .search-box,
+    .filters-box {
+      background: #111;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(0,255,127,0.08);
+      border: 1px solid #202020;
+      margin-bottom: 24px;
+    }
+
+    .search-title,
+    .filters-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: #fff;
+    }
+
+    .search-grid,
+    .filters-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr 1fr auto;
+      gap: 12px;
+      align-items: end;
+    }
+
+    .search-grid input,
+    .search-grid select,
+    .search-grid button,
+    .filters-grid select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 15px;
+      border: 1px solid #2a2a2a;
+      background: #0b0b0b;
+      color: #fff;
+      outline: none;
+    }
+
+    .search-grid input:focus,
+    .search-grid select:focus,
+    .filters-grid select:focus {
+      border-color: #00FF7F;
+      box-shadow: 0 0 0 3px rgba(0,255,127,0.16);
+    }
+
+    .search-grid button {
+      background: #00FF7F;
+      color: #000;
+      border: 1px solid #00FF7F;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .search-grid button:hover {
+      background: #000;
+      color: #00FF7F;
+    }
+
+    .results-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .results-count {
+      color: #e6e6e6;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .clear-btn {
+      border: 1px solid #00FF7F;
+      background: #000;
+      color: #00FF7F;
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .clear-btn:hover {
+      background: #00FF7F;
+      color: #000;
+    }
+
+    #status {
+      text-align: center;
+      color: #bdbdbd;
+      margin: 24px 0;
+      font-size: 16px;
+    }
+
+    #tires-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+      gap: 24px;
+    }
+
+    .tire-card {
+      background: #111;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      border: 2px solid transparent;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .tire-card:hover {
+      transform: translateY(-6px);
+      border-color: #00FF7F;
+      box-shadow: 0 12px 28px rgba(0,255,127,0.16);
+    }
+
+    .brand {
+      color: #8d8d8d;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+
+    .title {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.25;
+      color: #fff;
+    }
+
+    .specs {
+      color: #cfcfcf;
+      font-size: 14px;
+      line-height: 1.55;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      color: #00FF7F;
+      font-size: 22px;
+      font-weight: 800;
+      margin: 8px 0 14px;
+    }
+
+    .stock {
+      color: #bdbdbd;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .actions {
+      margin-top: auto;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      flex: 1 1 auto;
+      text-align: center;
+      text-decoration: none;
+      padding: 11px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-call {
+      background: #00FF7F;
+      color: #000;
+      border-color: #00FF7F;
+    }
+
+    .btn-call:hover {
+      background: #000;
+      color: #00FF7F;
+    }
+
+    .btn-quote {
+      background: #0b0b0b;
+      color: #fff;
+      border-color: #2a2a2a;
+    }
+
+    .btn-quote:hover {
+      border-color: #00FF7F;
+      color: #00FF7F;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .page-btn {
+      border: 1px solid #2a2a2a;
+      background: #111;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      min-width: 44px;
+    }
+
+    .page-btn:hover {
+      border-color: #00FF7F;
+      color: #00FF7F;
+    }
+
+    .page-btn.active {
+      background: #00FF7F;
+      color: #000;
+      border-color: #00FF7F;
+    }
+
+    .page-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 1100px) {
+      .search-grid,
+      .filters-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .search-grid,
+      .filters-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .search-grid,
+      .filters-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 31px;
+      }
+
+      .container {
+        padding: 20px 12px 40px;
+      }
+
+      .results-bar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>President Tire & Wheels</h1>
+    <div class="subtext">Search live TDG tire inventory by tire size</div>
+
+    <div class="search-box">
+      <div class="search-title">Find Tires</div>
+      <div class="search-grid">
+        <input type="text" id="sizeInput" placeholder='Example: 225/45R17' />
+        <select id="serviceType">
+          <option value="">Passenger or LT</option>
+          <option value="P">Passenger</option>
+          <option value="LT">Light Truck</option>
+        </select>
+        <select id="seasonFilter">
+          <option value="">Any Season</option>
+          <option value="1">Summer</option>
+          <option value="2">All Season</option>
+          <option value="3">All Weather</option>
+          <option value="4">Winter</option>
+        </select>
+        <select id="brandFilter">
+          <option value="">All Brands</option>
+        </select>
+        <button id="searchBtn">Search</button>
+      </div>
+
+      <div class="results-bar">
+        <div class="results-count" id="resultsCount">Enter a tire size to begin</div>
+        <button class="clear-btn" id="clearBtn">Clear</button>
+      </div>
+    </div>
+
+    <div class="filters-box">
+      <div class="filters-title">Optional Sorting</div>
+      <div class="filters-grid">
+        <select id="sortFilter">
+          <option value="stock">Best Availability</option>
+          <option value="price-low">Price: Low → High</option>
+          <option value="price-high">Price: High → Low</option>
+          <option value="brand">Brand A → Z</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="status">Enter a tire size and click Search.</div>
+    <div id="tires-grid"></div>
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+  <script>
+    const API_URL = "https://aged-butterfly-cd6a.samanjot146.workers.dev/";
+    const QUOTE_URL = "https://presidentwheels.ca/contact-us";
+    const PHONE_LINK = "tel:+12266981667";
+    const ITEMS_PER_PAGE = 24;
+
+    let allTires = [];
+    let filteredTires = [];
+    let currentPage = 1;
+    let searched = false;
+
+    const sizeInput = document.getElementById("sizeInput");
+    const serviceType = document.getElementById("serviceType");
+    const seasonFilter = document.getElementById("seasonFilter");
+    const brandFilter = document.getElementById("brandFilter");
+    const sortFilter = document.getElementById("sortFilter");
+    const searchBtn = document.getElementById("searchBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const tiresGrid = document.getElementById("tires-grid");
+    const statusEl = document.getElementById("status");
+    const resultsCount = document.getElementById("resultsCount");
+    const paginationEl = document.getElementById("pagination");
+
+    function safeValue(v) {
+      return (v || "").toString().trim();
+    }
+
+    function fillSelect(selectEl, values, firstLabel) {
+      selectEl.innerHTML = `<option value="">${firstLabel}</option>`;
+      values.forEach(v => {
+        const opt = document.createElement("option");
+        opt.value = v;
+        opt.textContent = v;
+        selectEl.appendChild(opt);
+      });
+    }
+
+    function getBestStock(locations) {
+      if (!Array.isArray(locations) || !locations.length) return 0;
+      return locations.reduce((sum, loc) => sum + (Number(loc.qtyAvailable) || 0), 0);
+    }
+
+    function getBestLocationText(locations) {
+      if (!Array.isArray(locations) || !locations.length) return "Stock unavailable";
+      const sorted = [...locations].sort((a, b) => (Number(b.qtyAvailable) || 0) - (Number(a.qtyAvailable) || 0));
+      const best = sorted[0];
+      const qty = Number(best.qtyAvailable) || 0;
+      return `${qty} available${best.name ? ` • ${best.name}` : ""}`;
+    }
+
+    function buildCard(tire) {
+      const brand = safeValue(tire.brand);
+      const itemNumber = safeValue(tire.itemNumber);
+      const partNumber = safeValue(tire.partNumber);
+      const price = tire.pricing && tire.pricing.price != null ? Number(tire.pricing.price).toFixed(2) : "Call";
+      const stockText = getBestLocationText(tire.locations);
+
+      return `
+        <div class="tire-card">
+          <div class="brand">${brand}</div>
+          <div class="title">${itemNumber || partNumber || "Tire"}</div>
+          <div class="specs">
+            Item #: ${itemNumber || "-"}<br>
+            Part #: ${partNumber || "-"}
+          </div>
+          <div class="price">$${price}</div>
+          <div class="stock">${stockText}</div>
+          <div class="actions">
+            <a class="btn btn-call" href="${PHONE_LINK}">Call Now</a>
+            <a class="btn btn-quote" href="${QUOTE_URL}" target="_blank" rel="noopener">Request Quote</a>
+          </div>
+        </div>
+      `;
+    }
+
+    function applyFilters() {
+      const selectedBrand = safeValue(brandFilter.value);
+      const sort = safeValue(sortFilter.value || "stock");
+
+      let results = [...allTires];
+
+      if (selectedBrand) {
+        results = results.filter(t => safeValue(t.brand) === selectedBrand);
+      }
+
+      if (sort === "stock") {
+        results.sort((a, b) => getBestStock(b.locations) - getBestStock(a.locations));
+      }
+
+      if (sort === "price-low") {
+        results.sort((a, b) => Number(a?.pricing?.price || 0) - Number(b?.pricing?.price || 0));
+      }
+
+      if (sort === "price-high") {
+        results.sort((a, b) => Number(b?.pricing?.price || 0) - Number(a?.pricing?.price || 0));
+      }
+
+      if (sort === "brand") {
+        results.sort((a, b) => safeValue(a.brand).localeCompare(safeValue(b.brand)));
+      }
+
+      filteredTires = results;
+    }
+
+    function renderPagination(totalItems) {
+      const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+      paginationEl.innerHTML = "";
+
+      if (totalPages <= 1) return;
+
+      const prevBtn = document.createElement("button");
+      prevBtn.className = "page-btn";
+      prevBtn.textContent = "Prev";
+      prevBtn.disabled = currentPage === 1;
+      prevBtn.onclick = () => {
+        currentPage--;
+        renderTires();
+      };
+      paginationEl.appendChild(prevBtn);
+
+      const maxVisible = 5;
+      let start = Math.max(1, currentPage - 2);
+      let end = Math.min(totalPages, start + maxVisible - 1);
+
+      if (end - start < maxVisible - 1) start = Math.max(1, end - maxVisible + 1);
+
+      for (let i = start; i <= end; i++) {
+        const btn = document.createElement("button");
+        btn.className = "page-btn" + (i === currentPage ? " active" : "");
+        btn.textContent = i;
+        btn.onclick = () => {
+          currentPage = i;
+          renderTires();
+        };
+        paginationEl.appendChild(btn);
+      }
+
+      const nextBtn = document.createElement("button");
+      nextBtn.className = "page-btn";
+      nextBtn.textContent = "Next";
+      nextBtn.disabled = currentPage === totalPages;
+      nextBtn.onclick = () => {
+        currentPage++;
+        renderTires();
+      };
+      paginationEl.appendChild(nextBtn);
+    }
+
+    function renderTires() {
+      applyFilters();
+
+      const total = filteredTires.length;
+      const totalPages = Math.max(1, Math.ceil(total / ITEMS_PER_PAGE));
+      if (currentPage > totalPages) currentPage = 1;
+
+      const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+      const endIndex = startIndex + ITEMS_PER_PAGE;
+      const pageItems = filteredTires.slice(startIndex, endIndex);
+
+      resultsCount.textContent = `${total.toLocaleString()} tires found`;
+
+      if (!searched) {
+        statusEl.style.display = "block";
+        statusEl.textContent = "Enter a tire size and click Search.";
+        tiresGrid.innerHTML = "";
+        paginationEl.innerHTML = "";
+        resultsCount.textContent = "Enter a tire size to begin";
+        return;
+      }
+
+      if (total === 0) {
+        statusEl.style.display = "block";
+        statusEl.textContent = "No tires found.";
+        tiresGrid.innerHTML = "";
+        paginationEl.innerHTML = "";
+        return;
+      }
+
+      statusEl.style.display = "none";
+      tiresGrid.innerHTML = pageItems.map(buildCard).join("");
+      renderPagination(total);
+    }
+
+    async function searchTires() {
+      const size = safeValue(sizeInput.value);
+      const service = safeValue(serviceType.value);
+      const season = safeValue(seasonFilter.value);
+
+      if (!size) {
+        alert("Please enter a tire size.");
+        return;
+      }
+
+      searched = true;
+      statusEl.style.display = "block";
+      statusEl.textContent = "Searching live inventory...";
+      tiresGrid.innerHTML = "";
+      paginationEl.innerHTML = "";
+      resultsCount.textContent = "Searching...";
+
+      try {
+        const params = new URLSearchParams();
+        params.set("size", size);
+        if (service) params.set("serviceType", service);
+        if (season) params.set("season", season);
+
+        const response = await fetch(`${API_URL}?${params.toString()}`);
+        const data = await response.json();
+
+        allTires = Array.isArray(data) ? data : [];
+        currentPage = 1;
+
+        const brands = [...new Set(allTires.map(t => safeValue(t.brand)).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+        fillSelect(brandFilter, brands, "All Brands");
+
+        renderTires();
+      } catch (error) {
+        statusEl.style.display = "block";
+        statusEl.textContent = "Could not load live TDG tires.";
+        resultsCount.textContent = "Error loading tires";
+        console.error(error);
+      }
+    }
+
+    function clearAll() {
+      sizeInput.value = "";
+      serviceType.value = "";
+      seasonFilter.value = "";
+      brandFilter.innerHTML = `<option value="">All Brands</option>`;
+      sortFilter.value = "stock";
+      allTires = [];
+      filteredTires = [];
+      searched = false;
+      currentPage = 1;
+      renderTires();
+    }
+
+    searchBtn.addEventListener("click", searchTires);
+    clearBtn.addEventListener("click", clearAll);
+    brandFilter.addEventListener("change", () => {
+      currentPage = 1;
+      renderTires();
+    });
+    sortFilter.addEventListener("change", () => {
+      currentPage = 1;
+      renderTires();
+    });
+
+    sizeInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") searchTires();
+    });
+
+    renderTires();
+  </script>
+</body>
+</html>
