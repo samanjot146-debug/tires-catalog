@@ -148,12 +148,57 @@
       display: flex;
       flex-direction: column;
       min-height: 100%;
+      position: relative;
     }
 
     .tire-card:hover {
       transform: translateY(-6px);
       border-color: #00FF7F;
       box-shadow: 0 12px 28px rgba(0,255,127,0.16);
+    }
+
+    .tire-card.in-stock {
+      border-color: rgba(0,255,127,0.35);
+    }
+
+    .stock-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: #00FF7F;
+      color: #000;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      padding: 4px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .tire-icon {
+      flex: 0 0 auto;
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tire-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .card-top-text {
+      flex: 1 1 auto;
+      min-width: 0;
     }
 
     .brand {
@@ -165,11 +210,11 @@
     }
 
     .title {
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 700;
-      margin-bottom: 8px;
       line-height: 1.25;
       color: #fff;
+      word-break: break-word;
     }
 
     .specs {
@@ -356,6 +401,7 @@
 
   <script>
     const API_URL = "https://aged-butterfly-cd6a.samanjot146.workers.dev/";
+    const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQJPp_16e7U3XU7F24tUCs3bDhcjynqx8kP-K31fljR3AsSwUl3ptIH40M4YfDuj78QqmfxNIRPYSEA/pub?gid=1040206245&single=true&output=csv";
     const QUOTE_URL = "https://presidentwheels.ca/contact-us";
     const PHONE_LINK = "tel:+12266981667";
     const ITEMS_PER_PAGE = 24;
@@ -381,6 +427,10 @@
       return (v || "").toString().trim();
     }
 
+    function normalizeSize(v) {
+      return safeValue(v).toUpperCase().replace(/\s+/g, "");
+    }
+
     function fillSelect(selectEl, values, firstLabel) {
       selectEl.innerHTML = `<option value="">${firstLabel}</option>`;
       values.forEach(v => {
@@ -391,36 +441,167 @@
       });
     }
 
-    function getBestStock(locations) {
-      if (!Array.isArray(locations) || !locations.length) return 0;
-      return locations.reduce((sum, loc) => sum + (Number(loc.qtyAvailable) || 0), 0);
+    // ---------- CSV parsing (handles quoted commas) ----------
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let field = "";
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+        const next = text[i + 1];
+
+        if (inQuotes) {
+          if (c === '"' && next === '"') { field += '"'; i++; }
+          else if (c === '"') { inQuotes = false; }
+          else { field += c; }
+        } else {
+          if (c === '"') inQuotes = true;
+          else if (c === ",") { row.push(field); field = ""; }
+          else if (c === "\n") { row.push(field); rows.push(row); row = []; field = ""; }
+          else if (c === "\r") { /* skip */ }
+          else { field += c; }
+        }
+      }
+      if (field.length || row.length) { row.push(field); rows.push(row); }
+      return rows;
     }
 
-    function getBestLocationText(locations) {
-      if (!Array.isArray(locations) || !locations.length) return "Stock unavailable";
-      const sorted = [...locations].sort((a, b) => (Number(b.qtyAvailable) || 0) - (Number(a.qtyAvailable) || 0));
-      const best = sorted[0];
-      const qty = Number(best.qtyAvailable) || 0;
-      return `${qty} available${best.name ? ` • ${best.name}` : ""}`;
+    // ---------- Tire type icons ----------
+    function detectTireType(unifiedTire) {
+      const text = `${unifiedTire.label || ""}`.toUpperCase();
+      const season = safeValue(unifiedTire.season);
+
+      if (season === "1") return "summer";
+      if (season === "2") return "allseason";
+      if (season === "3") return "allweather";
+      if (season === "4") return "winter";
+
+      if (/\bA\/?T\b/.test(text)) return "offroad";
+      if (/\bM\/?T\b/.test(text)) return "offroad";
+      if (/\bR\/?T\b/.test(text)) return "offroad";
+
+      return "generic";
+    }
+
+    function tireIconSVG(type) {
+      const palette = {
+        winter:     "#8ecbff",
+        allweather: "#00e0c6",
+        allseason:  "#00FF7F",
+        summer:     "#ff9f43",
+        offroad:    "#c9a15a",
+        generic:    "#7a7a7a"
+      };
+      const color = palette[type] || palette.generic;
+
+      let overlay = "";
+      if (type === "winter") {
+        overlay = `<path d="M50 30v40M32 40l36 20M68 40L32 60" stroke="#fff" stroke-width="3" stroke-linecap="round"/>`;
+      } else if (type === "offroad") {
+        overlay = `<path d="M50 32l10 16h-20z" fill="#fff"/>`;
+      } else if (type === "summer") {
+        overlay = `<circle cx="50" cy="50" r="6" fill="#fff"/>`;
+      }
+
+      return `
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="45" fill="#0b0b0b" stroke="${color}" stroke-width="6"/>
+          <circle cx="50" cy="50" r="30" fill="none" stroke="${color}" stroke-width="3" stroke-dasharray="5 5"/>
+          <circle cx="50" cy="50" r="13" fill="${color}" opacity="0.18" stroke="${color}" stroke-width="2"/>
+          ${overlay}
+        </svg>
+      `;
+    }
+
+    // ---------- Fetch TDG API ----------
+    async function fetchTdgTires(size, service, season) {
+      const params = new URLSearchParams();
+      params.set("size", size);
+      if (service) params.set("serviceType", service);
+      if (season) params.set("season", season);
+
+      const response = await fetch(`${API_URL}?${params.toString()}`);
+      const data = await response.json();
+      const raw = Array.isArray(data) ? data : [];
+
+      return raw.map(tire => {
+        const locations = Array.isArray(tire.locations) ? tire.locations : [];
+        const qty = locations.reduce((sum, loc) => sum + (Number(loc.qtyAvailable) || 0), 0);
+        const bestLoc = [...locations].sort((a, b) => (Number(b.qtyAvailable) || 0) - (Number(a.qtyAvailable) || 0))[0];
+
+        return {
+          source: "tdg",
+          brand: safeValue(tire.brand),
+          label: safeValue(tire.itemNumber) || safeValue(tire.partNumber) || "Tire",
+          price: tire.pricing && tire.pricing.price != null ? Number(tire.pricing.price) : null,
+          qty,
+          stockText: locations.length ? `${qty} available${bestLoc && bestLoc.name ? ` • ${bestLoc.name}` : ""}` : "Stock unavailable",
+          season: safeValue(season)
+        };
+      });
+    }
+
+    // ---------- Fetch in-stock Google Sheet ----------
+    async function fetchStockTires(size) {
+      try {
+        const url = `${SHEET_CSV_URL}&cachebust=${Date.now()}`;
+        const response = await fetch(url);
+        const text = await response.text();
+        const rows = parseCSV(text);
+
+        const wanted = normalizeSize(size);
+        const results = [];
+
+        for (let i = 1; i < rows.length; i++) {
+          const r = rows[i];
+          if (!r || !r.length) continue;
+
+          const rowSize = safeValue(r[0]);   // Column A
+          const brand = safeValue(r[1]);     // Column B
+          const qty = Number(safeValue(r[4])) || 0;   // Column E
+          const price = Number(safeValue(r[6])) || null; // Column G
+
+          if (!rowSize) continue;
+          if (normalizeSize(rowSize) !== wanted) continue;
+          if (qty <= 0) continue;
+
+          results.push({
+            source: "stock",
+            brand: brand || "In-Stock",
+            label: `${brand} ${rowSize}`.trim(),
+            price,
+            qty,
+            stockText: `${qty} in stock at our shop`,
+            season: ""
+          });
+        }
+
+        return results;
+      } catch (err) {
+        console.error("Stock sheet fetch failed:", err);
+        return [];
+      }
     }
 
     function buildCard(tire) {
-      const brand = safeValue(tire.brand);
-      const itemNumber = safeValue(tire.itemNumber);
-      const partNumber = safeValue(tire.partNumber);
-      const price = tire.pricing && tire.pricing.price != null ? Number(tire.pricing.price).toFixed(2) : "Call";
-      const stockText = getBestLocationText(tire.locations);
+      const type = detectTireType(tire);
+      const priceText = tire.price != null ? `$${tire.price.toFixed(2)}` : "Call";
+      const badge = tire.source === "stock" ? `<div class="stock-badge">In Stock Now</div>` : "";
 
       return `
-        <div class="tire-card">
-          <div class="brand">${brand}</div>
-          <div class="title">${itemNumber || partNumber || "Tire"}</div>
-          <div class="specs">
-            Item #: ${itemNumber || "-"}<br>
-            Part #: ${partNumber || "-"}
+        <div class="tire-card ${tire.source === "stock" ? "in-stock" : ""}">
+          ${badge}
+          <div class="card-top">
+            <div class="tire-icon">${tireIconSVG(type)}</div>
+            <div class="card-top-text">
+              <div class="brand">${tire.brand}</div>
+              <div class="title">${tire.label}</div>
+            </div>
           </div>
-          <div class="price">$${price}</div>
-          <div class="stock">${stockText}</div>
+          <div class="price">${priceText}</div>
+          <div class="stock">${tire.stockText}</div>
           <div class="actions">
             <a class="btn btn-call" href="${PHONE_LINK}">Call Now</a>
             <a class="btn btn-quote" href="${QUOTE_URL}" target="_blank" rel="noopener">Request Quote</a>
@@ -440,15 +621,18 @@
       }
 
       if (sort === "stock") {
-        results.sort((a, b) => getBestStock(b.locations) - getBestStock(a.locations));
+        results.sort((a, b) => {
+          if (a.source !== b.source) return a.source === "stock" ? -1 : 1;
+          return (b.qty || 0) - (a.qty || 0);
+        });
       }
 
       if (sort === "price-low") {
-        results.sort((a, b) => Number(a?.pricing?.price || 0) - Number(b?.pricing?.price || 0));
+        results.sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
       }
 
       if (sort === "price-high") {
-        results.sort((a, b) => Number(b?.pricing?.price || 0) - Number(a?.pricing?.price || 0));
+        results.sort((a, b) => (b.price ?? -Infinity) - (a.price ?? -Infinity));
       }
 
       if (sort === "brand") {
@@ -555,15 +739,12 @@
       resultsCount.textContent = "Searching...";
 
       try {
-        const params = new URLSearchParams();
-        params.set("size", size);
-        if (service) params.set("serviceType", service);
-        if (season) params.set("season", season);
+        const [tdgTires, stockTires] = await Promise.all([
+          fetchTdgTires(size, service, season),
+          fetchStockTires(size)
+        ]);
 
-        const response = await fetch(`${API_URL}?${params.toString()}`);
-        const data = await response.json();
-
-        allTires = Array.isArray(data) ? data : [];
+        allTires = [...stockTires, ...tdgTires];
         currentPage = 1;
 
         const brands = [...new Set(allTires.map(t => safeValue(t.brand)).filter(Boolean))].sort((a, b) => a.localeCompare(b));
@@ -572,7 +753,7 @@
         renderTires();
       } catch (error) {
         statusEl.style.display = "block";
-        statusEl.textContent = "Could not load live TDG tires.";
+        statusEl.textContent = "Could not load live tire inventory.";
         resultsCount.textContent = "Error loading tires";
         console.error(error);
       }
