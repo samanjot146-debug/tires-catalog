@@ -226,9 +226,15 @@
 
     .price {
       color: #00FF7F;
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 800;
       margin: 8px 0 14px;
+    }
+
+    .price .tax-note {
+      color: #8d8d8d;
+      font-size: 13px;
+      font-weight: 600;
     }
 
     .stock {
@@ -587,7 +593,7 @@
 
     function buildCard(tire) {
       const type = detectTireType(tire);
-      const priceText = tire.price != null ? `$${tire.price.toFixed(2)}` : "Call";
+      const priceText = tire.price != null ? `$${tire.price.toFixed(2)} <span class="tax-note">+ HST</span>` : "Call";
       const badge = tire.source === "stock" ? `<div class="stock-badge">In Stock Now</div>` : "";
 
       return `
