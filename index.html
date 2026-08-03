@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>President Tire & Wheels - Tire Search</title>
+    <style>
+      * { box-sizing: border-box; }
+
+    body {
+            margin: 0;
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      }
+
+    .container {
+            max-width: 1400px;
+      margin: 0 auto;
+      padding: 28px 16px 50px;
+}
+
+    h1 {
+            text-align: center;
+      color: #00FF7F;
+      font-size: 38px;
+      font-weight: 700;
+      margin: 8px 0 10px;
+}
+
+    .subtext {
+            text-align: center;
+      color: #bdbdbd;
+            font-size: 15px;
+      margin-bottom: 24px;
+}
+
+    .search-box,
+          .filters-box {
+            background: #111;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(0,255,127,0.08);
+      border: 1px solid #202020;
+      margin-bottom: 24px;
+}
+
+    .search-title,
+          .filters-title {
+            font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: #fff;
+      }
+
+    .search-grid,
+          .filters-grid {
+            display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr 1fr auto;
+      gap: 12px;
+      align-items: end;
+}
+
+    .search-grid input,
+          .search-grid select,
+          .search-grid button,
+          .filters-grid select {
+            width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 15px;
+      border: 1px solid #2a2a2a;
+      background: #0b0b0b;
+      color: #fff;
+            outline: none;
+}
+
+    .search-grid input:focus,
+          .search-grid select:focus,
+          .filters-grid select:focus {
+            border-color: #00FF7F;
+      box-shadow: 0 0 0 3px rgba(0,255,127,0.16);
+}
+
+    .search-grid button {
+            background: #00FF7F;
+      color: #000;
+      border: 1px solid #00FF7F;
+      font-weight: 700;
+      cursor: pointer;
+}
+
+    .search-grid button:hover {
+            background: #000;
+      color: #00FF7F;
+}
+
+    .results-bar {
+            display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+}
+
+    .results-count {
+            color: #e6e6e6;
+            font-size: 15px;
+      font-weight: 600;
+}
+
+    .clear-btn {
+            border: 1px solid #00FF7F;
+      background: #000;
+      color: #00FF7F;
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+}
+
+    .clear-btn:hover {
+            background: #00FF7F;
+      color: #000;
+    }
+
+    #status {
+      text-align: center;
+      color: #bdbdbd;
+            margin: 24px 0;
+      font-size: 16px;
+}
+
+    #tires-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+      gap: 24px;
+      }
+
+    .tire-card {
+            background: #111;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      border: 2px solid transparent;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      position: relative;
+}
+
+    .tire-card:hover {
+            transform: translateY(-6px);
+      border-color: #00FF7F;
+      box-shadow: 0 12px 28px rgba(0,255,127,0.16);
+    }
+
+    .tire-card.in-stock {
+            border-color: rgba(0,255,127,0.35);
+}
+
+    .stock-badge {
+      position: absolute;
+      top: 14px;
+              right: 14px;
+      background: #00FF7F;
+      color: #000;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      padding: 4px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+}
+
+    .card-top {
+            display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+}
+
+    .tire-icon {
+            flex: 0 0 auto;
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      }
+
+            .tire-photo {
+                    flex: 0 0 auto;
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      background: #0d0d0d;
+      border-radius: 8px;
+      border: 1px solid #1e1e1e;
+}
+
+    .tire-icon svg {
+            width: 100%;
+      height: 100%;
+}
+
+    .card-top-text {
+            flex: 1 1 auto;
+      min-width: 0;
+}
+
+    .brand {
+            color: #8d8d8d;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+}
+
+    .title {
+            font-size: 18px;
+      font-weight: 700;
+      line-height: 1.25;
+      color: #fff;
+            word-break: break-word;
+}
+
+    .specs {
+            color: #cfcfcf;
+            font-size: 14px;
+      line-height: 1.55;
+      margin-bottom: 10px;
+}
+
+    .price {
+            color: #00FF7F;
+      font-size: 20px;
+      font-weight: 800;
+      margin: 8px 0 14px;
+    }
+
+    .price .tax-note {
+            color: #8d8d8d;
+      font-size: 13px;
+      font-weight: 600;
+}
+
+    .stock {
+            color: #bdbdbd;
+            font-size: 13px;
+      margin-bottom: 12px;
+}
+
+    .actions {
+            margin-top: auto;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+}
+
+    .btn {
+            flex: 1 1 auto;
+      text-align: center;
+      text-decoration: none;
+      padding: 11px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: 0.2s ease;
+      border: 1px solid transparent;
+}
+
+    .btn-call {
+            background: #00FF7F;
+      color: #000;
+      border-color: #00FF7F;
+}
+
+    .btn-call:hover {
+            background: #000;
+      color: #00FF7F;
+    }
+
+    .btn-quote {
+            background: #0b0b0b;
+      color: #fff;
+            border-color: #2a2a2a;
+}
+
+    .btn-quote:hover {
+            border-color: #00FF7F;
+      color: #00FF7F;
+}
+
+    .pagination {
+            display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+}
+
+    .page-btn {
+            border: 1px solid #2a2a2a;
+      background: #111;
+      color: #fff;
+            padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      min-width: 44px;
+}
+
+    .page-btn:hover {
+            border-color: #00FF7F;
+      color: #00FF7F;
+}
+
+    .page-btn.active {
+      background: #00FF7F;
+      color: #000;
+      border-color: #00FF7F;
+    }
+
+    .page-btn:disabled {
+            opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 1100px) {
+      .search-grid,
+              .filters-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+    @media (max-width: 700px) {
+      .search-grid,
+            .filters-grid {
+              grid-template-columns: 1fr 1fr;
+}
+}
+
+    @media (max-width: 600px) {
+      .search-grid,
+            .filters-grid {
+              grid-template-columns: 1fr;
+}
+
+      h1 {
+                font-size: 31px;
+}
+
+      .container {
+                padding: 20px 12px 40px;
+      }
+
+      .results-bar {
+                align-items: flex-start;
+        flex-direction: column;
+}
+}
+  </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>President Tire & Wheels</h1>
+        <div class="subtext">Search live TDG tire inventory by tire size</div>
+
+        <div class="search-box">
+          <div class="search-title">Find Tires</div>
+          <div class="search-grid">
+            <select id="sizeInput">
+              <option value="">Select Tire Size</option>
+          <option value="185/65R15">185/65R15</option>
+          <option value="195/65R15">195/65R15</option>
+          <option value="205/55R16">205/55R16</option>
+          <option value="205/60R16">205/60R16</option>
+          <option value="205/65R16">205/65R16</option>
+          <option value="215/55R16">215/55R16</option>
+          <option value="215/60R16">215/60R16</option>
+              <option value="215/65R16">215/65R16</option>
+              <option value="215/70R16">215/70R16</option>
+              <option value="225/45R17">225/45R17</option>
+              <option value="225/50R17">225/50R17</option>
+              <option value="225/55R17">225/55R17</option>
+              <option value="225/60R17">225/60R17</option>
+              <option value="225/65R17">225/65R17</option>
+              <option value="235/55R17">235/55R17</option>
+              <option value="235/60R17">235/60R17</option>
+              <option value="235/65R17">235/65R17</option>
+              <option value="235/70R17">235/70R17</option>
+              <option value="225/45R18">225/45R18</option>
+              <option value="225/60R18">225/60R18</option>
+              <option value="235/45R18">235/45R18</option>
+              <option value="235/55R18">235/55R18</option>
+              <option value="235/60R18">235/60R18</option>
+              <option value="235/65R18">235/65R18</option>
+              <option value="245/60R18">245/60R18</option>
+              <option value="255/55R18">255/55R18</option>
+              <option value="265/60R18">265/60R18</option>
+              <option value="235/55R19">235/55R19</option>
+              <option value="245/45R19">245/45R19</option>
+              <option value="255/45R19">255/45R19</option>
+              <option value="255/50R19">255/50R19</option>
+              <option value="235/55R20">235/55R20</option>
+              <option value="245/45R20">245/45R20</option>
+              <option value="255/50R20">255/50R20</option>
+              <option value="265/50R20">265/50R20</option>
+              <option value="275/55R20">275/55R20</option>
+              <option value="275/60R20">275/60R20</option>
+              <option value="OTHER">Other size — call us</option>
+        </select>
+        <select id="serviceType">
+          <option value="">Passenger or LT</option>
+              <option value="P">Passenger</option>
+              <option value="LT">Light Truck</option>
+            </select>
+            <select id="seasonFilter">
+              <option value="">Any Season</option>
+              <option value="1">Summer</option>
+              <option value="2">All Season</option>
+              <option value="3">All Weather</option>
+              <option value="4">Winter</option>
+            </select>
+            <select id="brandFilter">
+              <option value="">All Brands</option>
+            </select>
+            <button id="searchBtn">Search</button>
+          </div>
+
+          <div class="results-bar">
+            <div class="results-count" id="resultsCount">Enter a tire size to begin</div>
+            <button class="clear-btn" id="clearBtn">Clear</button>
+          </div>
+        </div>
+
+        <div class="filters-box">
+          <div class="filters-title">Optional Sorting</div>
+          <div class="filters-grid">
+            <select id="sortFilter">
+              <option value="stock">Best Availability</option>
+              <option value="price-low">Price: Low → High</option>
+          <option value="price-high">Price: High → Low</option>
+          <option value="brand">Brand A → Z</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="status">Enter a tire size and click Search.</div>
+    <div id="tires-grid"></div>
+    <div class="pagination" id="pagination"></div>
+      </div>
+
+      <script>
+        const API_URL = "https://aged-butterfly-cd6a.samanjot146.workers.dev/api/tires";
+    const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQJPp_16e7U3XU7F24tUCs3bDhcjynqx8kP-K31fljR3AsSwUl3ptIH40M4YfDuj78QqmfxNIRPYSEA/pub?gid=1040206245&single=true&output=csv";
+    const QUOTE_URL = "https://presidentwheels.ca/contact-us";
+    const PHONE_LINK = "tel:+12266981667";
+    const ITEMS_PER_PAGE = 24;
+
+    let allTires = [];
+    let filteredTires = [];
+    let currentPage = 1;
+    let searched = false;
+
+    const sizeInput = document.getElementById("sizeInput");
+    const serviceType = document.getElementById("serviceType");
+    const seasonFilter = document.getElementById("seasonFilter");
+    const brandFilter = document.getElementById("brandFilter");
+    const sortFilter = document.getElementById("sortFilter");
+    const searchBtn = document.getElementById("searchBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const tiresGrid = document.getElementById("tires-grid");
+    const statusEl = document.getElementById("status");
+    const resultsCount = document.getElementById("resultsCount");
+    const paginationEl = document.getElementById("pagination");
+
+    function safeValue(v) {
+            return (v || "").toString().trim();
+    }
+
+    function normalizeSize(v) {
+            return safeValue(v).toUpperCase().replace(/\s+/g, "");
+    }
+
+    function fillSelect(selectEl, values, firstLabel) {
+            selectEl.innerHTML = `<option value="">${firstLabel}</option>`;
+      values.forEach(v => {
+                const opt = document.createElement("option");
+                opt.value = v;
+        opt.textContent = v;
+        selectEl.appendChild(opt);
+    });
+}
+
+    // ---------- CSV parsing (handles quoted commas) ----------
+    function parseCSV(text) {
+            const rows = [];
+      let row = [];
+      let field = "";
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+        const next = text[i + 1];
+
+        if (inQuotes) {
+          if (c === '"' && next === '"') { field += '"'; i++; }
+          else if (c === '"') { inQuotes = false; }
+          else { field += c; }
+        } else {
+          if (c === '"') inQuotes = true;
+          else if (c === ",") { row.push(field); field = ""; }
+          else if (c === "\n") { row.push(field); rows.push(row); row = []; field = ""; }
+          else if (c === "\r") { /* skip */ }
+          else { field += c; }
+        }
+      }
+      if (field.length || row.length) { row.push(field); rows.push(row); }
+      return rows;
+    }
+
+    // ---------- Tire type icons ----------
+    function detectTireType(unifiedTire) {
+            const text = `${unifiedTire.label || ""}`.toUpperCase();
+      const season = safeValue(unifiedTire.season);
+
+      if (season === "1") return "summer";
+      if (season === "2") return "allseason";
+      if (season === "3") return "allweather";
+      if (season === "4") return "winter";
+
+      if (/\bA\/?T\b/.test(text)) return "offroad";
+      if (/\bM\/?T\b/.test(text)) return "offroad";
+      if (/\bR\/?T\b/.test(text)) return "offroad";
+
+      return "generic";
+            }
+
+    function tireIconSVG(type) {
+            const palette = {
+                      winter:     "#8ecbff",
+                                allweather: "#00e0c6",
+                                allseason:  "#00FF7F",
+                                summer:     "#ff9f43",
+                                offroad:    "#c9a15a",
+                                generic:    "#7a7a7a"
+                        };
+      const color = palette[type] || palette.generic;
+
+      let overlay = "";
+      if (type === "winter") {
+        overlay = `<path d="M50 30v40M32 40l36 20M68 40L32 60" stroke="#fff" stroke-width="3" stroke-linecap="round"/>`;
+} else if (type === "offroad") {
+        overlay = `<path d="M50 32l10 16h-20z" fill="#fff"/>`;
+} else if (type === "summer") {
+        overlay = `<circle cx="50" cy="50" r="6" fill="#fff"/>`;
+}
+
+      return `
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="45" fill="#0b0b0b" stroke="${color}" stroke-width="6"/>
+          <circle cx="50" cy="50" r="30" fill="none" stroke="${color}" stroke-width="3" stroke-dasharray="5 5"/>
+          <circle cx="50" cy="50" r="13" fill="${color}" opacity="0.18" stroke="${color}" stroke-width="2"/>
+          ${overlay}
+        </svg>
+      `;
+}
+
+    // ---------- Fetch TDG API ----------
+    async function fetchTdgTires(size, service, season) {
+      const params = new URLSearchParams();
+      params.set("size", size);
+      if (service) params.set("serviceType", service);
+      if (season) params.set("season", season);
+
+      const response = await fetch(`${API_URL}?${params.toString()}`);
+      const data = await response.json();
+      const raw = Array.isArray(data) ? data : (Array.isArray(data.results) ? data.results : []);
+            return raw.map(tire => {
+                      const locations = Array.isArray(tire.locations) ? tire.locations : [];
+                      const qty = locations.reduce((sum, loc) => sum + (Number(loc.qtyAvailable) || 0), 0);
+                      const bestLoc = [...locations].sort((a, b) => (Number(b.qtyAvailable) || 0) - (Number(a.qtyAvailable) || 0))[0];
+
+                      return {
+                                  source: "tdg",
+                                  brand: safeValue(tire.brand),
+                                  label: safeValue(tire.itemNumber) || safeValue(tire.partNumber) || "Tire",
+                                price: tire.price != null ? Number(tire.price) : null,
+                                  qty,
+                                  stockText: locations.length ? `${qty} available${bestLoc && bestLoc.name ? ` • ${bestLoc.name}` : ""}` : "Stock unavailable",
+                                  season: safeValue(season),
+          image: safeValue(tire.image)
+                        };
+      });
+}
+
+    // ---------- Fetch in-stock Google Sheet ----------
+    async function fetchStockTires(size) {
+      try {
+        const url = `${SHEET_CSV_URL}&cachebust=${Date.now()}`;
+        const response = await fetch(url);
+        const text = await response.text();
+        const rows = parseCSV(text);
+
+        const wanted = normalizeSize(size);
+        const results = [];
+
+        for (let i = 1; i < rows.length; i++) {
+          const r = rows[i];
+          if (!r || !r.length) continue;
+
+          const rowSize = safeValue(r[0]);   // Column A
+          const brand = safeValue(r[1]);     // Column B
+          const qty = Number(safeValue(r[4])) || 0;   // Column E
+          const price = Number(safeValue(r[6])) || null; // Column G
+
+          if (!rowSize) continue;
+          if (normalizeSize(rowSize) !== wanted) continue;
+          if (qty <= 0) continue;
+
+          results.push({
+                        source: "stock",
+                        brand: brand || "In-Stock",
+                        label: `${brand} ${rowSize}`.trim(),
+                        price,
+                        qty,
+                        stockText: `${qty} in stock at our shop`,
+                        season: ""
+            });
+        }
+
+        return results;
+} catch (err) {
+        console.error("Stock sheet fetch failed:", err);
+        return [];
+}
+}
+
+    function buildCard(tire) {
+      const type = detectTireType(tire);
+      const priceText = tire.price != null ? `$${tire.price.toFixed(2)} <span class="tax-note">+ HST</span>` : "Call";
+      const badge = tire.source === "stock" ? `<div class="stock-badge">In Stock Now</div>` : "";
+
+      const imageHTML = tire.image
+        ? `<img src="${tire.image}" alt="${tire.brand} ${tire.label}" class="tire-photo" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'tire-icon',innerHTML:${JSON.stringify(tireIconSVG(type))}}))" />`
+        : `<div class="tire-icon">${tireIconSVG(type)}</div>`;
+
+      return `
+        <div class="tire-card ${tire.source === "stock" ? "in-stock" : ""}">
+          ${badge}
+          <div class="card-top">
+            ${imageHTML}
+            <div class="card-top-text">
+              <div class="brand">${tire.brand}</div>
+              <div class="title">${tire.label}</div>
+            </div>
+          </div>
+          <div class="price">${priceText}</div>
+          <div class="stock">${tire.stockText}</div>
+          <div class="actions">
+            <a class="btn btn-call" href="${PHONE_LINK}">Call Now</a>
+            <a class="btn btn-quote" href="${QUOTE_URL}" target="_blank" rel="noopener">Request Quote</a>
+          </div>
+        </div>
+      `;
+}
+
+    function applyFilters() {
+      const selectedBrand = safeValue(brandFilter.value);
+      const sort = safeValue(sortFilter.value || "stock");
+
+      let results = [...allTires];
+
+      if (selectedBrand) {
+        results = results.filter(t => safeValue(t.brand) === selectedBrand);
+      }
+
+      if (sort === "stock") {
+        results.sort((a, b) => {
+                    if (a.source !== b.source) return a.source === "stock" ? -1 : 1;
+          return (b.qty || 0) - (a.qty || 0);
+      });
+      }
+
+      if (sort === "price-low") {
+        results.sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
+}
+
+      if (sort === "price-high") {
+        results.sort((a, b) => (b.price ?? -Infinity) - (a.price ?? -Infinity));
+}
+
+      if (sort === "brand") {
+        results.sort((a, b) => safeValue(a.brand).localeCompare(safeValue(b.brand)));
+}
+
+      filteredTires = results;
+}
+
+    function renderPagination(totalItems) {
+      const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+      paginationEl.innerHTML = "";
+
+      if (totalPages <= 1) return;
+
+      const prevBtn = document.createElement("button");
+      prevBtn.className = "page-btn";
+      prevBtn.textContent = "Prev";
+      prevBtn.disabled = currentPage === 1;
+      prevBtn.onclick = () => {
+        currentPage--;
+        renderTires();
+};
+      paginationEl.appendChild(prevBtn);
+
+      const maxVisible = 5;
+      let start = Math.max(1, currentPage - 2);
+      let end = Math.min(totalPages, start + maxVisible - 1);
+
+      if (end - start < maxVisible - 1) start = Math.max(1, end - maxVisible + 1);
+
+      for (let i = start; i <= end; i++) {
+        const btn = document.createElement("button");
+        btn.className = "page-btn" + (i === currentPage ? " active" : "");
+        btn.textContent = i;
+        btn.onclick = () => {
+          currentPage = i;
+          renderTires();
+};
+        paginationEl.appendChild(btn);
+}
+
+      const nextBtn = document.createElement("button");
+      nextBtn.className = "page-btn";
+      nextBtn.textContent = "Next";
+      nextBtn.disabled = currentPage === totalPages;
+      nextBtn.onclick = () => {
+        currentPage++;
+        renderTires();
+};
+      paginationEl.appendChild(nextBtn);
+}
+
+    function renderTires() {
+      applyFilters();
+
+      const total = filteredTires.length;
+      const totalPages = Math.max(1, Math.ceil(total / ITEMS_PER_PAGE));
+      if (currentPage > totalPages) currentPage = 1;
+
+      const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+      const endIndex = startIndex + ITEMS_PER_PAGE;
+      const pageItems = filteredTires.slice(startIndex, endIndex);
+
+      resultsCount.textContent = `${total.toLocaleString()} tires found`;
+
+      if (!searched) {
+        statusEl.style.display = "block";
+        statusEl.textContent = "Enter a tire size and click Search.";
+        tiresGrid.innerHTML = "";
+        paginationEl.innerHTML = "";
+        resultsCount.textContent = "Enter a tire size to begin";
+        return;
+}
+
+      if (total === 0) {
+        statusEl.style.display = "block";
+        statusEl.textContent = "No tires found.";
+        tiresGrid.innerHTML = "";
+        paginationEl.innerHTML = "";
+        return;
+}
+
+      statusEl.style.display = "none";
+      tiresGrid.innerHTML = pageItems.map(buildCard).join("");
+      renderPagination(total);
+}
+
+    async function searchTires() {
+      const size = safeValue(sizeInput.value);
+      const service = safeValue(serviceType.value);
+      const season = safeValue(seasonFilter.value);
+
+      if (!size) {
+        alert("Please select a tire size.");
+        return;
+}
+
+      if (size === "OTHER") {
+        searched = true;
+        statusEl.style.display = "block";
+        statusEl.textContent = "Not seeing your size? Call us at (226) 698-1667 or request a quote — we can source almost any tire size.";
+        tiresGrid.innerHTML = "";
+        paginationEl.innerHTML = "";
+        resultsCount.textContent = "";
+        return;
+}
+
+      searched = true;
+      statusEl.style.display = "block";
+      statusEl.textContent = "Searching live inventory...";
+      tiresGrid.innerHTML = "";
+      paginationEl.innerHTML = "";
+      resultsCount.textContent = "Searching...";
+
+      try {
+        const [tdgTires, stockTires] = await Promise.all([
+          fetchTdgTires(size, service, season),
+          fetchStockTires(size)
+        ]);
+
+        allTires = [...stockTires, ...tdgTires];
+        currentPage = 1;
+
+        const brands = [...new Set(allTires.map(t => safeValue(t.brand)).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+        fillSelect(brandFilter, brands, "All Brands");
+
+                  renderTires();
+        } catch (error) {
+        statusEl.style.display = "block";
+        statusEl.textContent = "Could not load live tire inventory.";
+        resultsCount.textContent = "Error loading tires";
+        console.error(error);
+}
+}
+
+    function clearAll() {
+      sizeInput.value = "";
+      serviceType.value = "";
+      seasonFilter.value = "";
+      brandFilter.innerHTML = `<option value="">All Brands</option>`;
+      sortFilter.value = "stock";
+      allTires = [];
+      filteredTires = [];
+      searched = false;
+      currentPage = 1;
+      renderTires();
+      }
+
+    searchBtn.addEventListener("click", searchTires);
+    clearBtn.addEventListener("click", clearAll);
+    brandFilter.addEventListener("change", () => {
+      currentPage = 1;
+      renderTires();
+});
+    sortFilter.addEventListener("change", () => {
+      currentPage = 1;
+      renderTires();
+});
+
+    sizeInput.addEventListener("change", searchTires);
+
+    // Auto-search if a size is passed in the URL (e.g. from the homepage quick-search)
+    (function initFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      const preselectSize = params.get("size");
+      if (preselectSize) {
+        const match = Array.from(sizeInput.options).find(
+          (opt) => opt.value.toUpperCase() === preselectSize.toUpperCase()
+        );
+        if (match) {
+          sizeInput.value = match.value;
+          searchTires();
+          return;
+}
+}
+      renderTires();
+})();
+  </script>
+</body>
+</html>
