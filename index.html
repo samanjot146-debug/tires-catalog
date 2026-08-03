@@ -530,9 +530,8 @@
 
       const response = await fetch(`${API_URL}?${params.toString()}`);
       const data = await response.json();
-      const raw = Array.isArray(data) ? data : [];
-
-      return raw.map(tire => {
+      const raw = Array.isArray(data) ? data : (Array.isArray(data.results) ? data.results : []);
+            return raw.map(tire => {
         const locations = Array.isArray(tire.locations) ? tire.locations : [];
         const qty = locations.reduce((sum, loc) => sum + (Number(loc.qtyAvailable) || 0), 0);
         const bestLoc = [...locations].sort((a, b) => (Number(b.qtyAvailable) || 0) - (Number(a.qtyAvailable) || 0))[0];
@@ -541,7 +540,7 @@
           source: "tdg",
           brand: safeValue(tire.brand),
           label: safeValue(tire.itemNumber) || safeValue(tire.partNumber) || "Tire",
-          price: tire.pricing && tire.pricing.price != null ? Number(tire.pricing.price) : null,
+        price: tire.price != null ? Number(tire.price) : null,
           qty,
           stockText: locations.length ? `${qty} available${bestLoc && bestLoc.name ? ` • ${bestLoc.name}` : ""}` : "Stock unavailable",
           season: safeValue(season)
