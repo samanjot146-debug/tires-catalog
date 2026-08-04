@@ -641,14 +641,22 @@
 }
 }
 
-    function buildCard(tire) {
+// ---------- Image fallback ----------
+            window.tireImgError = function (imgEl, type) {
+                    const div = document.createElement("div");
+                    div.className = "tire-icon";
+                    div.innerHTML = tireIconSVG(type);
+                    imgEl.replaceWith(div);
+            };
+        
+            function buildCard(tire) {
       const type = detectTireType(tire);
       const priceText = tire.price != null ? `$${tire.price.toFixed(2)} <span class="tax-note">+ HST</span>` : "Call";
       const badge = tire.source === "stock" ? `<div class="stock-badge">In Stock Now</div>` : "";
 
-      const imageHTML = tire.image
-        ? `<img src="${tire.image}" alt="${tire.brand} ${tire.label}" class="tire-photo" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'tire-icon',innerHTML:${JSON.stringify(tireIconSVG(type))}}))" />`
-        : `<div class="tire-icon">${tireIconSVG(type)}</div>`;
+        const imageHTML = tire.image
+                ? `<img src="${tire.image}" alt="${tire.brand} ${tire.label}" class="tire-photo" loading="lazy" onerror="window.tireImgError(this,'${type}')" />`
+                    : `<div class="tire-icon">${tireIconSVG(type)}</div>`;
 
       return `
         <div class="tire-card ${tire.source === "stock" ? "in-stock" : ""}">
