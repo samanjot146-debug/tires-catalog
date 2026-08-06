@@ -780,11 +780,14 @@
 // ---------- Set-of-4 / financing math ----------
     function computePricing(tire) {
       if (tire.price == null) return null;
-      const perTireWithFee = tire.price + ENV_FEE_PER_TIRE;
-      const setOf4Total = perTireWithFee * 4;
-      const depositAmount = setOf4Total * 0.5;
-      const biweeklyEstimate = setOf4Total / BIWEEKLY_PERIODS;
-      return { setOf4Total, depositAmount, biweeklyEstimate };
+      const tireSubtotal = tire.price * 4;
+      const envFeeTotal = ENV_FEE_PER_TIRE * 4;
+      const setOf4Subtotal = tireSubtotal + envFeeTotal;
+      const setOf4WithTax = setOf4Subtotal * 1.13;
+      const depositAmount = setOf4Subtotal * 0.5;
+      const biweeklyEstimate = setOf4Subtotal / BIWEEKLY_PERIODS;
+      const showFinancing = setOf4WithTax >= 500;
+      return { tireSubtotal, envFeeTotal, setOf4Subtotal, setOf4WithTax, depositAmount, biweeklyEstimate, showFinancing };
 }
 
 // ---------- Image fallback ----------
@@ -833,11 +836,11 @@
 
       const pricing = computePricing(tire);
       const setOf4Html = pricing
-        ? `<div class="set-of-4">Set of 4: $${pricing.setOf4Total.toFixed(2)} before tax (incl. $${ENV_FEE_PER_TIRE}/tire environmental fee)</div>`
+        ? `<div class="set-of-4">Set of 4: $${pricing.tireSubtotal.toFixed(2)} + $${pricing.envFeeTotal.toFixed(2)} environmental fee ($${ENV_FEE_PER_TIRE}/tire) = $${pricing.setOf4Subtotal.toFixed(2)} before tax</div>`
         : "";
-      const financingText = pricing
-        ? `Financing available via Autologiq — as low as $${pricing.biweeklyEstimate.toFixed(2)} bi-weekly*`
-        : "Financing available via Autologiq*";
+      const financingHtml = pricing && pricing.showFinancing
+        ? `<div class="financing"><a href="${FINANCING_URL}" target="_blank" rel="noopener">Financing available via Autologiq — as low as $${pricing.biweeklyEstimate.toFixed(2)} bi-weekly*</a></div>`
+        : "";
 
       const seasonLabel = tire.source === "tdg" && tire.specs ? safeValue(tire.specs.season) : "";
       const seasonBadge = seasonLabel
@@ -868,7 +871,7 @@
           <div class="price">${priceText}</div>
           ${setOf4Html}
           ${buildStockSection(tire, pricing)}
-          <div class="financing"><a href="${FINANCING_URL}" target="_blank" rel="noopener">${financingText}</a></div>
+          ${financingHtml}
           <div class="actions">
             <a class="btn btn-call" href="${PHONE_LINK}">Call Now</a>
             <a class="btn btn-quote" href="${QUOTE_URL}" target="_blank" rel="noopener">Request Quote</a>
@@ -907,8 +910,12 @@
 }
 
       results.sort((a, b) => {
+        const sourceDiff = (a.source === "stock" ? 0 : 1) - (b.source === "stock" ? 0 : 1);
+        if (sourceDiff !== 0) return sourceDiff;
+
         const stockDiff = (a.inStock ? 0 : 1) - (b.inStock ? 0 : 1);
         if (stockDiff !== 0) return stockDiff;
+
         return secondaryCompare(a, b);
       });
 
