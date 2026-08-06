@@ -373,47 +373,40 @@
         <div class="search-box">
           <div class="search-title">Find Tires</div>
           <div class="search-grid">
-            <select id="sizeInput">
-              <option value="">Select Tire Size</option>
-          <option value="185/65R15">185/65R15</option>
-          <option value="195/65R15">195/65R15</option>
-          <option value="205/55R16">205/55R16</option>
-          <option value="205/60R16">205/60R16</option>
-          <option value="205/65R16">205/65R16</option>
-          <option value="215/55R16">215/55R16</option>
-          <option value="215/60R16">215/60R16</option>
-              <option value="215/65R16">215/65R16</option>
-              <option value="215/70R16">215/70R16</option>
-              <option value="225/45R17">225/45R17</option>
-              <option value="225/50R17">225/50R17</option>
-              <option value="225/55R17">225/55R17</option>
-              <option value="225/60R17">225/60R17</option>
-              <option value="225/65R17">225/65R17</option>
-              <option value="235/55R17">235/55R17</option>
-              <option value="235/60R17">235/60R17</option>
-              <option value="235/65R17">235/65R17</option>
-              <option value="235/70R17">235/70R17</option>
-              <option value="225/45R18">225/45R18</option>
-              <option value="225/60R18">225/60R18</option>
-              <option value="235/45R18">235/45R18</option>
-              <option value="235/55R18">235/55R18</option>
-              <option value="235/60R18">235/60R18</option>
-              <option value="235/65R18">235/65R18</option>
-              <option value="245/60R18">245/60R18</option>
-              <option value="255/55R18">255/55R18</option>
-              <option value="265/60R18">265/60R18</option>
-              <option value="235/55R19">235/55R19</option>
-              <option value="245/45R19">245/45R19</option>
-              <option value="255/45R19">255/45R19</option>
-              <option value="255/50R19">255/50R19</option>
-              <option value="235/55R20">235/55R20</option>
-              <option value="245/45R20">245/45R20</option>
-              <option value="255/50R20">255/50R20</option>
-              <option value="265/50R20">265/50R20</option>
-              <option value="275/55R20">275/55R20</option>
-              <option value="275/60R20">275/60R20</option>
+            <select id="sizeWidth">
+              <option value="">Width</option>
+              <option value="185">185</option>
+              <option value="195">195</option>
+              <option value="205">205</option>
+              <option value="215">215</option>
+              <option value="225">225</option>
+              <option value="235">235</option>
+              <option value="245">245</option>
+              <option value="255">255</option>
+              <option value="265">265</option>
+              <option value="275">275</option>
               <option value="OTHER">Other size — call us</option>
-        </select>
+            </select>
+            <select id="sizeProfile">
+              <option value="">Profile</option>
+              <option value="45">45</option>
+              <option value="50">50</option>
+              <option value="55">55</option>
+              <option value="60">60</option>
+              <option value="65">65</option>
+              <option value="70">70</option>
+              <option value="OTHER">Other size — call us</option>
+            </select>
+            <select id="sizeRim">
+              <option value="">Rim</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="OTHER">Other size — call us</option>
+            </select>
         <select id="serviceType">
           <option value="">Passenger or LT</option>
               <option value="P">Passenger</option>
@@ -467,7 +460,9 @@
     let currentPage = 1;
     let searched = false;
 
-    const sizeInput = document.getElementById("sizeInput");
+    const sizeWidth = document.getElementById("sizeWidth");
+    const sizeProfile = document.getElementById("sizeProfile");
+    const sizeRim = document.getElementById("sizeRim");
     const serviceType = document.getElementById("serviceType");
     const seasonFilter = document.getElementById("seasonFilter");
     const brandFilter = document.getElementById("brandFilter");
@@ -789,8 +784,24 @@
       renderPagination(total);
 }
 
+    function getSelectedSize() {
+      const width = safeValue(sizeWidth.value);
+      const profile = safeValue(sizeProfile.value);
+      const rim = safeValue(sizeRim.value);
+
+      if (width === "OTHER" || profile === "OTHER" || rim === "OTHER") {
+        return "OTHER";
+      }
+
+      if (!width || !profile || !rim) {
+        return "";
+      }
+
+      return `${width}/${profile}R${rim}`;
+    }
+
     async function searchTires() {
-      const size = safeValue(sizeInput.value);
+      const size = getSelectedSize();
       const service = safeValue(serviceType.value);
       const season = safeValue(seasonFilter.value);
 
@@ -838,7 +849,9 @@
 }
 
     function clearAll() {
-      sizeInput.value = "";
+      sizeWidth.value = "";
+      sizeProfile.value = "";
+      sizeRim.value = "";
       serviceType.value = "";
       seasonFilter.value = "";
       brandFilter.innerHTML = `<option value="">All Brands</option>`;
@@ -861,22 +874,48 @@
       renderTires();
 });
 
-    sizeInput.addEventListener("change", searchTires);
+    function handleSizeSelectChange() {
+      const size = getSelectedSize();
+      if (!size) {
+        return;
+}
+      searchTires();
+}
+
+    sizeWidth.addEventListener("change", handleSizeSelectChange);
+    sizeProfile.addEventListener("change", handleSizeSelectChange);
+    sizeRim.addEventListener("change", handleSizeSelectChange);
 
     // Auto-search if a size is passed in the URL (e.g. from the homepage quick-search)
     (function initFromQuery() {
       const params = new URLSearchParams(window.location.search);
       const preselectSize = params.get("size");
-      if (preselectSize) {
-        const match = Array.from(sizeInput.options).find(
-          (opt) => opt.value.toUpperCase() === preselectSize.toUpperCase()
-        );
-        if (match) {
-          sizeInput.value = match.value;
+      if (!preselectSize) {
+        renderTires();
+        return;
+}
+
+      if (preselectSize.toUpperCase() === "OTHER") {
+        sizeWidth.value = "OTHER";
+        searchTires();
+        return;
+}
+
+      const match = preselectSize.match(/^(\d{3})\/(\d{2})R(\d{2})$/i);
+      if (match) {
+        const [, width, profile, rim] = match;
+        const widthOpt = Array.from(sizeWidth.options).find((opt) => opt.value === width);
+        const profileOpt = Array.from(sizeProfile.options).find((opt) => opt.value === profile);
+        const rimOpt = Array.from(sizeRim.options).find((opt) => opt.value === rim);
+        if (widthOpt && profileOpt && rimOpt) {
+          sizeWidth.value = width;
+          sizeProfile.value = profile;
+          sizeRim.value = rim;
           searchTires();
           return;
 }
 }
+
       renderTires();
 })();
   </script>
