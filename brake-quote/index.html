@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Your Brake Quote | President Tire & Wheels</title>
+<meta name="description" content="Get a free brake service quote from President Tire & Wheels in Waterloo, ON. Usually a response within a few hours.">
+<style>
+  *{box-sizing:border-box}
+  body{background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif;margin:0;padding:0}
+  .wrap{max-width:560px;margin:0 auto;padding:48px 20px 64px}
+  .badge{display:inline-block;padding:8px 14px;border-radius:999px;background:rgba(3,255,127,.08);border:1px solid rgba(3,255,127,.35);color:#03ff7f;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:20px}
+  h1{font-size:32px;line-height:1.15;margin:0 0 12px 0;letter-spacing:-0.02em}
+  h1 span{color:#03ff7f}
+  .sub{color:#b0b8b4;font-size:15px;line-height:1.7;margin:0 0 28px 0}
+  form{background:#0c0c0c;border:1px solid #1e1e1e;border-radius:20px;padding:28px}
+  label{display:block;font-size:13px;font-weight:700;color:#d5ddd8;margin-bottom:6px;margin-top:18px}
+  label:first-of-type{margin-top:0}
+  input, textarea{
+    width:100%;background:#0b0b0b;border:1px solid #262626;color:#fff;
+    padding:12px 14px;border-radius:12px;font-size:15px;font-family:inherit;
+    outline:none;transition:border-color .15s ease;
+  }
+  input:focus, textarea:focus{border-color:#03ff7f}
+  textarea{resize:vertical;min-height:90px}
+  .req{color:#03ff7f;font-weight:800}
+  button[type="submit"]{
+    width:100%;margin-top:24px;padding:15px 20px;border-radius:14px;
+    background:#03ff7f;color:#000;font-size:16px;font-weight:800;
+    border:none;cursor:pointer;transition:opacity .15s ease;
+  }
+  button[type="submit"]:hover{opacity:.88}
+  button[type="submit"]:disabled{opacity:.5;cursor:not-allowed}
+  .note{color:#7a8580;font-size:12.5px;text-align:center;margin-top:14px}
+  .alt{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+  .alt a{
+    flex:1;text-align:center;text-decoration:none;padding:13px 16px;border-radius:12px;
+    font-size:14px;font-weight:800;background:#111;color:#fff;border:1px solid #262626;
+  }
+  #successMsg{display:none;background:#0c0c0c;border:1px solid rgba(3,255,127,.4);border-radius:20px;padding:32px;text-align:center}
+  #successMsg h2{color:#03ff7f;font-size:22px;margin:0 0 10px 0}
+  #successMsg p{color:#c9d0cb;font-size:14px;line-height:1.6;margin:0}
+  #errorMsg{display:none;color:#ff6b6b;font-size:13px;margin-top:12px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="badge">President Tire &amp; Wheels &middot; Waterloo, ON</div>
+  <h1>Squeaking, Grinding, or <span>Pulsing Brakes?</span></h1>
+  <p class="sub">Tell us about your vehicle and what you're noticing. We'll text or email you a real quote &mdash; usually within a few hours.</p>
+
+  <form id="brakeForm" action="https://formspree.io/f/mppazone" method="POST">
+    <input type="hidden" name="_subject" value="New Brake Quote Request - presidentwheels.ca">
+    <input type="hidden" name="lead_type" value="brake_quote">
+
+    <label for="name">Full Name <span class="req">*</span></label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="phone">Phone Number <span class="req">*</span></label>
+    <input type="tel" id="phone" name="phone" required>
+
+    <label for="email">Email <span class="req">*</span></label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="vehicle">Vehicle Year, Make &amp; Model</label>
+    <input type="text" id="vehicle" name="vehicle" placeholder="e.g. 2018 Honda Civic">
+
+    <label for="issue">What are you noticing with your brakes?</label>
+    <textarea id="issue" name="issue" placeholder="Squealing, grinding, pulsing, warning light, etc."></textarea>
+
+    <button type="submit" id="submitBtn">Get My Brake Quote</button>
+    <div id="errorMsg">Something went wrong &mdash; please call us instead at (226) 786-0421.</div>
+    <div class="note">No payment, no obligation. We'll be in touch within a few hours.</div>
+  </form>
+
+  <div id="successMsg">
+    <h2>Thanks &mdash; we got it!</h2>
+    <p>We'll text or email you a real quote within a few hours. If it's urgent, call us directly at <a href="tel:+12267860421" style="color:#03ff7f;text-decoration:none;font-weight:700">(226) 786-0421</a>.</p>
+  </div>
+
+  <div class="alt">
+    <a href="tel:+12267860421">Or Call (226) 786-0421</a>
+    <a href="https://presidentwheels.ca/brake-service/">Back to Brake Service</a>
+  </div>
+</div>
+
+<script>
+document.getElementById('brakeForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = document.getElementById('submitBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  errorMsg.style.display = 'none';
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    } else {
+      throw new Error('Submission failed');
+    }
+  } catch (err) {
+    errorMsg.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Get My Brake Quote';
+  }
+});
+</script>
+</body>
+</html>
