@@ -551,7 +551,7 @@
     <div id="status">Enter a tire size and click Search.</div>
     <div id="tires-grid"></div>
     <div class="pagination" id="pagination"></div>
-    <div class="financing-footnote">*Estimated payment, 0% interest assumed. Actual payment depends on approval terms via Autologiq.</div>
+    <div class="financing-footnote">*Estimated bi-weekly payment range based on Autologiq's published 9.99%&ndash;24.99% APR over 3 years (78 bi-weekly payments), on approved credit. Actual rate and payment depend on individual approval terms.</div>
       </div>
 
       <script>
@@ -562,7 +562,9 @@
     const FINANCING_URL = "https://presidentwheels.ca/financing-1";
     const ITEMS_PER_PAGE = 24;
     const ENV_FEE_PER_TIRE = 6;
-    const BIWEEKLY_PERIODS = 78; // 3 years x 26 biweekly periods
+    const FINANCING_YEARS = 3;
+    const FINANCING_APR_LOW = 9.99;
+    const FINANCING_APR_HIGH = 24.99;
 
     let allTires = [];
     let filteredTires = [];
@@ -653,6 +655,12 @@
 
     function cleanLocationName(name) {
             return safeValue(name).replace(/^\d+\s*-\s*/, "");
+}
+
+    function locationTiming(cleanName) {
+      if (cleanName.includes("London")) return "next business day";
+      if (cleanName.includes("Orangeville")) return "2 business days after deposit";
+      return "";
 }
 
     function slugify(str) {
@@ -778,6 +786,13 @@
 }
 
 // ---------- Set-of-4 / financing math ----------
+    function biweeklyPayment(principal, apr, years) {
+      const periods = years * 26;
+      const periodicRate = (apr / 100) / 26;
+      if (periodicRate === 0) return principal / periods;
+      return principal * periodicRate / (1 - Math.pow(1 + periodicRate, -periods));
+}
+
     function computePricing(tire) {
       if (tire.price == null) return null;
       const tireSubtotal = tire.price * 4;
@@ -785,9 +800,10 @@
       const setOf4Subtotal = tireSubtotal + envFeeTotal;
       const setOf4WithTax = setOf4Subtotal * 1.13;
       const depositAmount = setOf4Subtotal * 0.5;
-      const biweeklyEstimate = setOf4Subtotal / BIWEEKLY_PERIODS;
+      const biweeklyLow = biweeklyPayment(setOf4WithTax, FINANCING_APR_LOW, FINANCING_YEARS);
+      const biweeklyHigh = biweeklyPayment(setOf4WithTax, FINANCING_APR_HIGH, FINANCING_YEARS);
       const showFinancing = setOf4WithTax >= 500;
-      return { tireSubtotal, envFeeTotal, setOf4Subtotal, setOf4WithTax, depositAmount, biweeklyEstimate, showFinancing };
+      return { tireSubtotal, envFeeTotal, setOf4Subtotal, setOf4WithTax, depositAmount, biweeklyLow, biweeklyHigh, showFinancing };
 }
 
 // ---------- Image fallback ----------
@@ -819,7 +835,11 @@
       const totalText = (tire.totalStock != null ? tire.totalStock : tire.qty).toLocaleString();
       const breakdown = tire.locations
         .filter(loc => (Number(loc.qtyAvailable) || 0) > 0)
-        .map(loc => `${(Number(loc.qtyAvailable) || 0).toLocaleString()} at ${cleanLocationName(loc.name)}`)
+        .map(loc => {
+          const name = cleanLocationName(loc.name);
+          const timing = locationTiming(name);
+          return `${(Number(loc.qtyAvailable) || 0).toLocaleString()} at ${name}${timing ? ` (${timing})` : ""}`;
+        })
         .join(", ");
 
       return `
@@ -839,7 +859,7 @@
         ? `<div class="set-of-4">Set of 4: $${pricing.tireSubtotal.toFixed(2)} + $${pricing.envFeeTotal.toFixed(2)} environmental fee ($${ENV_FEE_PER_TIRE}/tire) = $${pricing.setOf4Subtotal.toFixed(2)} before tax</div>`
         : "";
       const financingHtml = pricing && pricing.showFinancing
-        ? `<div class="financing"><a href="${FINANCING_URL}" target="_blank" rel="noopener">Financing available via Autologiq — as low as $${pricing.biweeklyEstimate.toFixed(2)} bi-weekly*</a></div>`
+        ? `<div class="financing"><a href="${FINANCING_URL}" target="_blank" rel="noopener">Financing available via Autologiq — as low as $${pricing.biweeklyLow.toFixed(2)} to $${pricing.biweeklyHigh.toFixed(2)} bi-weekly, OAC*</a></div>`
         : "";
 
       const seasonLabel = tire.source === "tdg" && tire.specs ? safeValue(tire.specs.season) : "";
