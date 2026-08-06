@@ -250,7 +250,64 @@
     .stock {
             color: #bdbdbd;
             font-size: 13px;
-      margin-bottom: 12px;
+      margin-bottom: 6px;
+      font-weight: 600;
+}
+
+    .stock.instock {
+            color: #00FF7F;
+}
+
+    .stock.lowstock {
+            color: #ffb020;
+}
+
+    .deposit-note {
+            color: #6f6f6f;
+            font-size: 11.5px;
+            line-height: 1.4;
+      margin-bottom: 10px;
+}
+
+    .season-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      padding: 4px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+}
+
+    .season-badge.allseason { background: rgba(0,255,127,0.15); color: #00FF7F; border-color: rgba(0,255,127,0.4); }
+    .season-badge.winter { background: rgba(142,203,255,0.15); color: #8ecbff; border-color: rgba(142,203,255,0.4); }
+    .season-badge.allweather { background: rgba(0,224,198,0.15); color: #00e0c6; border-color: rgba(0,224,198,0.4); }
+    .season-badge.summer { background: rgba(255,159,67,0.15); color: #ff9f43; border-color: rgba(255,159,67,0.4); }
+    .season-badge.generic { background: rgba(255,255,255,0.08); color: #cfcfcf; border-color: rgba(255,255,255,0.18); }
+
+    .financing {
+      margin-bottom: 14px;
+}
+
+    .financing a {
+            display: inline-flex;
+      align-items: center;
+      font-size: 12px;
+      color: #8ecbff;
+      text-decoration: none;
+      border: 1px solid rgba(142,203,255,0.35);
+      background: rgba(142,203,255,0.08);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+            line-height: 1.3;
+}
+
+    .financing a:hover {
+            border-color: #8ecbff;
 }
 
     .actions {
@@ -290,6 +347,18 @@
 }
 
     .btn-quote:hover {
+            border-color: #00FF7F;
+      color: #00FF7F;
+}
+
+    .btn-details {
+            flex: 1 1 100%;
+      background: transparent;
+      color: #9aa39d;
+      border-color: #2a2a2a;
+}
+
+    .btn-details:hover {
             border-color: #00FF7F;
       color: #00FF7F;
 }
@@ -475,12 +544,14 @@
     const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQJPp_16e7U3XU7F24tUCs3bDhcjynqx8kP-K31fljR3AsSwUl3ptIH40M4YfDuj78QqmfxNIRPYSEA/pub?gid=1040206245&single=true&output=csv";
     const QUOTE_URL = "https://presidentwheels.ca/contact-us";
     const PHONE_LINK = "tel:+12266981667";
+    const FINANCING_URL = "https://presidentwheels.ca/financing-1";
     const ITEMS_PER_PAGE = 24;
 
     let allTires = [];
     let filteredTires = [];
     let currentPage = 1;
     let searched = false;
+    let lastSearchedSize = "";
 
     const sizeWidth = document.getElementById("sizeWidth");
     const sizeProfile = document.getElementById("sizeProfile");
@@ -542,21 +613,46 @@
     }
 
     // ---------- Tire type icons ----------
+    function seasonType(tire) {
+            const seasonText = safeValue(tire.specs && tire.specs.season).toLowerCase();
+      if (seasonText === "winter") return "winter";
+      if (seasonText === "all season") return "allseason";
+      if (seasonText === "all weather") return "allweather";
+      if (seasonText === "summer") return "summer";
+      return "";
+}
+
     function detectTireType(unifiedTire) {
-            const text = `${unifiedTire.label || ""}`.toUpperCase();
-      const season = safeValue(unifiedTire.season);
+            const fromSpecs = seasonType(unifiedTire);
+      if (fromSpecs) return fromSpecs;
 
-      if (season === "1") return "summer";
-      if (season === "2") return "allseason";
-      if (season === "3") return "allweather";
-      if (season === "4") return "winter";
-
+      const text = `${unifiedTire.model || unifiedTire.label || ""}`.toUpperCase();
       if (/\bA\/?T\b/.test(text)) return "offroad";
       if (/\bM\/?T\b/.test(text)) return "offroad";
       if (/\bR\/?T\b/.test(text)) return "offroad";
 
       return "generic";
             }
+
+    function cleanLocationName(name) {
+            return safeValue(name).replace(/^\d+\s*-\s*/, "");
+}
+
+    function slugify(str) {
+      return String(str)
+        .toLowerCase()
+        .replace(/\+/g, 'plus')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+}
+
+    function productDetailUrl(tire, sizeStr) {
+      const m = sizeStr.match(/(\d+)\/(\d+)R(\d+)/);
+      const dims = m ? `${m[1]}-${m[2]}-${m[3]}` : slugify(sizeStr);
+      const sizeSlug = `${dims}-${tire.specs.loadIndex}${tire.specs.speedRating}`.toLowerCase();
+      const productSlug = `${slugify(tire.brand)}-${slugify(tire.model)}`;
+      return `https://tires.presidentwheels.ca/${productSlug}/${sizeSlug}-${tire.id}/`;
+}
 
     function tireIconSVG(type) {
             const palette = {
@@ -601,16 +697,21 @@
             return raw.map(tire => {
                       const locations = Array.isArray(tire.locations) ? tire.locations : [];
                       const qty = locations.reduce((sum, loc) => sum + (Number(loc.qtyAvailable) || 0), 0);
-                      const bestLoc = [...locations].sort((a, b) => (Number(b.qtyAvailable) || 0) - (Number(a.qtyAvailable) || 0))[0];
+                      const specs = tire.specs && typeof tire.specs === "object" ? tire.specs : {};
 
                       return {
                                   source: "tdg",
+                                  id: tire.id,
                                   brand: safeValue(tire.brand),
-                                  label: safeValue(tire.itemNumber) || safeValue(tire.partNumber) || "Tire",
+                                  model: safeValue(tire.model) || safeValue(tire.itemNumber) || "Tire",
+                                  itemNumber: safeValue(tire.itemNumber),
                                 price: tire.price != null ? Number(tire.price) : null,
+                                  msrp: tire.msrp != null ? Number(tire.msrp) : null,
+                                  inStock: !!tire.inStock,
+                                  totalStock: tire.totalStock != null ? Number(tire.totalStock) : null,
+                                  locations,
                                   qty,
-                                  stockText: locations.length ? `${qty} available${bestLoc && bestLoc.name ? ` • ${bestLoc.name}` : ""}` : "Stock unavailable",
-                                  season: safeValue(season),
+                                  specs,
           image: safeValue(tire.image)
                         };
       });
@@ -646,8 +747,9 @@
                         label: `${brand} ${rowSize}`.trim(),
                         price,
                         qty,
-                        stockText: `${qty} in stock at our shop`,
-                        season: ""
+                        inStock: true,
+                        totalStock: qty,
+                        stockText: `${qty} in stock at our shop`
             });
         }
 
@@ -666,30 +768,70 @@
                     imgEl.replaceWith(div);
             };
         
-            function buildCard(tire) {
+            function buildStockSection(tire) {
+      if (tire.source !== "tdg") {
+        return `<div class="stock instock">${tire.stockText}</div>`;
+      }
+
+      if (!tire.inStock) {
+        return `
+          <div class="stock">Special order — call for expected arrival</div>
+          <div class="deposit-note">50% deposit required — ordered from warehouse to Waterloo</div>
+        `;
+      }
+
+      const lowStock = tire.totalStock != null && tire.totalStock <= 10;
+      const totalText = (tire.totalStock != null ? tire.totalStock : tire.qty).toLocaleString();
+      const breakdown = tire.locations
+        .filter(loc => (Number(loc.qtyAvailable) || 0) > 0)
+        .map(loc => `${(Number(loc.qtyAvailable) || 0).toLocaleString()} at ${cleanLocationName(loc.name)}`)
+        .join(", ");
+
+      return `
+        <div class="stock ${lowStock ? "lowstock" : "instock"}">${totalText} in stock${breakdown ? ` — ${breakdown}` : ""}</div>
+        <div class="deposit-note">50% deposit required — ordered from warehouse to Waterloo</div>
+      `;
+}
+
+    function buildCard(tire) {
       const type = detectTireType(tire);
+      const name = tire.source === "tdg" ? tire.model : tire.label;
       const priceText = tire.price != null ? `$${tire.price.toFixed(2)} <span class="tax-note">+ HST</span>` : "Call";
       const badge = tire.source === "stock" ? `<div class="stock-badge">In Stock Now</div>` : "";
 
+      const seasonLabel = tire.source === "tdg" && tire.specs ? safeValue(tire.specs.season) : "";
+      const seasonBadge = seasonLabel
+        ? `<div class="season-badge ${seasonType(tire) || "generic"}">${seasonLabel}</div>`
+        : "";
+
         const imageHTML = tire.image
-                ? `<img src="${tire.image}" alt="${tire.brand} ${tire.label}" class="tire-photo" loading="lazy" onerror="window.tireImgError(this,'${type}')" />`
+                ? `<img src="${tire.image}" alt="${tire.brand} ${name}" class="tire-photo" loading="lazy" onerror="window.tireImgError(this,'${type}')" />`
                     : `<div class="tire-icon">${tireIconSVG(type)}</div>`;
+
+      const canLinkDetails = tire.source === "tdg" && tire.id != null && tire.specs &&
+        tire.specs.loadIndex && tire.specs.speedRating && lastSearchedSize;
+      const detailsBtn = canLinkDetails
+        ? `<a class="btn btn-details" href="${productDetailUrl(tire, lastSearchedSize)}" target="_blank" rel="noopener">Details</a>`
+        : "";
 
       return `
         <div class="tire-card ${tire.source === "stock" ? "in-stock" : ""}">
           ${badge}
+          ${seasonBadge}
           <div class="card-top">
             ${imageHTML}
             <div class="card-top-text">
               <div class="brand">${tire.brand}</div>
-              <div class="title">${tire.label}</div>
+              <div class="title">${name}</div>
             </div>
           </div>
           <div class="price">${priceText}</div>
-          <div class="stock">${tire.stockText}</div>
+          ${buildStockSection(tire)}
+          <div class="financing"><a href="${FINANCING_URL}" target="_blank" rel="noopener">Financing available via Autologiq — 3-year bi-weekly payments</a></div>
           <div class="actions">
             <a class="btn btn-call" href="${PHONE_LINK}">Call Now</a>
             <a class="btn btn-quote" href="${QUOTE_URL}" target="_blank" rel="noopener">Request Quote</a>
+            ${detailsBtn}
           </div>
         </div>
       `;
@@ -705,24 +847,29 @@
         results = results.filter(t => safeValue(t.brand) === selectedBrand);
       }
 
+      let secondaryCompare = () => 0;
+
       if (sort === "stock") {
-        results.sort((a, b) => {
-                    if (a.source !== b.source) return a.source === "stock" ? -1 : 1;
-          return (b.qty || 0) - (a.qty || 0);
-      });
+        secondaryCompare = (a, b) => (b.qty || 0) - (a.qty || 0);
       }
 
       if (sort === "price-low") {
-        results.sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
+        secondaryCompare = (a, b) => (a.price ?? Infinity) - (b.price ?? Infinity);
 }
 
       if (sort === "price-high") {
-        results.sort((a, b) => (b.price ?? -Infinity) - (a.price ?? -Infinity));
+        secondaryCompare = (a, b) => (b.price ?? -Infinity) - (a.price ?? -Infinity);
 }
 
       if (sort === "brand") {
-        results.sort((a, b) => safeValue(a.brand).localeCompare(safeValue(b.brand)));
+        secondaryCompare = (a, b) => safeValue(a.brand).localeCompare(safeValue(b.brand));
 }
+
+      results.sort((a, b) => {
+        const stockDiff = (a.inStock ? 0 : 1) - (b.inStock ? 0 : 1);
+        if (stockDiff !== 0) return stockDiff;
+        return secondaryCompare(a, b);
+      });
 
       filteredTires = results;
 }
@@ -843,6 +990,7 @@
 }
 
       searched = true;
+      lastSearchedSize = size;
       statusEl.style.display = "block";
       statusEl.textContent = "Searching live inventory...";
       tiresGrid.innerHTML = "";
