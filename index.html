@@ -760,7 +760,7 @@
           const rowSize = safeValue(r[0]);   // Column A
           const brand = safeValue(r[1]);     // Column B
           const qty = Number(safeValue(r[4])) || 0;   // Column E
-          const price = Number(safeValue(r[6])) || null; // Column G
+          const price = Number(safeValue(r[6]).replace(/[^0-9.]/g, "")) || null; // Column G
 
           if (!rowSize) continue;
           if (normalizeSize(rowSize) !== wanted) continue;
