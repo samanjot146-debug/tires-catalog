@@ -238,13 +238,19 @@
             color: #00FF7F;
       font-size: 20px;
       font-weight: 800;
-      margin: 8px 0 14px;
+      margin: 8px 0 4px;
     }
 
     .price .tax-note {
             color: #8d8d8d;
       font-size: 13px;
       font-weight: 600;
+}
+
+    .set-of-4 {
+            color: #9aa39d;
+            font-size: 12px;
+      margin-bottom: 10px;
 }
 
     .stock {
@@ -370,6 +376,14 @@
       gap: 10px;
       margin-top: 30px;
       flex-wrap: wrap;
+}
+
+    .financing-footnote {
+            text-align: center;
+            color: #6f6f6f;
+      font-size: 11.5px;
+      margin-top: 18px;
+      padding: 0 12px;
 }
 
     .page-btn {
@@ -537,6 +551,7 @@
     <div id="status">Enter a tire size and click Search.</div>
     <div id="tires-grid"></div>
     <div class="pagination" id="pagination"></div>
+    <div class="financing-footnote">*Estimated payment, 0% interest assumed. Actual payment depends on approval terms via Autologiq.</div>
       </div>
 
       <script>
@@ -546,6 +561,8 @@
     const PHONE_LINK = "tel:+12266981667";
     const FINANCING_URL = "https://presidentwheels.ca/financing-1";
     const ITEMS_PER_PAGE = 24;
+    const ENV_FEE_PER_TIRE = 6;
+    const BIWEEKLY_PERIODS = 78; // 3 years x 26 biweekly periods
 
     let allTires = [];
     let filteredTires = [];
@@ -760,6 +777,16 @@
 }
 }
 
+// ---------- Set-of-4 / financing math ----------
+    function computePricing(tire) {
+      if (tire.price == null) return null;
+      const perTireWithFee = tire.price + ENV_FEE_PER_TIRE;
+      const setOf4Total = perTireWithFee * 4;
+      const depositAmount = setOf4Total * 0.5;
+      const biweeklyEstimate = setOf4Total / BIWEEKLY_PERIODS;
+      return { setOf4Total, depositAmount, biweeklyEstimate };
+}
+
 // ---------- Image fallback ----------
             window.tireImgError = function (imgEl, type) {
                     const div = document.createElement("div");
@@ -768,7 +795,12 @@
                     imgEl.replaceWith(div);
             };
         
-            function buildStockSection(tire) {
+            function buildDepositNote(tire, pricing, prefix) {
+      const amountText = pricing ? `: $${pricing.depositAmount.toFixed(2)}` : "";
+      return `<div class="deposit-note">${prefix} — 50% deposit required to order in${amountText}</div>`;
+}
+
+    function buildStockSection(tire, pricing) {
       if (tire.source !== "tdg") {
         return `<div class="stock instock">${tire.stockText}</div>`;
       }
@@ -776,7 +808,7 @@
       if (!tire.inStock) {
         return `
           <div class="stock">Special order — call for expected arrival</div>
-          <div class="deposit-note">50% deposit required — ordered from warehouse to Waterloo</div>
+          ${buildDepositNote(tire, pricing, "Special order from warehouse")}
         `;
       }
 
@@ -789,7 +821,7 @@
 
       return `
         <div class="stock ${lowStock ? "lowstock" : "instock"}">${totalText} in stock${breakdown ? ` — ${breakdown}` : ""}</div>
-        <div class="deposit-note">50% deposit required — ordered from warehouse to Waterloo</div>
+        ${buildDepositNote(tire, pricing, "In warehouse stock (not on our shelf)")}
       `;
 }
 
@@ -798,6 +830,14 @@
       const name = tire.source === "tdg" ? tire.model : tire.label;
       const priceText = tire.price != null ? `$${tire.price.toFixed(2)} <span class="tax-note">+ HST</span>` : "Call";
       const badge = tire.source === "stock" ? `<div class="stock-badge">In Stock Now</div>` : "";
+
+      const pricing = computePricing(tire);
+      const setOf4Html = pricing
+        ? `<div class="set-of-4">Set of 4: $${pricing.setOf4Total.toFixed(2)} before tax (incl. $${ENV_FEE_PER_TIRE}/tire environmental fee)</div>`
+        : "";
+      const financingText = pricing
+        ? `Financing available via Autologiq — as low as $${pricing.biweeklyEstimate.toFixed(2)} bi-weekly*`
+        : "Financing available via Autologiq*";
 
       const seasonLabel = tire.source === "tdg" && tire.specs ? safeValue(tire.specs.season) : "";
       const seasonBadge = seasonLabel
@@ -826,8 +866,9 @@
             </div>
           </div>
           <div class="price">${priceText}</div>
-          ${buildStockSection(tire)}
-          <div class="financing"><a href="${FINANCING_URL}" target="_blank" rel="noopener">Financing available via Autologiq — 3-year bi-weekly payments</a></div>
+          ${setOf4Html}
+          ${buildStockSection(tire, pricing)}
+          <div class="financing"><a href="${FINANCING_URL}" target="_blank" rel="noopener">${financingText}</a></div>
           <div class="actions">
             <a class="btn btn-call" href="${PHONE_LINK}">Call Now</a>
             <a class="btn btn-quote" href="${QUOTE_URL}" target="_blank" rel="noopener">Request Quote</a>
