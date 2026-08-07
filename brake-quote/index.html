@@ -1,117 +1,780 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Get Your Brake Quote | President Tire & Wheels</title>
-<meta name="description" content="Get a free brake service quote from President Tire & Wheels in Waterloo, ON. Usually a response within a few hours.">
-<style>
-  *{box-sizing:border-box}
-  body{background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif;margin:0;padding:0}
-  .wrap{max-width:560px;margin:0 auto;padding:48px 20px 64px}
-  .badge{display:inline-block;padding:8px 14px;border-radius:999px;background:rgba(3,255,127,.08);border:1px solid rgba(3,255,127,.35);color:#03ff7f;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:20px}
-  h1{font-size:32px;line-height:1.15;margin:0 0 12px 0;letter-spacing:-0.02em}
-  h1 span{color:#03ff7f}
-  .sub{color:#b0b8b4;font-size:15px;line-height:1.7;margin:0 0 28px 0}
-  form{background:#0c0c0c;border:1px solid #1e1e1e;border-radius:20px;padding:28px}
-  label{display:block;font-size:13px;font-weight:700;color:#d5ddd8;margin-bottom:6px;margin-top:18px}
-  label:first-of-type{margin-top:0}
-  input, textarea{
-    width:100%;background:#0b0b0b;border:1px solid #262626;color:#fff;
-    padding:12px 14px;border-radius:12px;font-size:15px;font-family:inherit;
-    outline:none;transition:border-color .15s ease;
-  }
-  input:focus, textarea:focus{border-color:#03ff7f}
-  textarea{resize:vertical;min-height:90px}
-  .req{color:#03ff7f;font-weight:800}
-  button[type="submit"]{
-    width:100%;margin-top:24px;padding:15px 20px;border-radius:14px;
-    background:#03ff7f;color:#000;font-size:16px;font-weight:800;
-    border:none;cursor:pointer;transition:opacity .15s ease;
-  }
-  button[type="submit"]:hover{opacity:.88}
-  button[type="submit"]:disabled{opacity:.5;cursor:not-allowed}
-  .note{color:#7a8580;font-size:12.5px;text-align:center;margin-top:14px}
-  .alt{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
-  .alt a{
-    flex:1;text-align:center;text-decoration:none;padding:13px 16px;border-radius:12px;
-    font-size:14px;font-weight:800;background:#111;color:#fff;border:1px solid #262626;
-  }
-  #successMsg{display:none;background:#0c0c0c;border:1px solid rgba(3,255,127,.4);border-radius:20px;padding:32px;text-align:center}
-  #successMsg h2{color:#03ff7f;font-size:22px;margin:0 0 10px 0}
-  #successMsg p{color:#c9d0cb;font-size:14px;line-height:1.6;margin:0}
-  #errorMsg{display:none;color:#ff6b6b;font-size:13px;margin-top:12px;text-align:center}
-</style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brake Service Waterloo ON | President Tire & Wheels</title>
+<meta name="description" content="Professional brake pad replacement, rotor replacement, brake inspections, brake fluid flushes, and caliper service using premium ProSeries OE+ parts for all makes and models in Waterloo, Kitchener, and Cambridge, Ontario. Same-day turnaround at 632 Colby Drive, Waterloo.">
 </head>
 <body>
-<div class="wrap">
-  <div class="badge">President Tire &amp; Wheels &middot; Waterloo, ON</div>
-  <h1>Squeaking, Grinding, or <span>Pulsing Brakes?</span></h1>
-  <p class="sub">Tell us about your vehicle and what you're noticing. We'll text or email you a real quote &mdash; usually within a few hours.</p>
+<!-- President Tire & Wheels — Brake Service Page (funnel v2) -->
+<!-- CHANGES FROM v1:
+     1) Lead form merged directly into the hero — visible without scrolling, not a separate section below.
+     2) Brand messaging simplified to a single premium tier: ProSeries OE+ (no standard/economy pricing shown). -->
+<!-- FIX APPLIED: all tel: links now include target="_top" so they work correctly inside the iframe embed -->
+<!-- FIX APPLIED: visible click-to-call buttons use the Twilio tracking number (226-786-0421) for call logging. Schema/JSON-LD keeps the main business number (226-698-1667) for NAP consistency. -->
 
-  <form id="brakeForm" action="https://formspree.io/f/mppazone" method="POST">
-    <input type="hidden" name="_subject" value="New Brake Quote Request - presidentwheels.ca">
-    <input type="hidden" name="lead_type" value="brake_quote">
+<article id="ptw-brake" itemscope itemtype="https://schema.org/Service">
+  <meta itemprop="name" content="Brake Service Waterloo ON">
+  <meta itemprop="serviceType" content="Automotive Brake Service">
 
-    <label for="name">Full Name <span class="req">*</span></label>
-    <input type="text" id="name" name="name" required>
+  <div class="ptw-wrap">
 
-    <label for="phone">Phone Number <span class="req">*</span></label>
-    <input type="tel" id="phone" name="phone" required>
+    <!-- ── HERO + QUOTE FORM (merged, above the fold) ── -->
+    <header class="ptw-hero-form-grid" id="ptw-quote-form">
+      <div class="ptw-hero-copy">
+        <div class="ptw-eyebrow">President Tire &amp; Wheels · Waterloo, ON</div>
+        <h1>Squeaking, Grinding, or<br><span class="ptw-accent">Pulsing Brakes?</span></h1>
+        <p class="ptw-hero-sub">
+          Tell us about your vehicle and what you're noticing. We'll text or email you a real quote — usually within a few hours. Serving <strong>Waterloo, Kitchener, Cambridge</strong> from our shop at <strong>632 Colby Drive, Unit B</strong>.
+        </p>
 
-    <label for="email">Email <span class="req">*</span></label>
-    <input type="email" id="email" name="email" required>
+        <div class="ptw-premium-badge">
+          <span class="ptw-premium-icon">🛡️</span>
+          <div>
+            <strong>Premium parts only — ProSeries OE+</strong>
+            <span>Quiet, reliable brake pads and rotors backed by a 3-year warranty. We don't cut corners with economy parts.</span>
+          </div>
+        </div>
 
-    <label for="vehicle">Vehicle Year, Make &amp; Model</label>
-    <input type="text" id="vehicle" name="vehicle" placeholder="e.g. 2018 Honda Civic">
+        <div class="ptw-trust-row">
+          <div class="ptw-trust-item"><span class="ptw-trust-icon">⚡</span><span>Same-Day Turnaround</span></div>
+          <div class="ptw-trust-item"><span class="ptw-trust-icon">📋</span><span>Free Inspection</span></div>
+        </div>
 
-    <label for="issue">What are you noticing with your brakes?</label>
-    <textarea id="issue" name="issue" placeholder="Squealing, grinding, pulsing, warning light, etc."></textarea>
+        <a href="tel:+12267860421" class="ptw-btn ptw-btn-secondary ptw-hero-call" target="_top">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+          Or call (226) 786-0421
+        </a>
+      </div>
 
-    <button type="submit" id="submitBtn">Get My Brake Quote</button>
-    <div id="errorMsg">Something went wrong &mdash; please call us instead at (226) 786-0421.</div>
-    <div class="note">No payment, no obligation. We'll be in touch within a few hours.</div>
-  </form>
+      <div class="ptw-quote-card" id="ptw-quote-card">
+        <form id="ptw-quote-form-el">
+          <div class="ptw-qform-header">
+            <h2>Get Your Brake Quote</h2>
+            <p>Takes under a minute. No payment, no obligation.</p>
+          </div>
 
-  <div id="successMsg">
-    <h2>Thanks &mdash; we got it!</h2>
-    <p>We'll text or email you a real quote within a few hours. If it's urgent, call us directly at <a href="tel:+12267860421" style="color:#03ff7f;text-decoration:none;font-weight:700">(226) 786-0421</a>.</p>
-  </div>
+          <div class="ptw-qfield-row">
+            <div class="ptw-qfield">
+              <label for="ptw-q-year">Year</label>
+              <select id="ptw-q-year" name="Year" required>
+                <option value="">Year</option>
+              </select>
+            </div>
+            <div class="ptw-qfield">
+              <label for="ptw-q-make">Make</label>
+              <input type="text" id="ptw-q-make" name="Make" placeholder="e.g. Honda" required />
+            </div>
+            <div class="ptw-qfield">
+              <label for="ptw-q-model">Model</label>
+              <input type="text" id="ptw-q-model" name="Model" placeholder="e.g. Civic" required />
+            </div>
+          </div>
 
-  <div class="alt">
-    <a href="tel:+12267860421">Or Call (226) 786-0421</a>
-    <a href="https://presidentwheels.ca/brake-service/">Back to Brake Service</a>
-  </div>
+          <div class="ptw-qfield">
+            <label>Which brakes need attention?</label>
+            <div class="ptw-pill-options" data-group="Brakes Needed">
+              <button type="button" class="ptw-pill" data-value="Front">Front</button>
+              <button type="button" class="ptw-pill" data-value="Rear">Rear</button>
+              <button type="button" class="ptw-pill" data-value="Both">Both</button>
+              <button type="button" class="ptw-pill" data-value="Not Sure">Not Sure</button>
+            </div>
+            <input type="hidden" id="ptw-q-brakes-needed" name="Brakes Needed" required />
+          </div>
+
+          <div class="ptw-qfield">
+            <label>What are you noticing?</label>
+            <div class="ptw-pill-options ptw-pill-multi" data-group="Symptoms">
+              <button type="button" class="ptw-pill" data-value="Squealing">Squealing</button>
+              <button type="button" class="ptw-pill" data-value="Grinding">Grinding</button>
+              <button type="button" class="ptw-pill" data-value="Pulsing/Vibration">Pulsing / Vibration</button>
+              <button type="button" class="ptw-pill" data-value="Warning Light">Warning Light</button>
+              <button type="button" class="ptw-pill" data-value="Soft Pedal">Soft Pedal</button>
+              <button type="button" class="ptw-pill" data-value="Just an Inspection">Just an Inspection</button>
+            </div>
+            <input type="hidden" id="ptw-q-symptoms" name="Symptoms" />
+          </div>
+
+          <div class="ptw-qfield-row">
+            <div class="ptw-qfield">
+              <label for="ptw-q-name">Name</label>
+              <input type="text" id="ptw-q-name" name="Name" placeholder="Your name" required />
+            </div>
+            <div class="ptw-qfield">
+              <label for="ptw-q-phone">Phone</label>
+              <input type="tel" id="ptw-q-phone" name="Phone" placeholder="(226) 000-0000" required />
+            </div>
+          </div>
+
+          <div class="ptw-qfield">
+            <label for="ptw-q-email">Email</label>
+            <input type="email" id="ptw-q-email" name="Email" placeholder="you@email.com" required />
+          </div>
+
+          <input type="hidden" name="Form Type" value="Brake Quote Request" />
+          <input type="hidden" name="_subject" value="New Brake Quote Request — President Tire" />
+
+          <button type="submit" class="ptw-btn ptw-btn-primary ptw-qsubmit" id="ptw-q-submit">Get My Quote →</button>
+          <p class="ptw-qfine">By submitting, you agree we may contact you by phone, text, or email about your quote.</p>
+        </form>
+
+        <div id="ptw-q-confirmation" class="ptw-q-confirmation" style="display:none;">
+          <div class="ptw-q-confirm-icon">✓</div>
+          <h3>Got it — thanks!</h3>
+          <p>We're putting together your brake quote now. Expect a text or email within a few hours.</p>
+          <p class="ptw-q-confirm-sub">Need it sooner? Call us at <a href="tel:+12267860421" target="_top">(226) 786-0421</a>.</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── SERVICES ── -->
+    <section class="ptw-section" aria-labelledby="services-heading">
+      <h2 id="services-heading" class="ptw-section-title">Brake Services We Offer</h2>
+      <p class="ptw-section-sub">Full-service brake repair and maintenance for every vehicle type — from daily drivers to heavy-duty trucks.</p>
+
+      <div class="ptw-grid">
+
+        <div class="ptw-card" itemscope itemtype="https://schema.org/Offer">
+          <div class="ptw-card-icon">🔧</div>
+          <h3 itemprop="name">Brake Pad Replacement</h3>
+          <p itemprop="description">
+            Worn brake pads are the most common brake repair across the KW region. We replace front and rear brake pads on all makes and models using ProSeries OE+ premium pads. Stops the squealing and grinding noise instantly and restores full stopping power — usually completed in under two hours.
+          </p>
+          <ul class="ptw-card-list">
+            <li>ProSeries OE+ premium pads only</li>
+            <li>Front, rear, or all four corners</li>
+            <li>Cars, SUVs, light trucks</li>
+          </ul>
+        </div>
+
+        <div class="ptw-card" itemscope itemtype="https://schema.org/Offer">
+          <div class="ptw-card-icon">⚙️</div>
+          <h3 itemprop="name">Rotor Replacement</h3>
+          <p itemprop="description">
+            Warped or scored rotors cause steering wheel vibration, pulsing pedal feel, and longer stopping distances. We supply and install ProSeries OE+ replacement rotors alongside fresh brake pads for a complete brake job that holds up through Ontario winters.
+          </p>
+          <ul class="ptw-card-list">
+            <li>Eliminates vibration and pedal pulsing</li>
+            <li>Paired with pad replacement for best results</li>
+            <li>3-year warranty coverage</li>
+          </ul>
+        </div>
+
+        <div class="ptw-card" itemscope itemtype="https://schema.org/Offer">
+          <div class="ptw-card-icon">🔍</div>
+          <h3 itemprop="name">Brake Inspection</h3>
+          <p itemprop="description">
+            Not sure if your brakes need service? Our comprehensive brake inspection covers pads, rotors, calipers, brake lines, hardware, and fluid condition. We give you an honest, no-pressure assessment — and only recommend what your vehicle actually needs.
+          </p>
+          <ul class="ptw-card-list">
+            <li>Complete safety inspection of all brake components</li>
+            <li>Honest, written assessment</li>
+            <li>Recommended before any long road trip</li>
+          </ul>
+        </div>
+
+        <div class="ptw-card" itemscope itemtype="https://schema.org/Offer">
+          <div class="ptw-card-icon">💧</div>
+          <h3 itemprop="name">Brake Fluid Flush</h3>
+          <p itemprop="description">
+            Brake fluid absorbs moisture over time, which lowers its boiling point and reduces braking performance — especially critical during heavy braking on Ontario highways. A full brake fluid flush restores hydraulic pressure and protects calipers and brake lines from internal corrosion.
+          </p>
+          <ul class="ptw-card-list">
+            <li>Recommended every 2 years or 40,000 km</li>
+            <li>Improves pedal feel and response</li>
+            <li>Protects calipers from corrosion</li>
+          </ul>
+        </div>
+
+        <div class="ptw-card" itemscope itemtype="https://schema.org/Offer">
+          <div class="ptw-card-icon">🗜️</div>
+          <h3 itemprop="name">Brake Caliper Service</h3>
+          <p itemprop="description">
+            A seized or sticking brake caliper causes uneven pad wear, pulling to one side, and excessive heat buildup. We inspect, lubricate, and replace brake calipers to ensure even, consistent braking across all four corners of your vehicle.
+          </p>
+          <ul class="ptw-card-list">
+            <li>Diagnoses pulling and uneven wear</li>
+            <li>Caliper slide pin lubrication and inspection</li>
+            <li>Full caliper replacement when needed</li>
+          </ul>
+        </div>
+
+        <div class="ptw-card ptw-card-highlight" itemscope itemtype="https://schema.org/Offer">
+          <div class="ptw-card-icon">📞</div>
+          <h3>Not Sure What You Need?</h3>
+          <p>
+            Call us and describe what you're hearing or feeling. Our team will help you figure out if it's pads, rotors, calipers, or something else — before you drive in. Fast advice, no obligation.
+          </p>
+          <a href="tel:+12267860421" class="ptw-inline-btn" target="_top">Call (226) 786-0421</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── WARNING SIGNS ── -->
+    <section class="ptw-section ptw-signs-section" aria-labelledby="signs-heading">
+      <div class="ptw-signs-inner">
+        <div class="ptw-signs-text">
+          <h2 id="signs-heading">Warning Signs You Need Brake Service</h2>
+          <p>
+            Don't wait until your brakes fail. These are the most common symptoms Waterloo-area drivers describe before coming in for brake work. If you notice any of these, bring your vehicle in for an inspection as soon as possible.
+          </p>
+          <a href="#ptw-quote-form" class="ptw-btn ptw-btn-primary" style="margin-top:20px;display:inline-flex;">Book an Inspection</a>
+        </div>
+        <ul class="ptw-signs-list" aria-label="Warning signs that indicate brake problems">
+          <li>
+            <span class="ptw-sign-icon">🔊</span>
+            <div>
+              <strong>Squealing or grinding noise when braking</strong>
+              <span>Usually worn brake pads. Grinding means metal-on-metal contact — urgent.</span>
+            </div>
+          </li>
+          <li>
+            <span class="ptw-sign-icon">📳</span>
+            <div>
+              <strong>Steering wheel or pedal vibrating when stopping</strong>
+              <span>Warped rotors are the most common cause.</span>
+            </div>
+          </li>
+          <li>
+            <span class="ptw-sign-icon">↗️</span>
+            <div>
+              <strong>Car pulling to one side when braking</strong>
+              <span>Often a stuck caliper or uneven pad wear.</span>
+            </div>
+          </li>
+          <li>
+            <span class="ptw-sign-icon">🦶</span>
+            <div>
+              <strong>Soft, spongy, or low brake pedal</strong>
+              <span>Could indicate air in the brake lines or a fluid leak — stop driving immediately.</span>
+            </div>
+          </li>
+          <li>
+            <span class="ptw-sign-icon">🚨</span>
+            <div>
+              <strong>Brake warning light on the dashboard</strong>
+              <span>Don't ignore it. Get an inspection before your next drive.</span>
+            </div>
+          </li>
+          <li>
+            <span class="ptw-sign-icon">📅</span>
+            <div>
+              <strong>More than 2 years since your last brake check</strong>
+              <span>Even if everything feels fine, brake components wear silently.</span>
+            </div>
+          </li>
+          <li>
+            <span class="ptw-sign-icon">👃</span>
+            <div>
+              <strong>Burning smell after driving</strong>
+              <span>Overheating brakes from a dragging caliper or riding the brake pedal.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── WHY CHOOSE US ── -->
+    <section class="ptw-section" aria-labelledby="why-heading">
+      <h2 id="why-heading" class="ptw-section-title">Why Waterloo Drivers Choose Us</h2>
+      <div class="ptw-why-grid">
+        <div class="ptw-why-item">
+          <span class="ptw-why-num">01</span>
+          <h3>Honest Assessments</h3>
+          <p>We show you what we find and explain what actually needs to be done. No upselling, no pressure.</p>
+        </div>
+        <div class="ptw-why-item">
+          <span class="ptw-why-num">02</span>
+          <h3>Same-Day Service</h3>
+          <p>Most brake jobs are completed the same day. Call ahead and we'll have your parts ready.</p>
+        </div>
+        <div class="ptw-why-item">
+          <span class="ptw-why-num">03</span>
+          <h3>Premium Parts Only</h3>
+          <p>ProSeries OE+ pads and rotors on every job — no economy substitutes, backed by a 3-year warranty.</p>
+        </div>
+        <div class="ptw-why-item">
+          <span class="ptw-why-num">04</span>
+          <h3>Transparent Quotes</h3>
+          <p>You get a full written quote before any work begins. No surprise charges on pickup.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FAQ (rich schema target) ── -->
+    <section class="ptw-section ptw-faq-section" aria-labelledby="faq-heading">
+      <h2 id="faq-heading" class="ptw-section-title">Brake Service FAQs</h2>
+      <div class="ptw-faq-list">
+
+        <details class="ptw-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary itemprop="name">How long does a brake pad replacement take?</summary>
+          <div class="ptw-faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">Most brake pad replacements at President Tire & Wheels are completed within 1–2 hours. If rotors also need replacing, allow 2–3 hours. Call ahead so we can have your parts in stock.</p>
+          </div>
+        </details>
+
+        <details class="ptw-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary itemprop="name">What brake parts do you use?</summary>
+          <div class="ptw-faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">We only install ProSeries OE+ premium brake pads and rotors — we don't offer economy or budget alternatives. Every brake job comes with a 3-year warranty.</p>
+          </div>
+        </details>
+
+        <details class="ptw-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary itemprop="name">Do I need new rotors when I replace brake pads?</summary>
+          <div class="ptw-faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">Not always. During inspection we measure rotor thickness and check for warping or deep scoring. If rotors are within spec, they can be reused with new pads. We'll tell you exactly what we find before recommending anything.</p>
+          </div>
+        </details>
+
+        <details class="ptw-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary itemprop="name">Is it safe to drive with squealing brakes?</summary>
+          <div class="ptw-faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">Squealing is a wear indicator — your pads are getting thin. You have some time but you shouldn't ignore it. If the noise has turned to grinding, stop driving and call us immediately — metal-on-metal contact damages rotors quickly and becomes a safety hazard.</p>
+          </div>
+        </details>
+
+        <details class="ptw-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary itemprop="name">Do you offer brake service in Kitchener and Cambridge?</summary>
+          <div class="ptw-faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">Yes. Our shop is located at 632 Colby Drive in Waterloo, which is central to Kitchener and Cambridge. Drivers from across the Region of Waterloo — including Elmira, Baden, and New Hamburg — regularly come to us for brake service.</p>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+    <!-- ── SERVICE AREA ── -->
+    <section class="ptw-section ptw-area-section" aria-labelledby="area-heading" itemprop="areaServed" itemscope itemtype="https://schema.org/AdministrativeArea">
+      <h2 id="area-heading">Brake Service Near You — Waterloo Region</h2>
+      <p>
+        President Tire &amp; Wheels serves brake repair customers from across the Region of Waterloo, including <strong>Waterloo, Kitchener, Cambridge, Elmira, Baden, New Hamburg, Woolwich Township,</strong> and surrounding communities. Our shop is conveniently located off Erb Street West — easy to reach from anywhere in the tri-city area.
+      </p>
+      <div class="ptw-area-tags">
+        <span>Waterloo</span>
+        <span>Kitchener</span>
+        <span>Cambridge</span>
+        <span>Elmira</span>
+        <span>Baden</span>
+        <span>New Hamburg</span>
+        <span>Woolwich</span>
+        <span>Wilmot</span>
+      </div>
+      <div class="ptw-area-cta">
+        <a href="tel:+12267860421" class="ptw-btn ptw-btn-primary" target="_top">Call to Book</a>
+        <a href="#ptw-quote-form" class="ptw-btn ptw-btn-secondary">Request a Quote Online</a>
+        <a href="https://maps.app.goo.gl/fdWue2vGri7JSKRW9" target="_top" class="ptw-btn ptw-btn-secondary">Get Directions</a>
+      </div>
+    </section>
+
+  </div><!-- /ptw-wrap -->
+</article>
+
+<!-- ── MOBILE BAR ── -->
+<div class="ptw-mobile-bar" role="navigation" aria-label="Quick actions">
+  <a href="tel:+12267860421" target="_top">📞 Call</a>
+  <a href="#ptw-quote-form">💬 Quote</a>
+  <a href="https://maps.app.goo.gl/fdWue2vGri7JSKRW9" target="_top">📍 Map</a>
 </div>
 
-<script>
-document.getElementById('brakeForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const form = e.target;
-  const btn = document.getElementById('submitBtn');
-  const errorMsg = document.getElementById('errorMsg');
-  btn.disabled = true;
-  btn.textContent = 'Sending...';
-  errorMsg.style.display = 'none';
+<!-- ══════════════════════════════════
+     STYLES
+══════════════════════════════════ -->
+<style>
+#ptw-brake, #ptw-brake *, #ptw-brake *::before, #ptw-brake *::after { box-sizing: border-box; }
 
-  try {
-    const res = await fetch(form.action, {
-      method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
-    });
-    if (res.ok) {
-      form.style.display = 'none';
-      document.getElementById('successMsg').style.display = 'block';
-    } else {
-      throw new Error('Submission failed');
-    }
-  } catch (err) {
-    errorMsg.style.display = 'block';
-    btn.disabled = false;
-    btn.textContent = 'Get My Brake Quote';
+#ptw-brake {
+  background: #000;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  padding: 56px 18px 52px;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+.ptw-wrap { max-width: 1140px; margin: 0 auto; }
+
+/* ── MERGED HERO + FORM ── */
+.ptw-hero-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 44px;
+  align-items: start;
+  padding-bottom: 56px;
+  border-bottom: 1px solid #1a1a1a;
+  margin-bottom: 56px;
+  scroll-margin-top: 20px;
+}
+
+.ptw-eyebrow {
+  display: inline-block;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: rgba(3,255,127,.08);
+  border: 1px solid rgba(3,255,127,.3);
+  color: #03ff7f;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.ptw-hero-copy h1 {
+  margin: 0 0 16px;
+  font-size: clamp(32px, 4.2vw, 46px);
+  line-height: 1.08;
+  letter-spacing: -.03em;
+  font-weight: 900;
+}
+
+.ptw-accent { color: #03ff7f; }
+
+.ptw-hero-sub {
+  color: #b0b8b4;
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 0 0 22px;
+  max-width: 480px;
+}
+.ptw-hero-sub strong { color: #fff; }
+
+.ptw-premium-badge {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: rgba(3,255,127,.05);
+  border: 1px solid rgba(3,255,127,.25);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  max-width: 480px;
+}
+.ptw-premium-icon { font-size: 20px; flex-shrink: 0; }
+.ptw-premium-badge strong { display: block; font-size: 14px; color: #fff; margin-bottom: 3px; }
+.ptw-premium-badge span { font-size: 13px; color: #9aa09d; line-height: 1.5; }
+
+.ptw-trust-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+.ptw-trust-item {
+  display: flex; align-items: center; gap: 7px;
+  background: #0d0d0d; border: 1px solid #1e1e1e;
+  padding: 8px 13px; border-radius: 999px;
+  font-size: 12px; font-weight: 600; color: #d5ddd8;
+}
+
+.ptw-hero-call { width: fit-content; }
+
+/* ── BUTTONS ── */
+.ptw-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  text-decoration: none; padding: 14px 24px; border-radius: 12px;
+  font-size: 15px; font-weight: 800; transition: opacity .15s;
+  cursor: pointer; border: none; font-family: inherit;
+}
+.ptw-btn:hover { opacity: .88; }
+.ptw-btn-primary { background: #03ff7f; color: #000; }
+.ptw-btn-secondary { background: #111; color: #fff; border: 1px solid #2a2a2a; }
+
+/* ── SECTION SHARED ── */
+.ptw-section { margin-bottom: 64px; }
+.ptw-section-title { font-size: clamp(22px, 3.5vw, 32px); font-weight: 800; margin: 0 0 10px; letter-spacing: -.02em; }
+.ptw-section-sub { color: #9aa09d; font-size: 16px; margin: 0 0 32px; max-width: 640px; }
+
+/* ── QUOTE CARD (form) ── */
+.ptw-quote-card {
+  background: #0c0c0c; border: 1px solid #1e1e1e; border-radius: 20px; padding: 28px;
+}
+.ptw-qform-header h2 { margin: 0 0 6px; font-size: 21px; font-weight: 800; }
+.ptw-qform-header p { margin: 0 0 20px; color: #9aa09d; font-size: 13px; }
+
+.ptw-qfield-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.ptw-qfield-row .ptw-qfield { margin-bottom: 0; }
+.ptw-qfield { margin-bottom: 16px; }
+.ptw-qfield label { display: block; font-size: 12px; font-weight: 700; color: #c9d0cb; margin-bottom: 6px; }
+.ptw-qfield input, .ptw-qfield select {
+  width: 100%; height: 46px; border-radius: 10px; font-size: 14px;
+  background: #161616; color: #fff; border: 1px solid #2a2a2a; padding: 0 12px;
+  box-sizing: border-box; font-family: inherit;
+}
+.ptw-qfield input::placeholder { color: #666; }
+.ptw-qfield input:focus, .ptw-qfield select:focus { outline: 2px solid #03ff7f; outline-offset: 1px; border-color: #03ff7f; }
+
+.ptw-pill-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.ptw-pill {
+  background: #161616; border: 1px solid #2a2a2a; color: #c9d0cb;
+  padding: 9px 14px; border-radius: 999px; font-size: 13px; font-weight: 700;
+  cursor: pointer; font-family: inherit;
+}
+.ptw-pill:hover { border-color: #444; }
+.ptw-pill.ptw-pill-active { background: #03ff7f; color: #000; border-color: #03ff7f; }
+.ptw-pill:focus-visible { outline: 2px solid #03ff7f; outline-offset: 2px; }
+
+.ptw-qsubmit { width: 100%; height: 52px; justify-content: center; font-size: 16px; margin-top: 6px; }
+.ptw-qsubmit:disabled { opacity: .6; cursor: not-allowed; }
+.ptw-qfine { font-size: 11px; color: #7a8580; text-align: center; margin: 10px 0 0; line-height: 1.5; }
+
+.ptw-q-confirmation { text-align: center; padding: 20px 6px; }
+.ptw-q-confirm-icon {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(3,255,127,.12); border: 1px solid rgba(3,255,127,.4);
+  color: #03ff7f; font-size: 24px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
+}
+.ptw-q-confirmation h3 { margin: 0 0 8px; font-size: 20px; }
+.ptw-q-confirmation p { margin: 0 0 6px; color: #c9d0cb; font-size: 14px; line-height: 1.6; }
+.ptw-q-confirm-sub { color: #9aa09d !important; font-size: 12px !important; }
+.ptw-q-confirm-sub a { color: #03ff7f; text-decoration: none; font-weight: 700; }
+
+/* ── SERVICE GRID ── */
+.ptw-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.ptw-card { background: #0c0c0c; border: 1px solid #1e1e1e; border-radius: 20px; padding: 28px 24px; transition: border-color .2s; }
+.ptw-card:hover { border-color: rgba(3,255,127,.25); }
+.ptw-card-icon { font-size: 26px; margin-bottom: 14px; }
+.ptw-card h3 { margin: 0 0 10px; font-size: 18px; font-weight: 800; line-height: 1.2; }
+.ptw-card p { margin: 0 0 14px; color: #9aa09d; font-size: 14px; line-height: 1.7; }
+.ptw-card-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid #1e1e1e; padding-top: 14px; }
+.ptw-card-list li { color: #7a8480; font-size: 13px; padding: 5px 0; padding-left: 16px; position: relative; line-height: 1.5; }
+.ptw-card-list li::before { content: '✓'; color: #03ff7f; position: absolute; left: 0; font-weight: 700; }
+.ptw-card-highlight { border-color: rgba(3,255,127,.2); background: rgba(3,255,127,.04); }
+.ptw-inline-btn { display: inline-block; margin-top: 16px; padding: 11px 18px; background: #03ff7f; color: #000; border-radius: 10px; text-decoration: none; font-size: 13px; font-weight: 800; }
+
+/* ── WARNING SIGNS ── */
+.ptw-signs-section { background: #080808; border: 1px solid #1e1e1e; border-radius: 24px; padding: 48px; }
+.ptw-signs-inner { display: grid; grid-template-columns: 320px 1fr; gap: 48px; align-items: start; }
+.ptw-signs-text h2 { font-size: clamp(20px, 3vw, 28px); font-weight: 800; margin: 0 0 12px; letter-spacing: -.02em; }
+.ptw-signs-text p { color: #9aa09d; font-size: 14px; line-height: 1.7; margin: 0; }
+.ptw-signs-list { list-style: none; padding: 0; margin: 0; }
+.ptw-signs-list li { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid #141414; align-items: flex-start; }
+.ptw-signs-list li:last-child { border-bottom: none; }
+.ptw-sign-icon { font-size: 20px; flex-shrink: 0; width: 32px; text-align: center; padding-top: 2px; }
+.ptw-signs-list strong { display: block; font-size: 14px; font-weight: 700; margin-bottom: 3px; color: #fff; }
+.ptw-signs-list span { font-size: 13px; color: #7a8480; line-height: 1.5; }
+
+/* ── WHY US ── */
+.ptw-why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.ptw-why-item { background: #0c0c0c; border: 1px solid #1e1e1e; border-radius: 18px; padding: 24px 22px 28px; }
+.ptw-why-num { display: block; font-size: 11px; font-weight: 800; letter-spacing: .1em; color: #03ff7f; margin-bottom: 12px; font-variant-numeric: tabular-nums; }
+.ptw-why-item h3 { margin: 0 0 8px; font-size: 16px; font-weight: 800; }
+.ptw-why-item p { margin: 0; color: #7a8480; font-size: 13px; line-height: 1.65; }
+
+/* ── FAQ ── */
+.ptw-faq-section { background: #080808; border: 1px solid #1e1e1e; border-radius: 24px; padding: 48px; }
+.ptw-faq-list { margin-top: 28px; }
+.ptw-faq-item { border-bottom: 1px solid #1a1a1a; }
+.ptw-faq-item:last-child { border-bottom: none; }
+.ptw-faq-item summary {
+  padding: 18px 0; cursor: pointer; font-size: 16px; font-weight: 700; list-style: none;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px; color: #e8ecea;
+}
+.ptw-faq-item summary::-webkit-details-marker { display: none; }
+.ptw-faq-item summary::after { content: '+'; color: #03ff7f; font-size: 22px; font-weight: 300; flex-shrink: 0; transition: transform .2s; }
+.ptw-faq-item[open] summary::after { transform: rotate(45deg); }
+.ptw-faq-answer { padding: 0 0 20px; }
+.ptw-faq-answer p { margin: 0; color: #9aa09d; font-size: 14px; line-height: 1.75; }
+
+/* ── SERVICE AREA ── */
+.ptw-area-section { background: #0c0c0c; border: 1px solid #1e1e1e; border-radius: 24px; padding: 48px; text-align: center; }
+.ptw-area-section h2 { font-size: clamp(20px, 3vw, 28px); font-weight: 800; margin: 0 0 14px; letter-spacing: -.02em; }
+.ptw-area-section > p { max-width: 700px; margin: 0 auto 24px; color: #9aa09d; font-size: 15px; line-height: 1.75; }
+.ptw-area-section > p strong { color: #fff; }
+.ptw-area-tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.ptw-area-tags span { background: #111; border: 1px solid #242424; color: #c5cdc8; padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; }
+.ptw-area-cta { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+
+/* ── MOBILE BAR ── */
+.ptw-mobile-bar {
+  display: none; position: fixed; left: 0; right: 0; bottom: 0;
+  grid-template-columns: repeat(3, 1fr); gap: 6px;
+  padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+  background: rgba(0,0,0,.97); border-top: 1px solid #1a1a1a; z-index: 9999; backdrop-filter: blur(10px);
+}
+.ptw-mobile-bar a { text-decoration: none; text-align: center; padding: 12px 8px; border-radius: 11px; font-size: 13px; font-weight: 800; background: #111; color: #fff; border: 1px solid #262626; }
+.ptw-mobile-bar a:first-child { background: #03ff7f; color: #000; border: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  .ptw-hero-form-grid { grid-template-columns: 1fr; }
+  .ptw-grid { grid-template-columns: repeat(2, 1fr); }
+  .ptw-why-grid { grid-template-columns: repeat(2, 1fr); }
+  .ptw-signs-inner { grid-template-columns: 1fr; gap: 28px; }
+}
+@media (max-width: 640px) {
+  #ptw-brake { padding: 36px 14px 100px; }
+  .ptw-grid { grid-template-columns: 1fr; }
+  .ptw-why-grid { grid-template-columns: 1fr 1fr; }
+  .ptw-signs-section, .ptw-faq-section, .ptw-area-section { padding: 28px 20px; }
+  .ptw-quote-card { padding: 22px; }
+  .ptw-qfield-row { grid-template-columns: 1fr; gap: 14px; }
+  .ptw-area-cta { flex-direction: column; }
+  .ptw-mobile-bar { display: grid; }
+}
+@media (max-width: 400px) { .ptw-why-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .ptw-btn, .ptw-card, .ptw-faq-item summary::after { transition: none; } }
+</style>
+
+<!-- ══════════════════════════════════
+     STRUCTURED DATA
+══════════════════════════════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Brake Service Waterloo ON",
+  "alternateName": ["Brake Pad Replacement Waterloo", "Brake Inspection Kitchener", "Rotor Replacement Cambridge"],
+  "provider": {
+    "@type": "AutoRepair",
+    "name": "President Tire & Wheels",
+    "url": "https://presidentwheels.ca",
+    "telephone": "+12266981667",
+    "image": "https://presidentwheels.ca/logo.png",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "632 Colby Dr Unit B",
+      "addressLocality": "Waterloo",
+      "addressRegion": "ON",
+      "postalCode": "N2V 1A2",
+      "addressCountry": "CA"
+    },
+    "geo": { "@type": "GeoCoordinates", "latitude": 43.4697, "longitude": -80.5673 },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "18:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "17:00" }
+    ],
+    "priceRange": "$$",
+    "sameAs": ["https://presidentwheels.ca"]
+  },
+  "areaServed": [
+    {"@type": "City", "name": "Waterloo", "containedInPlace": {"@type": "AdministrativeArea", "name": "Ontario"}},
+    {"@type": "City", "name": "Kitchener", "containedInPlace": {"@type": "AdministrativeArea", "name": "Ontario"}},
+    {"@type": "City", "name": "Cambridge", "containedInPlace": {"@type": "AdministrativeArea", "name": "Ontario"}},
+    {"@type": "City", "name": "Elmira"},
+    {"@type": "City", "name": "Baden"},
+    {"@type": "City", "name": "New Hamburg"}
+  ],
+  "serviceType": "Brake Service",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Brake Services",
+    "itemListElement": [
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Brake Pad Replacement Waterloo"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Rotor Replacement Waterloo"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Brake Inspection Kitchener"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Brake Fluid Flush Waterloo"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Brake Caliper Service Waterloo"}}
+    ]
+  },
+  "description": "Professional brake pad replacement, rotor replacement, brake inspections, brake fluid flushes, and caliper service using premium ProSeries OE+ parts for all makes and models in Waterloo, Kitchener, and Cambridge, Ontario. Same-day turnaround at 632 Colby Drive, Waterloo."
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How long does a brake pad replacement take?", "acceptedAnswer": { "@type": "Answer", "text": "Most brake pad replacements at President Tire & Wheels are completed within 1–2 hours. If rotors also need replacing, allow 2–3 hours. Call ahead so we can have your parts in stock." } },
+    { "@type": "Question", "name": "What brake parts do you use?", "acceptedAnswer": { "@type": "Answer", "text": "We only install ProSeries OE+ premium brake pads and rotors — we don't offer economy or budget alternatives. Every brake job comes with a 3-year warranty." } },
+    { "@type": "Question", "name": "Do I need new rotors when I replace brake pads?", "acceptedAnswer": { "@type": "Answer", "text": "Not always. During inspection we measure rotor thickness and check for warping or deep scoring. If rotors are within spec, they can be reused with new pads. We'll tell you exactly what we find before recommending anything." } },
+    { "@type": "Question", "name": "Is it safe to drive with squealing brakes?", "acceptedAnswer": { "@type": "Answer", "text": "Squealing is a wear indicator — your pads are getting thin. You have some time but you shouldn't ignore it. If the noise has turned to grinding, stop driving and call immediately — metal-on-metal contact damages rotors quickly and becomes a safety hazard." } },
+    { "@type": "Question", "name": "Do you offer brake service in Kitchener and Cambridge?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Our shop is located at 632 Colby Drive in Waterloo, which is central to Kitchener and Cambridge. Drivers from across the Region of Waterloo — including Elmira, Baden, and New Hamburg — regularly come to us for brake service." } }
+  ]
+}
+</script>
+
+<!-- Hidden internal-link anchors for SEO crawling -->
+<nav aria-hidden="true" style="display:none;">
+  <a href="/brake-service">Brake Service Waterloo</a>
+  <a href="/brake-service">Brake Pad Replacement Waterloo</a>
+  <a href="/brake-service">Brake Inspection Kitchener</a>
+  <a href="/brake-service">Brake Inspection Cambridge</a>
+  <a href="/brake-service">Rotor Replacement Waterloo</a>
+  <a href="/brake-service">Brake Fluid Flush Waterloo</a>
+  <a href="/contact-us">Book Brake Service Waterloo</a>
+  <a href="/contact-us">Auto Brake Repair Kitchener</a>
+</nav>
+
+<!-- ══════════════════════════════════
+     LEAD FORM LOGIC
+══════════════════════════════════ -->
+<script>
+(function(){
+  var yearSelect = document.getElementById('ptw-q-year');
+  var currentYear = new Date().getFullYear();
+  for (var y = currentYear + 1; y >= 1995; y--) {
+    var opt = document.createElement('option');
+    opt.value = opt.textContent = y;
+    yearSelect.appendChild(opt);
   }
-});
+
+  var brakesHidden = document.getElementById('ptw-q-brakes-needed');
+  document.querySelectorAll('.ptw-pill-options:not(.ptw-pill-multi) .ptw-pill').forEach(function(pill){
+    pill.addEventListener('click', function(){
+      document.querySelectorAll('.ptw-pill-options:not(.ptw-pill-multi) .ptw-pill').forEach(function(p){
+        p.classList.remove('ptw-pill-active');
+      });
+      pill.classList.add('ptw-pill-active');
+      brakesHidden.value = pill.dataset.value;
+    });
+  });
+
+  var symptomsHidden = document.getElementById('ptw-q-symptoms');
+  var selectedSymptoms = [];
+  document.querySelectorAll('.ptw-pill-multi .ptw-pill').forEach(function(pill){
+    pill.addEventListener('click', function(){
+      var val = pill.dataset.value;
+      var idx = selectedSymptoms.indexOf(val);
+      if (idx > -1) {
+        selectedSymptoms.splice(idx, 1);
+        pill.classList.remove('ptw-pill-active');
+      } else {
+        selectedSymptoms.push(val);
+        pill.classList.add('ptw-pill-active');
+      }
+      symptomsHidden.value = selectedSymptoms.join(', ');
+    });
+  });
+
+  var form = document.getElementById('ptw-quote-form-el');
+  var submitBtn = document.getElementById('ptw-q-submit');
+  var confirmation = document.getElementById('ptw-q-confirmation');
+
+  var FORMSPREE_ENDPOINT = 'https://formspree.io/f/mjgqyapz';
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    if (!brakesHidden.value) {
+      alert('Please select which brakes need attention.');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+
+    var formData = new FormData(form);
+
+    fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    }).then(function(response){
+      if (response.ok) {
+        form.style.display = 'none';
+        confirmation.style.display = 'block';
+      } else {
+        alert('Something went wrong. Please call us at (226) 786-0421 instead.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Get My Quote →';
+      }
+    }).catch(function(){
+      alert('Something went wrong. Please call us at (226) 786-0421 instead.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Get My Quote →';
+    });
+  });
+})();
 </script>
 </body>
 </html>
