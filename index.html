@@ -540,6 +540,14 @@
     runSearch(`${w}/${r}R${d}`);
   }
 
+  function scrollToResults(){
+    const statusEl = document.getElementById("status");
+    if(!statusEl) return;
+    const headerH = stickyWrap ? stickyWrap.offsetHeight : 0;
+    const targetY = statusEl.getBoundingClientRect().top + window.scrollY - headerH - 12;
+    window.scrollTo({ top: Math.max(0, targetY), behavior: "instant" });
+  }
+
   async function runSearch(size){
     currentSize     = size;
     allResults      = [];
@@ -547,6 +555,7 @@
     document.getElementById("status").textContent = "Loading tires…";
     document.getElementById("results").innerHTML  = "";
     resetFilterUI();
+    scrollToResults();
     try{
       const [tdgRes, stockRes] = await Promise.all([
         fetch(`${API}?size=${encodeURIComponent(size)}`).then(r => r.json()).catch(() => ({ ok:false, results:[] })),
@@ -557,12 +566,14 @@
 
       if(!tdgList.length && !stockRes.length){
         document.getElementById("status").textContent = "No tires found for " + size;
+        scrollToResults();
         return;
       }
 
       allResults = [...stockRes, ...tdgList];
       populateBrandFilter(allResults);
       applyFiltersAndSort();
+      scrollToResults();
     } catch(e){
       document.getElementById("status").textContent = "Error loading tires.";
     }
