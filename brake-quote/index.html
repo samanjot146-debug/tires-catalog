@@ -32,6 +32,13 @@
     <header class="ptw-hero-form-grid" id="ptw-quote-form">
       <div class="ptw-hero-copy">
         <div class="ptw-eyebrow">President Tire &amp; Wheels · Waterloo, ON</div>
+
+        <a href="#ptw-quote-form" class="ptw-free-banner" id="ptw-free-banner">
+          <span class="ptw-free-banner-icon">🎁</span>
+          <span class="ptw-free-banner-text">FREE BRAKE INSPECTION — No Cost, No Obligation</span>
+          <span class="ptw-free-banner-arrow">Request Yours →</span>
+        </a>
+
         <h1>Squeaking, Grinding, or<br><span class="ptw-accent">Pulsing Brakes?</span></h1>
         <p class="ptw-hero-sub">
           Tell us about your vehicle and what you're noticing. We'll text or email you a real quote — usually within a few hours. Serving <strong>Waterloo, Kitchener, Cambridge</strong> from our shop at <strong>632 Colby Drive, Unit B</strong>.
@@ -430,6 +437,43 @@
   margin-bottom: 20px;
 }
 
+.ptw-free-banner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  background: #03ff7f;
+  color: #000;
+  text-decoration: none;
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  max-width: 520px;
+  box-shadow: 0 0 0 3px rgba(3,255,127,.18);
+  transition: transform .15s, box-shadow .15s;
+}
+.ptw-free-banner:hover { transform: translateY(-1px); box-shadow: 0 0 0 4px rgba(3,255,127,.28); }
+.ptw-free-banner-icon { font-size: 24px; line-height: 1; flex-shrink: 0; }
+.ptw-free-banner-text {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -.01em;
+  line-height: 1.25;
+  flex: 1 1 auto;
+}
+.ptw-free-banner-arrow {
+  font-size: 13px;
+  font-weight: 800;
+  background: #000;
+  color: #03ff7f;
+  padding: 7px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+@media (max-width: 480px) {
+  .ptw-free-banner-text { font-size: 16px; }
+}
+
 .ptw-hero-copy h1 {
   margin: 0 0 16px;
   font-size: clamp(32px, 4.2vw, 46px);
@@ -668,7 +712,7 @@
     "itemListElement": [
       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Brake Pad Replacement Waterloo"}},
       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Rotor Replacement Waterloo"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Brake Inspection Kitchener"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Brake Inspection Kitchener"}, "price": "0", "priceCurrency": "CAD"},
       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Brake Fluid Flush Waterloo"}},
       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Brake Caliper Service Waterloo"}}
     ]
@@ -743,6 +787,16 @@
       symptomsHidden.value = selectedSymptoms.join(', ');
     });
   });
+
+  var freeBanner = document.getElementById('ptw-free-banner');
+  if (freeBanner) {
+    freeBanner.addEventListener('click', function(){
+      var inspectionPill = document.querySelector('.ptw-pill-multi .ptw-pill[data-value="Just an Inspection"]');
+      if (inspectionPill && !inspectionPill.classList.contains('ptw-pill-active')) {
+        inspectionPill.click();
+      }
+    });
+  }
 
   var form = document.getElementById('ptw-quote-form-el');
   var submitBtn = document.getElementById('ptw-q-submit');
