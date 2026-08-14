@@ -1,780 +1,814 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Brake Service Waterloo ON | President Tire & Wheels</title>
-<meta name="description" content="Professional brake pad replacement, rotor replacement, brake inspections, brake fluid flushes, and caliper service using premium ProSeries OE+ parts for all makes and models in Waterloo, Kitchener, and Cambridge, Ontario. Same-day turnaround at 632 Colby Drive, Waterloo.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>President Tire & Wheels - Tire Search</title>
+  <!-- Google Ads conversion tracking -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-622628757"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-622628757');
+  </script>
 </head>
 <body>
-<!-- President Tire & Wheels — Brake Service Page (funnel v2) -->
-<!-- CHANGES FROM v1:
-     1) Lead form merged directly into the hero — visible without scrolling, not a separate section below.
-     2) Brand messaging simplified to a single premium tier: ProSeries OE+ (no standard/economy pricing shown). -->
-<!-- FIX APPLIED: all tel: links now include target="_top" so they work correctly inside the iframe embed -->
-<!-- FIX APPLIED: visible click-to-call buttons use the Twilio tracking number (226-786-0421) for call logging. Schema/JSON-LD keeps the main business number (226-698-1667) for NAP consistency. -->
-
-<article id="ptw-brake" itemscope itemtype="https://schema.org/Service">
-  <meta itemprop="name" content="Brake Service Waterloo ON">
-  <meta itemprop="serviceType" content="Automotive Brake Service">
-
-  <div class="ptw-wrap">
-
-    <!-- ── HERO + QUOTE FORM (merged, above the fold) ── -->
-    <header class="ptw-hero-form-grid" id="ptw-quote-form">
-      <div class="ptw-hero-copy">
-        <div class="ptw-eyebrow">President Tire &amp; Wheels · Waterloo, ON</div>
-        <h1>Squeaking, Grinding, or<br><span class="ptw-accent">Pulsing Brakes?</span></h1>
-        <p class="ptw-hero-sub">
-          Tell us about your vehicle and what you're noticing. We'll text or email you a real quote — usually within a few hours. Serving <strong>Waterloo, Kitchener, Cambridge</strong> from our shop at <strong>632 Colby Drive, Unit B</strong>.
-        </p>
-
-        <div class="ptw-premium-badge">
-          <span class="ptw-premium-icon">🛡️</span>
-          <div>
-            <strong>Premium parts only — ProSeries OE+</strong>
-            <span>Quiet, reliable brake pads and rotors backed by a 3-year warranty. We don't cut corners with economy parts.</span>
-          </div>
-        </div>
-
-        <div class="ptw-trust-row">
-          <div class="ptw-trust-item"><span class="ptw-trust-icon">⚡</span><span>Same-Day Turnaround</span></div>
-          <div class="ptw-trust-item"><span class="ptw-trust-icon">📋</span><span>Free Inspection</span></div>
-        </div>
-
-        <a href="tel:+12267860421" class="ptw-btn ptw-btn-secondary ptw-hero-call" target="_top">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
-          Or call (226) 786-0421
-        </a>
-      </div>
-
-      <div class="ptw-quote-card" id="ptw-quote-card">
-        <form id="ptw-quote-form-el">
-          <div class="ptw-qform-header">
-            <h2>Get Your Brake Quote</h2>
-            <p>Takes under a minute. No payment, no obligation.</p>
-          </div>
-
-          <div class="ptw-qfield-row">
-            <div class="ptw-qfield">
-              <label for="ptw-q-year">Year</label>
-              <select id="ptw-q-year" name="Year" required>
-                <option value="">Year</option>
-              </select>
-            </div>
-            <div class="ptw-qfield">
-              <label for="ptw-q-make">Make</label>
-              <input type="text" id="ptw-q-make" name="Make" placeholder="e.g. Honda" required />
-            </div>
-            <div class="ptw-qfield">
-              <label for="ptw-q-model">Model</label>
-              <input type="text" id="ptw-q-model" name="Model" placeholder="e.g. Civic" required />
-            </div>
-          </div>
-
-          <div class="ptw-qfield">
-            <label>Which brakes need attention?</label>
-            <div class="ptw-pill-options" data-group="Brakes Needed">
-              <button type="button" class="ptw-pill" data-value="Front">Front</button>
-              <button type="button" class="ptw-pill" data-value="Rear">Rear</button>
-              <button type="button" class="ptw-pill" data-value="Both">Both</button>
-              <button type="button" class="ptw-pill" data-value="Not Sure">Not Sure</button>
-            </div>
-            <input type="hidden" id="ptw-q-brakes-needed" name="Brakes Needed" required />
-          </div>
-
-          <div class="ptw-qfield">
-            <label>What are you noticing?</label>
-            <div class="ptw-pill-options ptw-pill-multi" data-group="Symptoms">
-              <button type="button" class="ptw-pill" data-value="Squealing">Squealing</button>
-              <button type="button" class="ptw-pill" data-value="Grinding">Grinding</button>
-              <button type="button" class="ptw-pill" data-value="Pulsing/Vibration">Pulsing / Vibration</button>
-              <button type="button" class="ptw-pill" data-value="Warning Light">Warning Light</button>
-              <button type="button" class="ptw-pill" data-value="Soft Pedal">Soft Pedal</button>
-              <button type="button" class="ptw-pill" data-value="Just an Inspection">Just an Inspection</button>
-            </div>
-            <input type="hidden" id="ptw-q-symptoms" name="Symptoms" />
-          </div>
-
-          <div class="ptw-qfield-row">
-            <div class="ptw-qfield">
-              <label for="ptw-q-name">Name</label>
-              <input type="text" id="ptw-q-name" name="Name" placeholder="Your name" required />
-            </div>
-            <div class="ptw-qfield">
-              <label for="ptw-q-phone">Phone</label>
-              <input type="tel" id="ptw-q-phone" name="Phone" placeholder="(226) 000-0000" required />
-            </div>
-          </div>
-
-          <div class="ptw-qfield">
-            <label for="ptw-q-email">Email</label>
-            <input type="email" id="ptw-q-email" name="Email" placeholder="you@email.com" required />
-          </div>
-
-          <input type="hidden" name="Form Type" value="Brake Quote Request" />
-          <input type="hidden" name="_subject" value="New Brake Quote Request — President Tire" />
-
-          <button type="submit" class="ptw-btn ptw-btn-primary ptw-qsubmit" id="ptw-q-submit">Get My Quote →</button>
-          <p class="ptw-qfine">By submitting, you agree we may contact you by phone, text, or email about your quote.</p>
+<section id="ptw-tire-search">
+  <div class="ptwOvl" id="ptwOvl">
+    <div class="ptwMod">
+      <div id="ptwOform">
+        <div class="ptwHd"><h3>Request This Tire</h3><button class="ptwClose" onclick="closeTireOrder()" aria-label="Close">&times;</button></div>
+        <div class="ptwSum" id="ptwOsum"></div>
+        <form id="ptwOrderForm" onsubmit="submitTireOrder(event)">
+          <div class="ptwFg"><label>Name</label><input type="text" id="ptwOname" required autocomplete="name"></div>
+          <div class="ptwFg"><label>Phone</label><input type="tel" id="ptwOphone" required autocomplete="tel" placeholder="226-xxx-xxxx"></div>
+          <div class="ptwFg"><label>Email (optional)</label><input type="email" id="ptwOemail" autocomplete="email"></div>
+          <div class="ptwFg"><label>Note (optional)</label><textarea id="ptwOnote" rows="2" placeholder="Vehicle, timeline, questions..."></textarea></div>
+          <button class="ptwSend" type="submit" id="ptwOsendbtn">Send Request</button>
+          <div class="ptwErr" id="ptwOerr">Something went wrong — please call 226-698-1667 instead.</div>
         </form>
-
-        <div id="ptw-q-confirmation" class="ptw-q-confirmation" style="display:none;">
-          <div class="ptw-q-confirm-icon">✓</div>
-          <h3>Got it — thanks!</h3>
-          <p>We're putting together your brake quote now. Expect a text or email within a few hours.</p>
-          <p class="ptw-q-confirm-sub">Need it sooner? Call us at <a href="tel:+12267860421" target="_top">(226) 786-0421</a>.</p>
-        </div>
       </div>
-    </header>
-
-    <!-- ── SERVICES ── -->
-    <section class="ptw-section" aria-labelledby="services-heading">
-      <h2 id="services-heading" class="ptw-section-title">Brake Services We Offer</h2>
-      <p class="ptw-section-sub">Full-service brake repair and maintenance for every vehicle type — from daily drivers to heavy-duty trucks.</p>
-
-      <div class="ptw-grid">
-
-        <div class="ptw-card" itemscope itemtype="https://schema.org/Offer">
-          <div class="ptw-card-icon">🔧</div>
-          <h3 itemprop="name">Brake Pad Replacement</h3>
-          <p itemprop="description">
-            Worn brake pads are the most common brake repair across the KW region. We replace front and rear brake pads on all makes and models using ProSeries OE+ premium pads. Stops the squealing and grinding noise instantly and restores full stopping power — usually completed in under two hours.
-          </p>
-          <ul class="ptw-card-list">
-            <li>ProSeries OE+ premium pads only</li>
-            <li>Front, rear, or all four corners</li>
-            <li>Cars, SUVs, light trucks</li>
-          </ul>
-        </div>
-
-        <div class="ptw-card" itemscope itemtype="https://schema.org/Offer">
-          <div class="ptw-card-icon">⚙️</div>
-          <h3 itemprop="name">Rotor Replacement</h3>
-          <p itemprop="description">
-            Warped or scored rotors cause steering wheel vibration, pulsing pedal feel, and longer stopping distances. We supply and install ProSeries OE+ replacement rotors alongside fresh brake pads for a complete brake job that holds up through Ontario winters.
-          </p>
-          <ul class="ptw-card-list">
-            <li>Eliminates vibration and pedal pulsing</li>
-            <li>Paired with pad replacement for best results</li>
-            <li>3-year warranty coverage</li>
-          </ul>
-        </div>
-
-        <div class="ptw-card" itemscope itemtype="https://schema.org/Offer">
-          <div class="ptw-card-icon">🔍</div>
-          <h3 itemprop="name">Brake Inspection</h3>
-          <p itemprop="description">
-            Not sure if your brakes need service? Our comprehensive brake inspection covers pads, rotors, calipers, brake lines, hardware, and fluid condition. We give you an honest, no-pressure assessment — and only recommend what your vehicle actually needs.
-          </p>
-          <ul class="ptw-card-list">
-            <li>Complete safety inspection of all brake components</li>
-            <li>Honest, written assessment</li>
-            <li>Recommended before any long road trip</li>
-          </ul>
-        </div>
-
-        <div class="ptw-card" itemscope itemtype="https://schema.org/Offer">
-          <div class="ptw-card-icon">💧</div>
-          <h3 itemprop="name">Brake Fluid Flush</h3>
-          <p itemprop="description">
-            Brake fluid absorbs moisture over time, which lowers its boiling point and reduces braking performance — especially critical during heavy braking on Ontario highways. A full brake fluid flush restores hydraulic pressure and protects calipers and brake lines from internal corrosion.
-          </p>
-          <ul class="ptw-card-list">
-            <li>Recommended every 2 years or 40,000 km</li>
-            <li>Improves pedal feel and response</li>
-            <li>Protects calipers from corrosion</li>
-          </ul>
-        </div>
-
-        <div class="ptw-card" itemscope itemtype="https://schema.org/Offer">
-          <div class="ptw-card-icon">🗜️</div>
-          <h3 itemprop="name">Brake Caliper Service</h3>
-          <p itemprop="description">
-            A seized or sticking brake caliper causes uneven pad wear, pulling to one side, and excessive heat buildup. We inspect, lubricate, and replace brake calipers to ensure even, consistent braking across all four corners of your vehicle.
-          </p>
-          <ul class="ptw-card-list">
-            <li>Diagnoses pulling and uneven wear</li>
-            <li>Caliper slide pin lubrication and inspection</li>
-            <li>Full caliper replacement when needed</li>
-          </ul>
-        </div>
-
-        <div class="ptw-card ptw-card-highlight" itemscope itemtype="https://schema.org/Offer">
-          <div class="ptw-card-icon">📞</div>
-          <h3>Not Sure What You Need?</h3>
-          <p>
-            Call us and describe what you're hearing or feeling. Our team will help you figure out if it's pads, rotors, calipers, or something else — before you drive in. Fast advice, no obligation.
-          </p>
-          <a href="tel:+12267860421" class="ptw-inline-btn" target="_top">Call (226) 786-0421</a>
-        </div>
-
+      <div class="ptwOk" id="ptwOok" style="display:none">
+        <h3>Request Sent ✓</h3>
+        <p>We'll text or call you shortly to confirm availability and next steps.</p>
       </div>
-    </section>
-
-    <!-- ── WARNING SIGNS ── -->
-    <section class="ptw-section ptw-signs-section" aria-labelledby="signs-heading">
-      <div class="ptw-signs-inner">
-        <div class="ptw-signs-text">
-          <h2 id="signs-heading">Warning Signs You Need Brake Service</h2>
-          <p>
-            Don't wait until your brakes fail. These are the most common symptoms Waterloo-area drivers describe before coming in for brake work. If you notice any of these, bring your vehicle in for an inspection as soon as possible.
-          </p>
-          <a href="#ptw-quote-form" class="ptw-btn ptw-btn-primary" style="margin-top:20px;display:inline-flex;">Book an Inspection</a>
+    </div>
+  </div>
+  <div class="ptw-wrap">
+    <div class="ptw-header">
+      <div class="ptw-kicker">President Tire & Wheels</div>
+      <h1>Tires in Waterloo, Kitchener & Cambridge</h1>
+      <p>Browse live tire inventory by size, compare brands, and reserve your tires today.</p>
+      <div class="ptw-trust-bar">
+        <div class="ptw-trust-item">
+          <span class="ptw-stars">★★★★★</span>
+          <span class="ptw-rating-text">4.9 · 160 Google Reviews</span>
         </div>
-        <ul class="ptw-signs-list" aria-label="Warning signs that indicate brake problems">
-          <li>
-            <span class="ptw-sign-icon">🔊</span>
-            <div>
-              <strong>Squealing or grinding noise when braking</strong>
-              <span>Usually worn brake pads. Grinding means metal-on-metal contact — urgent.</span>
-            </div>
-          </li>
-          <li>
-            <span class="ptw-sign-icon">📳</span>
-            <div>
-              <strong>Steering wheel or pedal vibrating when stopping</strong>
-              <span>Warped rotors are the most common cause.</span>
-            </div>
-          </li>
-          <li>
-            <span class="ptw-sign-icon">↗️</span>
-            <div>
-              <strong>Car pulling to one side when braking</strong>
-              <span>Often a stuck caliper or uneven pad wear.</span>
-            </div>
-          </li>
-          <li>
-            <span class="ptw-sign-icon">🦶</span>
-            <div>
-              <strong>Soft, spongy, or low brake pedal</strong>
-              <span>Could indicate air in the brake lines or a fluid leak — stop driving immediately.</span>
-            </div>
-          </li>
-          <li>
-            <span class="ptw-sign-icon">🚨</span>
-            <div>
-              <strong>Brake warning light on the dashboard</strong>
-              <span>Don't ignore it. Get an inspection before your next drive.</span>
-            </div>
-          </li>
-          <li>
-            <span class="ptw-sign-icon">📅</span>
-            <div>
-              <strong>More than 2 years since your last brake check</strong>
-              <span>Even if everything feels fine, brake components wear silently.</span>
-            </div>
-          </li>
-          <li>
-            <span class="ptw-sign-icon">👃</span>
-            <div>
-              <strong>Burning smell after driving</strong>
-              <span>Overheating brakes from a dragging caliper or riding the brake pedal.</span>
-            </div>
-          </li>
-        </ul>
+        <div class="ptw-trust-divider"></div>
+        <div class="ptw-trust-item">🚚 Next-Day Warehouse Delivery</div>
+        <div class="ptw-trust-divider"></div>
+        <div class="ptw-trust-item">💳 Financing via Autologiq</div>
+        <div class="ptw-trust-divider"></div>
+        <div class="ptw-trust-item">🔧 Free Install with Wheel Package</div>
       </div>
-    </section>
+    </div>
 
-    <!-- ── WHY CHOOSE US ── -->
-    <section class="ptw-section" aria-labelledby="why-heading">
-      <h2 id="why-heading" class="ptw-section-title">Why Waterloo Drivers Choose Us</h2>
-      <div class="ptw-why-grid">
-        <div class="ptw-why-item">
-          <span class="ptw-why-num">01</span>
-          <h3>Honest Assessments</h3>
-          <p>We show you what we find and explain what actually needs to be done. No upselling, no pressure.</p>
-        </div>
-        <div class="ptw-why-item">
-          <span class="ptw-why-num">02</span>
-          <h3>Same-Day Service</h3>
-          <p>Most brake jobs are completed the same day. Call ahead and we'll have your parts ready.</p>
-        </div>
-        <div class="ptw-why-item">
-          <span class="ptw-why-num">03</span>
-          <h3>Premium Parts Only</h3>
-          <p>ProSeries OE+ pads and rotors on every job — no economy substitutes, backed by a 3-year warranty.</p>
-        </div>
-        <div class="ptw-why-item">
-          <span class="ptw-why-num">04</span>
-          <h3>Transparent Quotes</h3>
-          <p>You get a full written quote before any work begins. No surprise charges on pickup.</p>
-        </div>
+    <div class="ptw-sticky-wrap" id="ptwStickyWrap">
+      <div class="ptw-search-box">
+        <select id="width"><option value="">Width</option></select>
+        <select id="ratio"><option value="">Ratio</option></select>
+        <select id="rim"><option value="">Rim</option></select>
+        <button type="button" onclick="searchTires()">Search Tires</button>
       </div>
-    </section>
-
-    <!-- ── FAQ (rich schema target) ── -->
-    <section class="ptw-section ptw-faq-section" aria-labelledby="faq-heading">
-      <h2 id="faq-heading" class="ptw-section-title">Brake Service FAQs</h2>
-      <div class="ptw-faq-list">
-
-        <details class="ptw-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-          <summary itemprop="name">How long does a brake pad replacement take?</summary>
-          <div class="ptw-faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-            <p itemprop="text">Most brake pad replacements at President Tire & Wheels are completed within 1–2 hours. If rotors also need replacing, allow 2–3 hours. Call ahead so we can have your parts in stock.</p>
-          </div>
-        </details>
-
-        <details class="ptw-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-          <summary itemprop="name">What brake parts do you use?</summary>
-          <div class="ptw-faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-            <p itemprop="text">We only install ProSeries OE+ premium brake pads and rotors — we don't offer economy or budget alternatives. Every brake job comes with a 3-year warranty.</p>
-          </div>
-        </details>
-
-        <details class="ptw-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-          <summary itemprop="name">Do I need new rotors when I replace brake pads?</summary>
-          <div class="ptw-faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-            <p itemprop="text">Not always. During inspection we measure rotor thickness and check for warping or deep scoring. If rotors are within spec, they can be reused with new pads. We'll tell you exactly what we find before recommending anything.</p>
-          </div>
-        </details>
-
-        <details class="ptw-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-          <summary itemprop="name">Is it safe to drive with squealing brakes?</summary>
-          <div class="ptw-faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-            <p itemprop="text">Squealing is a wear indicator — your pads are getting thin. You have some time but you shouldn't ignore it. If the noise has turned to grinding, stop driving and call us immediately — metal-on-metal contact damages rotors quickly and becomes a safety hazard.</p>
-          </div>
-        </details>
-
-        <details class="ptw-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-          <summary itemprop="name">Do you offer brake service in Kitchener and Cambridge?</summary>
-          <div class="ptw-faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-            <p itemprop="text">Yes. Our shop is located at 632 Colby Drive in Waterloo, which is central to Kitchener and Cambridge. Drivers from across the Region of Waterloo — including Elmira, Baden, and New Hamburg — regularly come to us for brake service.</p>
-          </div>
-        </details>
-
+      <div class="ptw-filter-bar">
+        <select id="brandFilter" onchange="applyFiltersAndSort()">
+          <option value="">All Brands</option>
+        </select>
+        <select id="seasonFilter" onchange="applyFiltersAndSort()">
+          <option value="">All Types</option>
+          <option value="All Season">All Season</option>
+          <option value="Winter">Winter</option>
+          <option value="Summer">Summer</option>
+          <option value="All Weather">All Weather</option>
+          <option value="All Terrain">All Terrain / A/T</option>
+          <option value="Mud Terrain">Mud Terrain / M/T</option>
+          <option value="Rugged Terrain">Rugged Terrain / R/T</option>
+        </select>
+        <select id="sortBy" onchange="applyFiltersAndSort()">
+          <option value="stock">Availability First</option>
+          <option value="priceLow">Price: Low to High</option>
+          <option value="priceHigh">Price: High to Low</option>
+          <option value="brandAZ">Brand A-Z</option>
+          <option value="mostStock">Most Warehouse Stock</option>
+        </select>
+        <select id="vehicleFilter" onchange="applyFiltersAndSort()">
+          <option value="">All Tires (P + LT)</option>
+          <option value="P">Passenger (P)</option>
+          <option value="LT">Light Truck (LT)</option>
+        </select>
+        <label class="ptw-checkbox">
+          <input id="inStockOnly" type="checkbox" onchange="applyFiltersAndSort()">
+          <span>In Stock Only</span>
+        </label>
       </div>
-    </section>
+    </div>
+    <div id="ptwStickyPlaceholder"></div>
 
-    <!-- ── SERVICE AREA ── -->
-    <section class="ptw-section ptw-area-section" aria-labelledby="area-heading" itemprop="areaServed" itemscope itemtype="https://schema.org/AdministrativeArea">
-      <h2 id="area-heading">Brake Service Near You — Waterloo Region</h2>
-      <p>
-        President Tire &amp; Wheels serves brake repair customers from across the Region of Waterloo, including <strong>Waterloo, Kitchener, Cambridge, Elmira, Baden, New Hamburg, Woolwich Township,</strong> and surrounding communities. Our shop is conveniently located off Erb Street West — easy to reach from anywhere in the tri-city area.
-      </p>
-      <div class="ptw-area-tags">
-        <span>Waterloo</span>
-        <span>Kitchener</span>
-        <span>Cambridge</span>
-        <span>Elmira</span>
-        <span>Baden</span>
-        <span>New Hamburg</span>
-        <span>Woolwich</span>
-        <span>Wilmot</span>
-      </div>
-      <div class="ptw-area-cta">
-        <a href="tel:+12267860421" class="ptw-btn ptw-btn-primary" target="_top">Call to Book</a>
-        <a href="#ptw-quote-form" class="ptw-btn ptw-btn-secondary">Request a Quote Online</a>
-        <a href="https://maps.app.goo.gl/fdWue2vGri7JSKRW9" target="_top" class="ptw-btn ptw-btn-secondary">Get Directions</a>
-      </div>
-    </section>
+    <div class="ptw-top-promos">
+      <span>Free install with wheel package</span>
+      <span>Financing available</span>
+      <span>Call to reserve today</span>
+    </div>
 
-  </div><!-- /ptw-wrap -->
-</article>
+    <div class="ptw-disclaimer">
+      Availability shown is based on warehouse stock, not live in-store Waterloo inventory. Please call to confirm exact arrival time.
+    </div>
 
-<!-- ── MOBILE BAR ── -->
-<div class="ptw-mobile-bar" role="navigation" aria-label="Quick actions">
-  <a href="tel:+12267860421" target="_top">📞 Call</a>
-  <a href="#ptw-quote-form">💬 Quote</a>
-  <a href="https://maps.app.goo.gl/fdWue2vGri7JSKRW9" target="_top">📍 Map</a>
-</div>
+    <div id="status"></div>
+    <div id="results"></div>
+  </div>
+</section>
 
-<!-- ══════════════════════════════════
-     STYLES
-══════════════════════════════════ -->
 <style>
-#ptw-brake, #ptw-brake *, #ptw-brake *::before, #ptw-brake *::after { box-sizing: border-box; }
+  #ptw-tire-search{background:#000;color:#fff;padding:48px 18px 72px;font-family:Arial,Helvetica,sans-serif;}
+  .ptw-wrap{max-width:1280px;margin:0 auto;}
+  .ptw-header{text-align:center;margin-bottom:24px;}
+  .ptw-kicker{display:inline-block;padding:8px 14px;border-radius:999px;background:rgba(3,255,127,.08);border:1px solid rgba(3,255,127,.35);color:#03ff7f;font-size:13px;font-weight:700;margin-bottom:16px;}
+  .ptw-header h1{margin:0 0 10px;font-size:42px;line-height:1.06;letter-spacing:-.02em;}
+  .ptw-header p{margin:0 0 18px;color:#c8d0cb;font-size:16px;line-height:1.6;}
+  .ptw-trust-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;background:#0d0d0d;border:1px solid #1e1e1e;border-radius:14px;padding:14px 20px;}
+  .ptw-trust-item{font-size:13px;font-weight:600;color:#d0d8d4;}
+  .ptw-trust-divider{width:1px;height:18px;background:#2a2a2a;}
+  .ptw-stars{color:#f5c518;font-size:15px;margin-right:5px;}
+  .ptw-rating-text{font-weight:700;color:#fff;}
+  .ptw-sticky-wrap{background:#000;padding:16px 0 12px;z-index:999;transition:box-shadow .2s;}
+  .ptw-sticky-wrap.is-sticky{position:fixed;top:0;left:0;right:0;padding:12px 18px 10px;background:#000;box-shadow:0 4px 24px rgba(0,0,0,.8);border-bottom:1px solid #1a1a1a;}
+  .ptw-sticky-wrap.is-sticky .ptw-search-box,.ptw-sticky-wrap.is-sticky .ptw-filter-bar{max-width:1280px;margin:0 auto;}
+  .ptw-search-box{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:12px;}
+  .ptw-filter-bar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:14px;align-items:center;}
+  .ptw-top-promos{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px;}
+  .ptw-top-promos span{background:#101010;border:1px solid #232323;color:#fff;padding:10px 12px;border-radius:999px;font-size:13px;font-weight:700;}
+  .ptw-disclaimer{color:#c8d0cb;font-size:13px;line-height:1.6;margin-bottom:18px;background:#0d0d0d;border:1px solid #202020;border-radius:12px;padding:12px 14px;}
+  .ptw-search-box select,.ptw-search-box button,.ptw-filter-bar select{height:54px;border-radius:12px;font-size:16px;box-sizing:border-box;}
+  .ptw-search-box select,.ptw-filter-bar select{width:100%;background:#fff;color:#111;border:1px solid #d8d8d8;padding:0 14px;}
+  .ptw-search-box button{background:#03ff7f;color:#000;border:none;font-weight:800;cursor:pointer;padding:0 18px;}
+  .ptw-checkbox{display:flex;align-items:center;gap:10px;min-height:54px;background:#111;border:1px solid #2a2a2a;border-radius:12px;padding:0 14px;color:#fff;font-size:15px;}
+  .ptw-checkbox input{width:18px;height:18px;accent-color:#03ff7f;}
+  #status{min-height:22px;margin:10px 0 18px;color:#d9dfdb;font-size:15px;}
+  #results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}
+  .card{background:#fff;color:#111;border-radius:18px;overflow:hidden;border:1px solid #ececec;box-shadow:0 12px 30px rgba(0,0,0,.22);position:relative;display:flex;flex-direction:column;}
+  .card-image{min-height:180px;background:linear-gradient(180deg,#f8f8f8 0%,#efefef 100%);display:flex;align-items:center;justify-content:center;padding:20px;position:relative;}
+  .card-image img{max-width:100%;max-height:140px;object-fit:contain;}
+  .card-image svg{width:110px;height:110px;}
+  .ptw-badge-wrap{position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:5px;}
+  .ptw-badge{display:inline-block;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;}
+  .ptw-badge-best{background:#03ff7f;color:#000;}
+  .ptw-badge-popular{background:#111;color:#03ff7f;border:1px solid #03ff7f;}
+  .ptw-badge-lt{background:#1e3a5f;color:#7ec8e3;border:1px solid #2a5080;}
+  .ptw-badge-instock{background:#03ff7f;color:#000;}
+  .card-body{padding:16px;flex:1;display:flex;flex-direction:column;}
+  .card h3{margin:0 0 3px;font-size:20px;line-height:1.12;}
+  .model{color:#4b5563;font-size:14px;margin-bottom:10px;}
+  .ptw-price-block{margin-bottom:10px;}
+  .price{font-size:34px;font-weight:800;color:#03ff7f;line-height:1;margin-bottom:2px;}
+  .price-label{font-size:12px;color:#6b7280;margin-bottom:4px;}
+  .tax-note{font-size:13px;color:#6b7280;font-weight:700;margin-left:4px;}
+  .set4{font-size:18px;font-weight:800;color:#111;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:6px 10px;display:inline-block;margin-bottom:4px;}
+  .set4-label{font-size:11px;color:#6b7280;margin-bottom:8px;}
+  .deposit{font-size:12px;font-weight:700;color:#b45309;margin-bottom:8px;}
+  .deposit strong{color:#b45309;}
+  .ptw-financing{font-size:12px;color:#059669;font-weight:700;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:6px;padding:4px 8px;display:inline-block;margin-bottom:10px;cursor:pointer;text-decoration:underline;text-underline-offset:2px;}
+  .stock{display:inline-block;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;margin-bottom:6px;}
+  .stock.in{background:rgba(3,255,127,.16);color:#017d3f;}
+  .stock.out{background:#fdecec;color:#b42318;}
+  .stock-note{font-size:11px;color:#5b6470;line-height:1.5;margin:0 0 6px;}
+  .warehouse-lines{display:grid;gap:4px;margin:0 0 8px;font-size:11px;color:#3b4450;}
+  .warehouse-lines span{background:#f7f7f7;border:1px solid #ececec;border-radius:8px;padding:5px 8px;}
+  .urgency{display:inline-block;background:#111;color:#03ff7f;border:1px solid #2a2a2a;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800;margin:0 0 10px;}
+  .ptw-sales-badges{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px;}
+  .ptw-sales-badge{background:rgba(3,255,127,.10);color:#017d3f;border:1px solid rgba(3,255,127,.28);padding:5px 8px;border-radius:999px;font-size:11px;font-weight:700;}
+  .ptw-rebate-badge{background:#111;color:#03ff7f;border:1px solid #2a2a2a;}
+  .meta{display:grid;gap:4px;font-size:13px;color:#2f3742;margin-bottom:12px;}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;}
+  .callbtn{border:none;border-radius:10px;padding:10px 14px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;background:#03ff7f;color:#000;flex:1;justify-content:center;}
+  .wabtn{border:none;border-radius:10px;padding:10px 14px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;background:#25D366;color:#fff;flex:1;justify-content:center;}
+  .quotebtn{border:2px solid #25D366;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;background:#25D366;color:#fff;width:100%;justify-content:center;margin-top:6px;box-sizing:border-box;}
+  @media(max-width:1100px){#results{grid-template-columns:repeat(2,minmax(0,1fr));}.ptw-filter-bar{grid-template-columns:repeat(2,minmax(0,1fr));}.ptw-trust-divider{display:none;}}
+  @media(max-width:767px){#ptw-tire-search{padding:36px 14px 56px;}.ptw-header h1{font-size:28px;}.ptw-search-box,.ptw-filter-bar,#results{grid-template-columns:1fr;}.ptw-trust-bar{flex-direction:column;gap:8px;text-align:center;}}
 
-#ptw-brake {
-  background: #000;
-  color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-  padding: 56px 18px 52px;
-  -webkit-font-smoothing: antialiased;
-  scroll-behavior: smooth;
-}
-
-.ptw-wrap { max-width: 1140px; margin: 0 auto; }
-
-/* ── MERGED HERO + FORM ── */
-.ptw-hero-form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 44px;
-  align-items: start;
-  padding-bottom: 56px;
-  border-bottom: 1px solid #1a1a1a;
-  margin-bottom: 56px;
-  scroll-margin-top: 20px;
-}
-
-.ptw-eyebrow {
-  display: inline-block;
-  padding: 7px 16px;
-  border-radius: 999px;
-  background: rgba(3,255,127,.08);
-  border: 1px solid rgba(3,255,127,.3);
-  color: #03ff7f;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-}
-
-.ptw-hero-copy h1 {
-  margin: 0 0 16px;
-  font-size: clamp(32px, 4.2vw, 46px);
-  line-height: 1.08;
-  letter-spacing: -.03em;
-  font-weight: 900;
-}
-
-.ptw-accent { color: #03ff7f; }
-
-.ptw-hero-sub {
-  color: #b0b8b4;
-  font-size: 16px;
-  line-height: 1.7;
-  margin: 0 0 22px;
-  max-width: 480px;
-}
-.ptw-hero-sub strong { color: #fff; }
-
-.ptw-premium-badge {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  background: rgba(3,255,127,.05);
-  border: 1px solid rgba(3,255,127,.25);
-  border-radius: 14px;
-  padding: 14px 16px;
-  margin-bottom: 20px;
-  max-width: 480px;
-}
-.ptw-premium-icon { font-size: 20px; flex-shrink: 0; }
-.ptw-premium-badge strong { display: block; font-size: 14px; color: #fff; margin-bottom: 3px; }
-.ptw-premium-badge span { font-size: 13px; color: #9aa09d; line-height: 1.5; }
-
-.ptw-trust-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
-.ptw-trust-item {
-  display: flex; align-items: center; gap: 7px;
-  background: #0d0d0d; border: 1px solid #1e1e1e;
-  padding: 8px 13px; border-radius: 999px;
-  font-size: 12px; font-weight: 600; color: #d5ddd8;
-}
-
-.ptw-hero-call { width: fit-content; }
-
-/* ── BUTTONS ── */
-.ptw-btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  text-decoration: none; padding: 14px 24px; border-radius: 12px;
-  font-size: 15px; font-weight: 800; transition: opacity .15s;
-  cursor: pointer; border: none; font-family: inherit;
-}
-.ptw-btn:hover { opacity: .88; }
-.ptw-btn-primary { background: #03ff7f; color: #000; }
-.ptw-btn-secondary { background: #111; color: #fff; border: 1px solid #2a2a2a; }
-
-/* ── SECTION SHARED ── */
-.ptw-section { margin-bottom: 64px; }
-.ptw-section-title { font-size: clamp(22px, 3.5vw, 32px); font-weight: 800; margin: 0 0 10px; letter-spacing: -.02em; }
-.ptw-section-sub { color: #9aa09d; font-size: 16px; margin: 0 0 32px; max-width: 640px; }
-
-/* ── QUOTE CARD (form) ── */
-.ptw-quote-card {
-  background: #0c0c0c; border: 1px solid #1e1e1e; border-radius: 20px; padding: 28px;
-}
-.ptw-qform-header h2 { margin: 0 0 6px; font-size: 21px; font-weight: 800; }
-.ptw-qform-header p { margin: 0 0 20px; color: #9aa09d; font-size: 13px; }
-
-.ptw-qfield-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-.ptw-qfield-row .ptw-qfield { margin-bottom: 0; }
-.ptw-qfield { margin-bottom: 16px; }
-.ptw-qfield label { display: block; font-size: 12px; font-weight: 700; color: #c9d0cb; margin-bottom: 6px; }
-.ptw-qfield input, .ptw-qfield select {
-  width: 100%; height: 46px; border-radius: 10px; font-size: 14px;
-  background: #161616; color: #fff; border: 1px solid #2a2a2a; padding: 0 12px;
-  box-sizing: border-box; font-family: inherit;
-}
-.ptw-qfield input::placeholder { color: #666; }
-.ptw-qfield input:focus, .ptw-qfield select:focus { outline: 2px solid #03ff7f; outline-offset: 1px; border-color: #03ff7f; }
-
-.ptw-pill-options { display: flex; flex-wrap: wrap; gap: 8px; }
-.ptw-pill {
-  background: #161616; border: 1px solid #2a2a2a; color: #c9d0cb;
-  padding: 9px 14px; border-radius: 999px; font-size: 13px; font-weight: 700;
-  cursor: pointer; font-family: inherit;
-}
-.ptw-pill:hover { border-color: #444; }
-.ptw-pill.ptw-pill-active { background: #03ff7f; color: #000; border-color: #03ff7f; }
-.ptw-pill:focus-visible { outline: 2px solid #03ff7f; outline-offset: 2px; }
-
-.ptw-qsubmit { width: 100%; height: 52px; justify-content: center; font-size: 16px; margin-top: 6px; }
-.ptw-qsubmit:disabled { opacity: .6; cursor: not-allowed; }
-.ptw-qfine { font-size: 11px; color: #7a8580; text-align: center; margin: 10px 0 0; line-height: 1.5; }
-
-.ptw-q-confirmation { text-align: center; padding: 20px 6px; }
-.ptw-q-confirm-icon {
-  width: 52px; height: 52px; border-radius: 50%;
-  background: rgba(3,255,127,.12); border: 1px solid rgba(3,255,127,.4);
-  color: #03ff7f; font-size: 24px; font-weight: 800;
-  display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
-}
-.ptw-q-confirmation h3 { margin: 0 0 8px; font-size: 20px; }
-.ptw-q-confirmation p { margin: 0 0 6px; color: #c9d0cb; font-size: 14px; line-height: 1.6; }
-.ptw-q-confirm-sub { color: #9aa09d !important; font-size: 12px !important; }
-.ptw-q-confirm-sub a { color: #03ff7f; text-decoration: none; font-weight: 700; }
-
-/* ── SERVICE GRID ── */
-.ptw-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.ptw-card { background: #0c0c0c; border: 1px solid #1e1e1e; border-radius: 20px; padding: 28px 24px; transition: border-color .2s; }
-.ptw-card:hover { border-color: rgba(3,255,127,.25); }
-.ptw-card-icon { font-size: 26px; margin-bottom: 14px; }
-.ptw-card h3 { margin: 0 0 10px; font-size: 18px; font-weight: 800; line-height: 1.2; }
-.ptw-card p { margin: 0 0 14px; color: #9aa09d; font-size: 14px; line-height: 1.7; }
-.ptw-card-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid #1e1e1e; padding-top: 14px; }
-.ptw-card-list li { color: #7a8480; font-size: 13px; padding: 5px 0; padding-left: 16px; position: relative; line-height: 1.5; }
-.ptw-card-list li::before { content: '✓'; color: #03ff7f; position: absolute; left: 0; font-weight: 700; }
-.ptw-card-highlight { border-color: rgba(3,255,127,.2); background: rgba(3,255,127,.04); }
-.ptw-inline-btn { display: inline-block; margin-top: 16px; padding: 11px 18px; background: #03ff7f; color: #000; border-radius: 10px; text-decoration: none; font-size: 13px; font-weight: 800; }
-
-/* ── WARNING SIGNS ── */
-.ptw-signs-section { background: #080808; border: 1px solid #1e1e1e; border-radius: 24px; padding: 48px; }
-.ptw-signs-inner { display: grid; grid-template-columns: 320px 1fr; gap: 48px; align-items: start; }
-.ptw-signs-text h2 { font-size: clamp(20px, 3vw, 28px); font-weight: 800; margin: 0 0 12px; letter-spacing: -.02em; }
-.ptw-signs-text p { color: #9aa09d; font-size: 14px; line-height: 1.7; margin: 0; }
-.ptw-signs-list { list-style: none; padding: 0; margin: 0; }
-.ptw-signs-list li { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid #141414; align-items: flex-start; }
-.ptw-signs-list li:last-child { border-bottom: none; }
-.ptw-sign-icon { font-size: 20px; flex-shrink: 0; width: 32px; text-align: center; padding-top: 2px; }
-.ptw-signs-list strong { display: block; font-size: 14px; font-weight: 700; margin-bottom: 3px; color: #fff; }
-.ptw-signs-list span { font-size: 13px; color: #7a8480; line-height: 1.5; }
-
-/* ── WHY US ── */
-.ptw-why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-.ptw-why-item { background: #0c0c0c; border: 1px solid #1e1e1e; border-radius: 18px; padding: 24px 22px 28px; }
-.ptw-why-num { display: block; font-size: 11px; font-weight: 800; letter-spacing: .1em; color: #03ff7f; margin-bottom: 12px; font-variant-numeric: tabular-nums; }
-.ptw-why-item h3 { margin: 0 0 8px; font-size: 16px; font-weight: 800; }
-.ptw-why-item p { margin: 0; color: #7a8480; font-size: 13px; line-height: 1.65; }
-
-/* ── FAQ ── */
-.ptw-faq-section { background: #080808; border: 1px solid #1e1e1e; border-radius: 24px; padding: 48px; }
-.ptw-faq-list { margin-top: 28px; }
-.ptw-faq-item { border-bottom: 1px solid #1a1a1a; }
-.ptw-faq-item:last-child { border-bottom: none; }
-.ptw-faq-item summary {
-  padding: 18px 0; cursor: pointer; font-size: 16px; font-weight: 700; list-style: none;
-  display: flex; justify-content: space-between; align-items: center; gap: 16px; color: #e8ecea;
-}
-.ptw-faq-item summary::-webkit-details-marker { display: none; }
-.ptw-faq-item summary::after { content: '+'; color: #03ff7f; font-size: 22px; font-weight: 300; flex-shrink: 0; transition: transform .2s; }
-.ptw-faq-item[open] summary::after { transform: rotate(45deg); }
-.ptw-faq-answer { padding: 0 0 20px; }
-.ptw-faq-answer p { margin: 0; color: #9aa09d; font-size: 14px; line-height: 1.75; }
-
-/* ── SERVICE AREA ── */
-.ptw-area-section { background: #0c0c0c; border: 1px solid #1e1e1e; border-radius: 24px; padding: 48px; text-align: center; }
-.ptw-area-section h2 { font-size: clamp(20px, 3vw, 28px); font-weight: 800; margin: 0 0 14px; letter-spacing: -.02em; }
-.ptw-area-section > p { max-width: 700px; margin: 0 auto 24px; color: #9aa09d; font-size: 15px; line-height: 1.75; }
-.ptw-area-section > p strong { color: #fff; }
-.ptw-area-tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
-.ptw-area-tags span { background: #111; border: 1px solid #242424; color: #c5cdc8; padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; }
-.ptw-area-cta { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-
-/* ── MOBILE BAR ── */
-.ptw-mobile-bar {
-  display: none; position: fixed; left: 0; right: 0; bottom: 0;
-  grid-template-columns: repeat(3, 1fr); gap: 6px;
-  padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
-  background: rgba(0,0,0,.97); border-top: 1px solid #1a1a1a; z-index: 9999; backdrop-filter: blur(10px);
-}
-.ptw-mobile-bar a { text-decoration: none; text-align: center; padding: 12px 8px; border-radius: 11px; font-size: 13px; font-weight: 800; background: #111; color: #fff; border: 1px solid #262626; }
-.ptw-mobile-bar a:first-child { background: #03ff7f; color: #000; border: none; }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 960px) {
-  .ptw-hero-form-grid { grid-template-columns: 1fr; }
-  .ptw-grid { grid-template-columns: repeat(2, 1fr); }
-  .ptw-why-grid { grid-template-columns: repeat(2, 1fr); }
-  .ptw-signs-inner { grid-template-columns: 1fr; gap: 28px; }
-}
-@media (max-width: 640px) {
-  #ptw-brake { padding: 36px 14px 100px; }
-  .ptw-grid { grid-template-columns: 1fr; }
-  .ptw-why-grid { grid-template-columns: 1fr 1fr; }
-  .ptw-signs-section, .ptw-faq-section, .ptw-area-section { padding: 28px 20px; }
-  .ptw-quote-card { padding: 22px; }
-  .ptw-qfield-row { grid-template-columns: 1fr; gap: 14px; }
-  .ptw-area-cta { flex-direction: column; }
-  .ptw-mobile-bar { display: grid; }
-}
-@media (max-width: 400px) { .ptw-why-grid { grid-template-columns: 1fr; } }
-@media (prefers-reduced-motion: reduce) { .ptw-btn, .ptw-card, .ptw-faq-item summary::after { transition: none; } }
+  /* Order modal */
+  .ptwOvl{display:none;position:absolute;top:0;left:0;right:0;background:rgba(0,0,0,.7);z-index:999}
+  .ptwOvl.open{display:block}
+  .ptwMod{position:absolute;left:50%;transform:translateX(-50%);background:#0d0d0d;border:1px solid #1c1c1c;color:#fff;width:calc(100% - 32px);max-width:440px;max-height:80vh;overflow-y:auto;border-radius:16px;padding:20px;font-family:Arial,Helvetica,sans-serif;}
+  .ptwSum{background:#181818;border:1px solid #2a2a2a;border-radius:10px;padding:12px;margin-bottom:16px;font-size:13px;line-height:1.5;color:#ddd}
+  .ptwHd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+  .ptwHd h3{font-size:18px;font-weight:800;color:#fff}
+  .ptwClose{background:none;border:none;color:#777;font-size:22px;cursor:pointer;line-height:1;padding:4px 6px}
+  .ptwFg{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+  .ptwFg label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#444}
+  .ptwFg input,.ptwFg textarea{background:#181818;border:1px solid #2a2a2a;border-radius:8px;color:#fff;padding:12px;font-size:16px;outline:none;width:100%;font-family:inherit;resize:vertical}
+  .ptwFg input:focus,.ptwFg textarea:focus{border-color:#03ff7f}
+  .ptwSend{width:100%;background:#03ff7f;color:#000;border:none;border-radius:8px;padding:14px;font-size:15px;font-weight:800;cursor:pointer}
+  .ptwSend:disabled{opacity:.6;cursor:not-allowed}
+  .ptwErr{color:#ff4444;font-size:12px;margin-top:8px;display:none}
+  .ptwOk{text-align:center;padding:20px 0}
+  .ptwOk h3{color:#03ff7f;font-size:18px;margin-bottom:8px}
+  .ptwOk p{color:#999;font-size:13px}
 </style>
 
-<!-- ══════════════════════════════════
-     STRUCTURED DATA
-══════════════════════════════════ -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "Brake Service Waterloo ON",
-  "alternateName": ["Brake Pad Replacement Waterloo", "Brake Inspection Kitchener", "Rotor Replacement Cambridge"],
-  "provider": {
-    "@type": "AutoRepair",
-    "name": "President Tire & Wheels",
-    "url": "https://presidentwheels.ca",
-    "telephone": "+12266981667",
-    "image": "https://presidentwheels.ca/logo.png",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "632 Colby Dr Unit B",
-      "addressLocality": "Waterloo",
-      "addressRegion": "ON",
-      "postalCode": "N2V 1A2",
-      "addressCountry": "CA"
-    },
-    "geo": { "@type": "GeoCoordinates", "latitude": 43.4697, "longitude": -80.5673 },
-    "openingHoursSpecification": [
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "18:00" },
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "17:00" }
-    ],
-    "priceRange": "$$",
-    "sameAs": ["https://presidentwheels.ca"]
-  },
-  "areaServed": [
-    {"@type": "City", "name": "Waterloo", "containedInPlace": {"@type": "AdministrativeArea", "name": "Ontario"}},
-    {"@type": "City", "name": "Kitchener", "containedInPlace": {"@type": "AdministrativeArea", "name": "Ontario"}},
-    {"@type": "City", "name": "Cambridge", "containedInPlace": {"@type": "AdministrativeArea", "name": "Ontario"}},
-    {"@type": "City", "name": "Elmira"},
-    {"@type": "City", "name": "Baden"},
-    {"@type": "City", "name": "New Hamburg"}
-  ],
-  "serviceType": "Brake Service",
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Brake Services",
-    "itemListElement": [
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Brake Pad Replacement Waterloo"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Rotor Replacement Waterloo"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Brake Inspection Kitchener"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Brake Fluid Flush Waterloo"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Brake Caliper Service Waterloo"}}
-    ]
-  },
-  "description": "Professional brake pad replacement, rotor replacement, brake inspections, brake fluid flushes, and caliper service using premium ProSeries OE+ parts for all makes and models in Waterloo, Kitchener, and Cambridge, Ontario. Same-day turnaround at 632 Colby Drive, Waterloo."
-}
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    { "@type": "Question", "name": "How long does a brake pad replacement take?", "acceptedAnswer": { "@type": "Answer", "text": "Most brake pad replacements at President Tire & Wheels are completed within 1–2 hours. If rotors also need replacing, allow 2–3 hours. Call ahead so we can have your parts in stock." } },
-    { "@type": "Question", "name": "What brake parts do you use?", "acceptedAnswer": { "@type": "Answer", "text": "We only install ProSeries OE+ premium brake pads and rotors — we don't offer economy or budget alternatives. Every brake job comes with a 3-year warranty." } },
-    { "@type": "Question", "name": "Do I need new rotors when I replace brake pads?", "acceptedAnswer": { "@type": "Answer", "text": "Not always. During inspection we measure rotor thickness and check for warping or deep scoring. If rotors are within spec, they can be reused with new pads. We'll tell you exactly what we find before recommending anything." } },
-    { "@type": "Question", "name": "Is it safe to drive with squealing brakes?", "acceptedAnswer": { "@type": "Answer", "text": "Squealing is a wear indicator — your pads are getting thin. You have some time but you shouldn't ignore it. If the noise has turned to grinding, stop driving and call immediately — metal-on-metal contact damages rotors quickly and becomes a safety hazard." } },
-    { "@type": "Question", "name": "Do you offer brake service in Kitchener and Cambridge?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Our shop is located at 632 Colby Drive in Waterloo, which is central to Kitchener and Cambridge. Drivers from across the Region of Waterloo — including Elmira, Baden, and New Hamburg — regularly come to us for brake service." } }
-  ]
-}
-</script>
-
-<!-- Hidden internal-link anchors for SEO crawling -->
-<nav aria-hidden="true" style="display:none;">
-  <a href="/brake-service">Brake Service Waterloo</a>
-  <a href="/brake-service">Brake Pad Replacement Waterloo</a>
-  <a href="/brake-service">Brake Inspection Kitchener</a>
-  <a href="/brake-service">Brake Inspection Cambridge</a>
-  <a href="/brake-service">Rotor Replacement Waterloo</a>
-  <a href="/brake-service">Brake Fluid Flush Waterloo</a>
-  <a href="/contact-us">Book Brake Service Waterloo</a>
-  <a href="/contact-us">Auto Brake Repair Kitchener</a>
-</nav>
-
-<!-- ══════════════════════════════════
-     LEAD FORM LOGIC
-══════════════════════════════════ -->
 <script>
-(function(){
-  var yearSelect = document.getElementById('ptw-q-year');
-  var currentYear = new Date().getFullYear();
-  for (var y = currentYear + 1; y >= 1995; y--) {
-    var opt = document.createElement('option');
-    opt.value = opt.textContent = y;
-    yearSelect.appendChild(opt);
+  const API = "https://aged-butterfly-cd6a.samanjot146.workers.dev/api/tires";
+  const SHEET_CSV_URL = "https://stock-sheet-proxy.samanjot146.workers.dev";
+  const WA  = "2266981667";
+
+  let currentSize = "";
+  let allResults = [];
+  let filteredResults = [];
+  let bestValueId = null;
+  let mostPopularId = null;
+
+  const widths = ["135","145","155","165","175","185","195","205","215","225","235","245","255","265","275","285","295","305","315","325","335","345","355"];
+  const ratios = ["25","30","35","40","45","50","55","60","65","70","75","80","85"];
+  const rims   = ["12","13","14","15","16","17","18","19","20","21","22","23","24","26"];
+
+  function fillSelect(id, values){
+    const el = document.getElementById(id);
+    values.forEach(v => {
+      const o = document.createElement("option");
+      o.value = o.textContent = v;
+      el.appendChild(o);
+    });
+  }
+  fillSelect("width", widths);
+  fillSelect("ratio", ratios);
+  fillSelect("rim",   rims);
+
+  // ── AUTO-FILL FROM URL ────────────────────────────────────────────────────
+  (function(){
+    function getSizeFromURL(){
+      const sources = [
+        () => window.location.search,
+        () => { try{ return window.top.location.search; }catch(e){ return ""; } },
+        () => { try{ return window.parent.location.search; }catch(e){ return ""; } }
+      ];
+      for(const fn of sources){
+        const search = fn();
+        const size = new URLSearchParams(search).get("size");
+        if(size) return size;
+      }
+      return null;
+    }
+    function applySize(){
+      const size = getSizeFromURL();
+      if(!size) return;
+      const match = size.match(/^(\d+)\/(\d+)[Rr](\d+)$/);
+      if(!match) return;
+      document.getElementById("width").value = match[1];
+      document.getElementById("ratio").value = match[2];
+      document.getElementById("rim").value   = match[3];
+      runSearch(size);
+    }
+    applySize();
+    setTimeout(applySize, 300);
+    setTimeout(applySize, 800);
+    setTimeout(applySize, 1500);
+  })();
+
+  const stickyWrap = document.getElementById("ptwStickyWrap");
+  const stickyPlaceholder = document.getElementById("ptwStickyPlaceholder");
+  let stickyTop = 0;
+
+  function isMobileViewport(){
+    return window.matchMedia("(max-width: 767px)").matches;
+  }
+  function initSticky(){
+    stickyTop = stickyWrap.getBoundingClientRect().top + window.scrollY;
+  }
+  function handleScroll(){
+    if(isMobileViewport()){
+      stickyWrap.classList.remove("is-sticky");
+      stickyPlaceholder.style.height = "0px";
+      return;
+    }
+    if(window.scrollY > stickyTop){
+      if(!stickyWrap.classList.contains("is-sticky")){
+        stickyPlaceholder.style.height = stickyWrap.offsetHeight + "px";
+        stickyWrap.classList.add("is-sticky");
+      }
+    } else {
+      stickyWrap.classList.remove("is-sticky");
+      stickyPlaceholder.style.height = "0px";
+    }
+  }
+  window.addEventListener("scroll", handleScroll, {passive:true});
+  window.addEventListener("load", initSticky);
+  setTimeout(initSticky, 500);
+
+  function getRetailPrice(cost){
+    cost = Number(cost);
+    if(cost < 120) return (cost * 1.30).toFixed(2);
+    if(cost < 200) return (cost * 1.20).toFixed(2);
+    if(cost < 300) return (cost * 1.25).toFixed(2);
+    if(cost < 400) return (cost * 1.20).toFixed(2);
+    return               (cost * 1.25).toFixed(2);
   }
 
-  var brakesHidden = document.getElementById('ptw-q-brakes-needed');
-  document.querySelectorAll('.ptw-pill-options:not(.ptw-pill-multi) .ptw-pill').forEach(function(pill){
-    pill.addEventListener('click', function(){
-      document.querySelectorAll('.ptw-pill-options:not(.ptw-pill-multi) .ptw-pill').forEach(function(p){
-        p.classList.remove('ptw-pill-active');
-      });
-      pill.classList.add('ptw-pill-active');
-      brakesHidden.value = pill.dataset.value;
-    });
-  });
+  // Unified price helpers — in-stock sheet items are already final retail
+  // price (no markup applied); TDG items are cost and get marked up.
+  function getUnitPrice(t){
+    if(t.price == null) return null;
+    return t.isStock ? Number(t.price) : Number(getRetailPrice(t.price));
+  }
+  function getSetOf4(t){
+    const unit = getUnitPrice(t);
+    return unit == null ? null : (unit * 4).toFixed(2);
+  }
+  function getDepositAmt(t){
+    const s4 = getSetOf4(t);
+    return s4 == null ? null : (Number(s4) * 0.5).toFixed(2);
+  }
+  function getMonthlyPayment(t){
+    const s4 = getSetOf4(t);
+    if(s4 == null) return null;
+    const total = Number(s4);
+    if(total < 500) return null;
+    return (total / 36).toFixed(0);
+  }
 
-  var symptomsHidden = document.getElementById('ptw-q-symptoms');
-  var selectedSymptoms = [];
-  document.querySelectorAll('.ptw-pill-multi .ptw-pill').forEach(function(pill){
-    pill.addEventListener('click', function(){
-      var val = pill.dataset.value;
-      var idx = selectedSymptoms.indexOf(val);
-      if (idx > -1) {
-        selectedSymptoms.splice(idx, 1);
-        pill.classList.remove('ptw-pill-active');
+  function getBrandRebate(brand){
+    const map = {
+      "BF Goodrich":"Up to $100 rebate","BFGoodrich":"Up to $100 rebate",
+      "Bridgestone":"Up to $100 rebate","Continental":"Up to $110 rebate",
+      "Dunlop":"$200 rebate","Firestone":"Up to $80 rebate",
+      "General":"Up to $100 rebate","General Tire":"Up to $100 rebate",
+      "Hankook":"$100 rebate","Kumho":"$60 rebate","Laufenn":"$40 rebate",
+      "Michelin":"$100 rebate","Nexen":"Up to $80 rebate","Nitto":"Up to $70 rebate",
+      "Pirelli":"Up to $100 rebate","Toyo":"Up to $100 rebate",
+      "Toyo Tires":"Up to $100 rebate","Uniroyal":"$50 rebate",
+      "Yokohama":"Up to $125 rebate"
+    };
+    return (brand && map[brand]) ? map[brand] : "";
+  }
+  function getSalesBadges(t){
+    const badges = [
+      { text:"Free install with wheel package", rebate:false },
+      { text:"Financing available",             rebate:false },
+      { text:"Call to reserve today",           rebate:false }
+    ];
+    const rebate = getBrandRebate(t.brand);
+    if(rebate) badges.unshift({ text:rebate, rebate:true });
+    return badges;
+  }
+
+  function normalizeWarehouseName(name){
+    const n = String(name||"").trim();
+    if(!n) return "Warehouse";
+    if(/london/i.test(n))      return "London warehouse";
+    if(/orangeville/i.test(n)) return "Orangeville warehouse";
+    return n.replace(/^\d+\s*-\s*/,"");
+  }
+  function getAvailabilityInfo(t){
+    if(t.isStock){
+      const qty = Number(t.totalStock||0);
+      return {
+        label:`${qty} in stock at our Waterloo shop`,
+        className:"in",
+        note:"Ready for install — no waiting on warehouse delivery.",
+        urgency: qty <= 4 ? "Limited quantity in stock" : "",
+        warehouseHtml:""
+      };
+    }
+    const locations  = Array.isArray(t.locations) ? t.locations : [];
+    const totalStock = Number(t.totalStock||0);
+    if(!locations.length || totalStock <= 0){
+      return { label:"Currently unavailable", className:"out",
+               note:"Call for availability at our Waterloo store.", urgency:"", warehouseHtml:"" };
+    }
+    const avail = l => Number(l.qtyAvailable||0) > 0;
+    const london      = locations.filter(l => /london/i.test(l.name||"")      && avail(l));
+    const orangeville = locations.filter(l => /orangeville/i.test(l.name||"") && avail(l));
+    const other       = locations.filter(l => !/london|orangeville/i.test(l.name||"") && avail(l));
+    let label = "", urgency = "";
+    if(london.length){
+      label = "Available next business day";
+      const lq = london.reduce((s,l)=>s+Number(l.qtyAvailable||0),0);
+      if(lq > 0 && lq <= 8) urgency = "Limited stock in London warehouse";
+    } else if(orangeville.length){
+      label = "Available in ~2 business days";
+    } else if(other.length){
+      label = "Available in 2–3 business days";
+    } else {
+      label = "Currently unavailable";
+    }
+    const lines = [...london,...orangeville,...other].slice(0,3)
+      .filter(l=>Number(l.qtyAvailable||0)>0)
+      .map(l=>`<span>${escapeHtml(normalizeWarehouseName(l.name))}: ${Number(l.qtyAvailable)} available</span>`);
+    return {
+      label,
+      className: label==="Currently unavailable" ? "out" : "in",
+      note: "Call for availability at our Waterloo store.",
+      urgency,
+      warehouseHtml: lines.length ? `<div class="warehouse-lines">${lines.join("")}</div>` : ""
+    };
+  }
+
+  function getTireTypeCode(t){
+    const raw = String(t.specs?.tireType || t.specifications?.tireType || "").toLowerCase().trim();
+    if(!raw) return "";
+    if(raw.startsWith("aw")) return "All Weather";
+    if(raw.startsWith("wi")) return "Winter";
+    if(raw.startsWith("su")) return "Summer";
+    if(raw.startsWith("at")) return "All Terrain";
+    if(raw.startsWith("mt")) return "Mud Terrain";
+    if(raw.startsWith("rt")) return "Rugged Terrain";
+    if(raw.startsWith("as")) return "All Season";
+    return "";
+  }
+  function getDisplaySeason(t){
+    const code = getTireTypeCode(t);
+    if(code) return code;
+    return t.specs?.season || t.specifications?.season || "N/A";
+  }
+  function matchesSeasonFilter(t, selectedSeason){
+    if(!selectedSeason) return true;
+    const code = getTireTypeCode(t);
+    if(code) return code === selectedSeason;
+    const raw = String(t.specs?.season||t.specifications?.season||"").toLowerCase();
+    return raw.includes(selectedSeason.toLowerCase());
+  }
+  function getServiceType(t){
+    const size = String(t.specs?.size || t.specifications?.size || "").toUpperCase();
+    if(size.includes("LT")) return "LT";
+    const svc = String(t.specs?.serviceType || t.specifications?.serviceType || "").toLowerCase();
+    if(svc.includes("light")) return "LT";
+    return "P";
+  }
+
+  // ---------- Tire type icon (fallback when there is no product image) ----------
+  function detectIconType(t){
+    if(t.isStock) return "generic";
+    const code = getTireTypeCode(t);
+    const map = {
+      "Winter":"winter", "Summer":"summer", "All Weather":"allweather",
+      "All Season":"allseason", "All Terrain":"offroad",
+      "Mud Terrain":"offroad", "Rugged Terrain":"offroad"
+    };
+    return map[code] || "generic";
+  }
+  function tireIconSVG(type){
+    const palette = {
+      winter:     "#2f8fd6",
+      allweather: "#0aa88f",
+      allseason:  "#03c26f",
+      summer:     "#e8862a",
+      offroad:    "#8a6a3a",
+      generic:    "#9a9a9a"
+    };
+    const color = palette[type] || palette.generic;
+    let overlay = "";
+    if(type === "winter"){
+      overlay = `<path d="M50 30v40M32 40l36 20M68 40L32 60" stroke="#fff" stroke-width="3" stroke-linecap="round"/>`;
+    } else if(type === "offroad"){
+      overlay = `<path d="M50 32l10 16h-20z" fill="#fff"/>`;
+    } else if(type === "summer"){
+      overlay = `<circle cx="50" cy="50" r="6" fill="#fff"/>`;
+    }
+    return `
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" fill="#1a1a1a" stroke="${color}" stroke-width="6"/>
+        <circle cx="50" cy="50" r="30" fill="none" stroke="${color}" stroke-width="3" stroke-dasharray="5 5"/>
+        <circle cx="50" cy="50" r="13" fill="${color}" opacity="0.25" stroke="${color}" stroke-width="2"/>
+        ${overlay}
+      </svg>
+    `;
+  }
+
+  function computeBadges(results){
+    const inStock = results.filter(t => Number(t.totalStock||0) > 0 && t.price != null && t.price > 0);
+    if(!inStock.length){ bestValueId = null; mostPopularId = null; return; }
+    const sorted = [...inStock].sort((a,b) => getUnitPrice(a) - getUnitPrice(b));
+    bestValueId = sorted[0]?.id || null;
+    const byStock = [...inStock].sort((a,b) => Number(b.totalStock||0) - Number(a.totalStock||0));
+    mostPopularId = (byStock[0]?.id !== bestValueId ? byStock[0]?.id : byStock[1]?.id) || null;
+  }
+
+  // ---------- CSV parsing (handles quoted commas) ----------
+  function parseCSV(text){
+    const rows = [];
+    let row = [];
+    let field = "";
+    let inQuotes = false;
+    for(let i=0;i<text.length;i++){
+      const c = text[i];
+      const next = text[i+1];
+      if(inQuotes){
+        if(c === '"' && next === '"'){ field += '"'; i++; }
+        else if(c === '"'){ inQuotes = false; }
+        else { field += c; }
       } else {
-        selectedSymptoms.push(val);
-        pill.classList.add('ptw-pill-active');
+        if(c === '"') inQuotes = true;
+        else if(c === ","){ row.push(field); field = ""; }
+        else if(c === "\n"){ row.push(field); rows.push(row); row = []; field = ""; }
+        else if(c === "\r"){ /* skip */ }
+        else { field += c; }
       }
-      symptomsHidden.value = selectedSymptoms.join(', ');
+    }
+    if(field.length || row.length){ row.push(field); rows.push(row); }
+    return rows;
+  }
+  function normalizeSize(v){
+    return String(v||"").trim().toUpperCase().replace(/\s+/g,"");
+  }
+  function extractCoreSize(v){
+    const normalized = normalizeSize(v);
+    const match = normalized.match(/^(\d{2,3}\/\d{2,3}R\d{2,3})/);
+    return match ? match[1] : normalized;
+  }
+
+  // ---------- Fetch in-stock Google Sheet ----------
+  async function fetchStockTires(size){
+    try{
+      const url = `${SHEET_CSV_URL}?cachebust=${Date.now()}`;
+      const res = await fetch(url);
+      const text = await res.text();
+      const rows = parseCSV(text);
+      const wanted = normalizeSize(size);
+      const results = [];
+
+      for(let i=1;i<rows.length;i++){
+        const r = rows[i];
+        if(!r || !r.length) continue;
+        const rowSize = String(r[0]||"").trim();   // Column A
+        const brand   = String(r[1]||"").trim();   // Column B
+        const qty     = Number(String(r[4]||"").replace(/[^0-9.\-]/g,"")) || 0; // Column E
+        const price   = Number(String(r[6]||"").replace(/[^0-9.\-]/g,""));      // Column G
+
+        if(!rowSize) continue;
+        const rowCore = extractCoreSize(rowSize);
+        if(rowCore !== wanted) continue;
+        if(qty <= 0) continue;
+
+        results.push({
+          id: `stock-${i}-${brand}`.replace(/\s+/g,"_"),
+          isStock: true,
+          brand: brand || "In-Stock",
+          model: rowCore,
+          price: isNaN(price) ? null : price,
+          totalStock: qty,
+          locations: [{ name:"Our Waterloo Shop", qtyAvailable: qty }],
+          specs: { size: rowCore },
+          image: null
+        });
+      }
+      return results;
+    } catch(err){
+      console.error("Stock sheet fetch failed:", err);
+      return [];
+    }
+  }
+
+  async function searchTires(){
+    const w = document.getElementById("width").value;
+    const r = document.getElementById("ratio").value;
+    const d = document.getElementById("rim").value;
+    if(!w||!r||!d){ alert("Please select full tire size"); return; }
+    runSearch(`${w}/${r}R${d}`);
+  }
+
+  function scrollToResults(){
+    const statusEl = document.getElementById("status");
+    if(!statusEl) return;
+    const headerH = (stickyWrap && !isMobileViewport()) ? stickyWrap.offsetHeight : 0;
+    const targetY = statusEl.getBoundingClientRect().top + window.scrollY - headerH - 12;
+    window.scrollTo({ top: Math.max(0, targetY), behavior: "instant" });
+  }
+
+  async function runSearch(size){
+    currentSize     = size;
+    allResults      = [];
+    filteredResults = [];
+    document.getElementById("status").textContent = "Loading tires…";
+    document.getElementById("results").innerHTML  = "";
+    resetFilterUI();
+    scrollToResults();
+    try{
+      const [tdgRes, stockRes] = await Promise.all([
+        fetch(`${API}?size=${encodeURIComponent(size)}`).then(r => r.json()).catch(() => ({ ok:false, results:[] })),
+        fetchStockTires(size)
+      ]);
+
+      const tdgList = (tdgRes && tdgRes.ok && Array.isArray(tdgRes.results)) ? tdgRes.results : [];
+
+      if(!tdgList.length && !stockRes.length){
+        document.getElementById("status").textContent = "No tires found for " + size;
+        scrollToResults();
+        return;
+      }
+
+      allResults = [...stockRes, ...tdgList];
+      populateBrandFilter(allResults);
+      applyFiltersAndSort();
+      scrollToResults();
+    } catch(e){
+      document.getElementById("status").textContent = "Error loading tires.";
+    }
+  }
+
+  function resetFilterUI(){
+    document.getElementById("brandFilter").innerHTML = `<option value="">All Brands</option>`;
+    document.getElementById("seasonFilter").value = "";
+    document.getElementById("sortBy").value = "stock";
+    document.getElementById("vehicleFilter").value = "";
+    document.getElementById("inStockOnly").checked = false;
+  }
+  function populateBrandFilter(results){
+    const brands = [...new Set(results.map(x=>(x.brand||"").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+    document.getElementById("brandFilter").innerHTML =
+      `<option value="">All Brands</option>` +
+      brands.map(b=>`<option value="${escapeHtml(b)}">${escapeHtml(b)}</option>`).join("");
+  }
+
+  function applyFiltersAndSort(){
+    const brand       = document.getElementById("brandFilter").value;
+    const season      = document.getElementById("seasonFilter").value;
+    const sortBy      = document.getElementById("sortBy").value;
+    const vehicleType = document.getElementById("vehicleFilter").value;
+    const inStockOnly = document.getElementById("inStockOnly").checked;
+
+    filteredResults = allResults.filter(t => {
+      if(brand && (t.brand||"").trim() !== brand) return false;
+      if(!matchesSeasonFilter(t, season)) return false;
+      if(vehicleType && getServiceType(t) !== vehicleType) return false;
+      if(inStockOnly && Number(t.totalStock||0) <= 0) return false;
+      return true;
     });
-  });
 
-  var form = document.getElementById('ptw-quote-form-el');
-  var submitBtn = document.getElementById('ptw-q-submit');
-  var confirmation = document.getElementById('ptw-q-confirmation');
+    filteredResults.sort((a,b) => {
+      if(sortBy==="priceLow"){
+        const ap = getUnitPrice(a), bp = getUnitPrice(b);
+        return (ap==null?Infinity:ap) - (bp==null?Infinity:bp);
+      }
+      if(sortBy==="priceHigh"){
+        const ap = getUnitPrice(a), bp = getUnitPrice(b);
+        return (bp==null?-Infinity:bp) - (ap==null?-Infinity:ap);
+      }
+      if(sortBy==="brandAZ") return String(a.brand||"").localeCompare(String(b.brand||""));
+      if(sortBy==="mostStock") return Number(b.totalStock||0)-Number(a.totalStock||0);
 
-  var FORMSPREE_ENDPOINT = 'https://formspree.io/f/mjgqyapz';
+      // Default "Availability First": in-shop stock first, then next-day
+      // warehouse (London), then everything else, then price.
+      const aAvail = Number(a.totalStock||0)>0;
+      const bAvail = Number(b.totalStock||0)>0;
+      if(aAvail!==bAvail) return aAvail?-1:1;
 
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
+      if(!!a.isStock !== !!b.isStock) return a.isStock ? -1 : 1;
 
-    if (!brakesHidden.value) {
-      alert('Please select which brakes need attention.');
+      const hasLondon = t=>(Array.isArray(t.locations)?t.locations:[])
+        .some(l=>/london/i.test(l.name||"")&&Number(l.qtyAvailable||0)>0);
+      if(hasLondon(a)!==hasLondon(b)) return hasLondon(a)?-1:1;
+
+      const ap = getUnitPrice(a), bp = getUnitPrice(b);
+      return (ap==null?Infinity:ap) - (bp==null?Infinity:bp);
+    });
+
+    computeBadges(filteredResults);
+    renderResults();
+  }
+
+  function renderResults(){
+    document.getElementById("status").textContent =
+      `Showing ${filteredResults.length} tire(s) for ${currentSize}`;
+    const el = document.getElementById("results");
+    if(!filteredResults.length){
+      el.innerHTML = `<div style="color:#fff;font-size:16px;">No tires match your filters.</div>`;
       return;
     }
 
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending...';
+    el.innerHTML = filteredResults.slice(0,200).map(t => {
+      const isBest    = t.id === bestValueId;
+      const isPopular = t.id === mostPopularId;
+      const isLT      = getServiceType(t) === "LT";
+      const unit      = getUnitPrice(t);
+      const price     = unit != null ? "$"+unit.toFixed(2) : "Call for price";
+      const set4      = getSetOf4(t);
+      const deposit   = getDepositAmt(t);
+      const monthly   = getMonthlyPayment(t);
+      const avail     = getAvailabilityInfo(t);
+      const badges    = getSalesBadges(t);
+      const typeLabel = getDisplaySeason(t);
+      const sizeLabel = t.specs?.size||t.specifications?.size||currentSize;
+      const orderMsg  = `${t.brand} ${t.model} (${currentSize}) tire — ${price} + HST/tire.${set4?` Set of 4: $${set4} + HST.`:''}${deposit?` 50% deposit to order: $${deposit}.`:''} Please confirm availability and next steps.`;
+      const orderSummary = escapeHtml(orderMsg);
 
-    var formData = new FormData(form);
+      const badgeHtml = (isBest || isPopular || isLT || t.isStock) ? `
+        <div class="ptw-badge-wrap">
+          ${t.isStock  ? `<span class="ptw-badge ptw-badge-instock">✅ In Stock Now</span>` : ""}
+          ${isBest    ? `<span class="ptw-badge ptw-badge-best">⭐ Best Value</span>` : ""}
+          ${isPopular ? `<span class="ptw-badge ptw-badge-popular">🔥 Most Popular</span>` : ""}
+          ${isLT      ? `<span class="ptw-badge ptw-badge-lt">LT</span>` : ""}
+        </div>` : "";
 
-    fetch(FORMSPREE_ENDPOINT, {
-      method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' }
-    }).then(function(response){
-      if (response.ok) {
-        form.style.display = 'none';
-        confirmation.style.display = 'block';
-      } else {
-        alert('Something went wrong. Please call us at (226) 786-0421 instead.');
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Get My Quote →';
-      }
-    }).catch(function(){
-      alert('Something went wrong. Please call us at (226) 786-0421 instead.');
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Get My Quote →';
+      const imageHtml = t.image
+        ? `<img src="${escapeHtml(t.image)}" alt="${escapeHtml(t.brand)} ${escapeHtml(t.model)}">`
+        : tireIconSVG(detectIconType(t));
+
+      return `
+        <div class="card">
+          <div class="card-image">
+            ${imageHtml}
+            ${badgeHtml}
+          </div>
+          <div class="card-body">
+            <h3>${escapeHtml(t.brand||"")}</h3>
+            <div class="model">${escapeHtml(t.model||"")}</div>
+            <div class="ptw-price-block">
+              <div class="price-label">Per tire (installed price may vary)</div>
+              <div class="price">${price}${unit!=null?`<span class="tax-note">+ HST</span>`:""}</div>
+              ${set4 ? `<div class="set4-label">Set of 4:</div><div class="set4">$${set4}<span class="tax-note">+ HST</span></div>` : ""}
+              ${deposit ? `<div class="deposit">50% Deposit: <strong>$${deposit}</strong></div>` : ""}
+              ${monthly ? `<div class="ptw-financing" onclick="window.open('https://www.autologiq.ca','_blank')">💳 From $${monthly}/mo for 36 months with Autologiq</div>` : ""}
+            </div>
+            <div class="stock ${avail.className}">${escapeHtml(avail.label)}</div>
+            ${avail.urgency?`<div class="urgency">${escapeHtml(avail.urgency)}</div>`:""}
+            <div class="stock-note">${escapeHtml(avail.note)}</div>
+            ${avail.warehouseHtml}
+            <div class="ptw-sales-badges">
+              ${badges.map(b=>`<span class="ptw-sales-badge ${b.rebate?"ptw-rebate-badge":""}">${escapeHtml(b.text)}</span>`).join("")}
+            </div>
+            <div class="meta">
+              <div><strong>Size:</strong> ${escapeHtml(sizeLabel)}</div>
+              <div><strong>Type:</strong> ${escapeHtml(typeLabel)}</div>
+              <div><strong>Load Index:</strong> ${escapeHtml(t.specs?.loadIndex||t.specifications?.loadIndex||"N/A")}</div>
+              <div><strong>Speed Rating:</strong> ${escapeHtml(t.specs?.speedRating||t.specifications?.speedRating||"N/A")}</div>
+              <div><strong>Warranty:</strong> ${(t.specs?.warrantyMileage||t.specifications?.warrantyMileage)?escapeHtml(t.specs?.warrantyMileage||t.specifications?.warrantyMileage)+" km":"N/A"}</div>
+            </div>
+            <div class="actions">
+              <a class="callbtn" href="tel:+12266981667" target="_top">📞 Call</a>
+              <button type="button" class="wabtn" data-summary="${orderSummary}" onclick="openTireOrder(this)">📩 Message Us</button>
+            </div>
+            <button type="button" class="quotebtn" data-summary="${orderSummary}" onclick="openTireOrder(this)">
+              📩 Get a Free Quote
+            </button>
+          </div>
+        </div>`;
+    }).join("");
+  }
+
+  function escapeHtml(v){
+    if(v==null) return "";
+    return String(v)
+      .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+  }
+
+  // ── ORDER MODAL ───────────────────────────────
+  let ptwCurSummary='';
+  function openTireOrder(btn){
+    ptwCurSummary=btn.getAttribute('data-summary');
+    document.getElementById('ptwOsum').textContent=ptwCurSummary;
+    document.getElementById('ptwOform').style.display='block';
+    document.getElementById('ptwOok').style.display='none';
+    document.getElementById('ptwOerr').style.display='none';
+    document.getElementById('ptwOrderForm').reset();
+    const ovl=document.getElementById('ptwOvl');
+    const mod=ovl.querySelector('.ptwMod');
+    ovl.style.height=document.documentElement.scrollHeight+'px';
+    ovl.classList.add('open');
+    const rect=btn.getBoundingClientRect();
+    const btnDocTop=rect.top+window.pageYOffset;
+    mod.style.top=Math.max(20,btnDocTop-320)+'px';
+    requestAnimationFrame(()=>{
+      const modH=mod.offsetHeight;
+      const maxTop=document.documentElement.scrollHeight-modH-20;
+      mod.style.top=Math.max(20,Math.min(btnDocTop-320,maxTop))+'px';
     });
-  });
-})();
+  }
+  function closeTireOrder(){
+    document.getElementById('ptwOvl').classList.remove('open');
+  }
+  document.getElementById('ptwOvl').addEventListener('click',e=>{if(e.target.id==='ptwOvl')closeTireOrder();});
+
+  async function submitTireOrder(e){
+    e.preventDefault();
+    const btn=document.getElementById('ptwOsendbtn');
+    const errEl=document.getElementById('ptwOerr');
+    errEl.style.display='none';
+    btn.disabled=true;btn.textContent='Sending...';
+    const name=document.getElementById('ptwOname').value.trim();
+    const phone=document.getElementById('ptwOphone').value.trim();
+    const email=document.getElementById('ptwOemail').value.trim();
+    const note=document.getElementById('ptwOnote').value.trim();
+    try{
+      const res=await fetch('https://formspree.io/f/mjgqyapz',{
+        method:'POST',
+        headers:{'Accept':'application/json','Content-Type':'application/json'},
+        body:JSON.stringify({
+          name, phone, email,
+          tire:ptwCurSummary,
+          note,
+          _subject:'New Tire Order Request — '+name
+        })
+      });
+      if(res.ok){
+        if(typeof gtag === 'function'){
+          gtag('event', 'conversion', {
+            'send_to': 'AW-622628757/-gVvCPrMrOEcEJWf8qgC',
+            'value': 1.0,
+            'currency': 'CAD'
+          });
+        }
+        document.getElementById('ptwOform').style.display='none';
+        document.getElementById('ptwOok').style.display='block';
+      } else {
+        throw new Error('Formspree error');
+      }
+    }catch(err){
+      errEl.style.display='block';
+    }finally{
+      btn.disabled=false;btn.textContent='Send Request';
+    }
+  }
 </script>
 </body>
 </html>
