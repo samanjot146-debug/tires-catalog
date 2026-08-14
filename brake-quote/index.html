@@ -107,6 +107,7 @@
               <button type="button" class="ptw-pill" data-value="Not Sure">Not Sure — Recommend for Me</button>
             </div>
             <input type="hidden" id="ptw-q-parts" name="Parts Preference" />
+            <p class="ptw-price-note">Economy front pads &amp; rotors start at <strong>$250 installed</strong>. Economy parts do not include warranty coverage — ask about Standard/Premium if warranty matters to you.</p>
           </div>
 
           <div class="ptw-qfield">
@@ -563,6 +564,18 @@
 }
 .ptw-qfield input::placeholder { color: #666; }
 .ptw-qfield input:focus, .ptw-qfield select:focus { outline: 2px solid #03ff7f; outline-offset: 1px; border-color: #03ff7f; }
+
+.ptw-price-note {
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #9aa09d;
+  background: rgba(3,255,127,.05);
+  border: 1px solid rgba(3,255,127,.2);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.ptw-price-note strong { color: #03ff7f; }
 
 .ptw-pill-options { display: flex; flex-wrap: wrap; gap: 8px; }
 .ptw-pill {
