@@ -8,6 +8,33 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-622628757"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-622628757');
+</script>
+
+<!-- Meta Pixel -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1985076565690815');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1985076565690815&ev=PageView&noscript=1"
+/></noscript>
+
 <style>
   :root{
     --ink:#171717;
@@ -613,6 +640,17 @@
       .then(function(){
         form.style.display = 'none';
         document.getElementById('quote-success').classList.add('show');
+
+        // Google Ads conversion — brake quote form submitted
+        // TODO: replace REPLACE_WITH_YOUR_LABEL once you create the
+        // "Brake Quote Form Submit" conversion action in Google Ads
+        gtag('event', 'conversion', {
+          'send_to': 'AW-622628757/REPLACE_WITH_YOUR_LABEL'
+        });
+
+        // Meta Pixel conversion — brake quote form submitted
+        fbq('track', 'Lead', { content_name: 'Brake Quote Form' });
+
       }).catch(function(){ form.submit(); });
   });
 </script>
