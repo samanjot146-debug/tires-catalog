@@ -149,6 +149,17 @@
   .tax-note{font-size:13px;color:#6b7280;font-weight:700;margin-left:4px;}
   .set4{font-size:18px;font-weight:800;color:#111;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:6px 10px;display:inline-block;margin-bottom:4px;}
   .set4-label{font-size:11px;color:#6b7280;margin-bottom:8px;}
+  .otd{border:2px solid #0B0D0F;border-radius:10px;padding:10px 12px;margin:4px 0 10px;background:#fff;}
+  .otd-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;}
+  .otd-label{font-size:13px;font-weight:800;color:#0B0D0F;}
+  .otd-total{font-size:22px;font-weight:800;color:#0B0D0F;}
+  .otd-sub{font-size:11px;color:#6b7280;margin-top:2px;}
+  .otd details{margin-top:6px;font-size:12px;color:#374151;}
+  .otd summary{cursor:pointer;font-weight:700;color:#D6472A;}
+  .otd summary:focus-visible{outline:2px solid #D6472A;outline-offset:2px;}
+  .otd-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dashed #e5e7eb;}
+  .otd-row:last-child{border-bottom:0;font-weight:800;color:#0B0D0F;}
+  .otd-rebate{font-size:11px;color:#15803D;font-weight:700;margin-top:6px;}
   .deposit{font-size:12px;font-weight:700;color:#b45309;margin-bottom:8px;}
   .deposit strong{color:#b45309;}
   .ptw-financing{font-size:12px;color:#059669;font-weight:700;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:6px;padding:4px 8px;display:inline-block;margin-bottom:10px;cursor:pointer;text-decoration:underline;text-underline-offset:2px;}
@@ -297,14 +308,39 @@
     const unit = getUnitPrice(t);
     return unit == null ? null : (unit * 4).toFixed(2);
   }
+  // ---- Out-the-door price (set of 4) ----
+  const INSTALL_UP_TO_19 = 25;   // per tire, up to 19-inch
+  const INSTALL_20_PLUS  = 30;   // per tire, 20-inch and bigger
+  const DISPOSAL_FEE     = 6;    // per tire, old tire disposal
+  const HST_RATE         = 0.13;
+
+  function getRimSize(sizeStr){
+    const m = String(sizeStr||"").toUpperCase().match(/R\s*(\d{2}(?:\.\d)?)/);
+    return m ? Number(m[1]) : null;
+  }
+  function getOutTheDoor(t, sizeStr){
+    const unit = getUnitPrice(t);
+    if(unit == null || !(unit > 0)) return null;
+    const rim = getRimSize(sizeStr);
+    const installEach = (rim != null && rim >= 20) ? INSTALL_20_PLUS : INSTALL_UP_TO_19;
+    const tires    = unit * 4;
+    const install  = installEach * 4;
+    const disposal = DISPOSAL_FEE * 4;
+    const subtotal = tires + install + disposal;
+    const hst      = Math.round(subtotal * HST_RATE * 100) / 100;
+    const total    = Math.round((subtotal + hst) * 100) / 100;
+    return { tires, install, installEach, disposal, hst, total };
+  }
+  function money(n){ return "$" + Number(n).toLocaleString("en-CA",{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
   function getDepositAmt(t){
     const s4 = getSetOf4(t);
     return s4 == null ? null : (Number(s4) * 0.5).toFixed(2);
   }
-  function getMonthlyPayment(t){
-    const s4 = getSetOf4(t);
-    if(s4 == null) return null;
-    const total = Number(s4);
+  function getMonthlyPayment(t, sizeStr){
+    const otd = getOutTheDoor(t, sizeStr);
+    if(otd == null) return null;
+    const total = otd.total;
     if(total < 500) return null;
     return (total / 36).toFixed(0);
   }
@@ -666,12 +702,15 @@
       const price     = unit != null ? "$"+unit.toFixed(2) : "Call for price";
       const set4      = getSetOf4(t);
       const deposit   = getDepositAmt(t);
-      const monthly   = getMonthlyPayment(t);
+      const sizeForCalc = t.specs?.size||t.specifications?.size||currentSize;
+      const otd       = getOutTheDoor(t, sizeForCalc);
+      const monthly   = getMonthlyPayment(t, sizeForCalc);
+      const rebateTxt = getBrandRebate(t.brand);
       const avail     = getAvailabilityInfo(t);
       const badges    = getSalesBadges(t);
       const typeLabel = getDisplaySeason(t);
       const sizeLabel = t.specs?.size||t.specifications?.size||currentSize;
-      const orderMsg  = `${t.brand} ${t.model} (${currentSize}) tire — ${price} + HST/tire.${set4?` Set of 4: $${set4} + HST.`:''}${deposit?` 50% deposit to order: $${deposit}.`:''} Please confirm availability and next steps.`;
+      const orderMsg  = `${t.brand} ${t.model} (${currentSize}) tire — ${price} + HST/tire.${set4?` Set of 4: $${set4} + HST.`:''}${otd?` Out-the-door for 4 (install, disposal & HST): ${money(otd.total)}.`:''}${deposit?` 50% deposit to order: $${deposit}.`:''} Please confirm availability and next steps.`;
       const orderSummary = escapeHtml(orderMsg);
 
       const badgeHtml = (isBest || isPopular || isLT || t.isStock) ? `
@@ -696,9 +735,21 @@
             <h3>${escapeHtml(t.brand||"")}</h3>
             <div class="model">${escapeHtml(t.model||"")}</div>
             <div class="ptw-price-block">
-              <div class="price-label">Per tire (installed price may vary)</div>
+              <div class="price-label">Per tire</div>
               <div class="price">${price}${unit!=null?`<span class="tax-note">+ HST</span>`:""}</div>
               ${set4 ? `<div class="set4-label">Set of 4:</div><div class="set4">$${set4}<span class="tax-note">+ HST</span></div>` : ""}
+              ${otd ? `<div class="otd">
+                <div class="otd-top"><span class="otd-label">Out-the-door, 4 tires</span><span class="otd-total">${money(otd.total)}</span></div>
+                <div class="otd-sub">Includes installation, old tire disposal and HST</div>
+                <details><summary>See price breakdown</summary>
+                  <div class="otd-row"><span>4 tires</span><span>${money(otd.tires)}</span></div>
+                  <div class="otd-row"><span>Installation (4 × $${otd.installEach})</span><span>${money(otd.install)}</span></div>
+                  <div class="otd-row"><span>Old tire disposal (4 × $${DISPOSAL_FEE})</span><span>${money(otd.disposal)}</span></div>
+                  <div class="otd-row"><span>HST (13%)</span><span>${money(otd.hst)}</span></div>
+                  <div class="otd-row"><span>Total</span><span>${money(otd.total)}</span></div>
+                </details>
+                ${rebateTxt ? `<div class="otd-rebate">Plus ${escapeHtml(rebateTxt.toLowerCase())} back from ${escapeHtml(t.brand)} on qualifying models</div>` : ""}
+              </div>` : ""}
               ${deposit ? `<div class="deposit">50% Deposit: <strong>$${deposit}</strong></div>` : ""}
               ${monthly ? `<div class="ptw-financing" onclick="window.open('https://www.autologiq.ca','_blank')">💳 From $${monthly}/mo for 36 months with Autologiq</div>` : ""}
             </div>
