@@ -18,11 +18,11 @@
           <div class="ptwFg"><label>Email (optional)</label><input type="email" id="ptwOemail" autocomplete="email"></div>
           <div class="ptwFg"><label>Note (optional)</label><textarea id="ptwOnote" rows="2" placeholder="Vehicle, timeline, questions..."></textarea></div>
           <button class="ptwSend" type="submit" id="ptwOsendbtn">Send Request</button>
-          <div class="ptwErr" id="ptwOerr">Something went wrong ‚Äî please call 226-698-1667 instead.</div>
+          <div class="ptwErr" id="ptwOerr">Something went wrong — please call 226-698-1667 instead.</div>
         </form>
       </div>
       <div class="ptwOk" id="ptwOok" style="display:none">
-        <h3>Request Sent ‚úì</h3>
+        <h3>Request Sent ✓</h3>
         <p>We'll text or call you shortly to confirm availability and next steps.</p>
       </div>
     </div>
@@ -35,15 +35,15 @@
       <div class="ptw-promo" id="ptwPromo" style="display:none"></div>
       <div class="ptw-trust-bar">
         <div class="ptw-trust-item">
-          <span class="ptw-stars">‚òÖ‚òÖ‚òÖ‚òÖ‚òÖ</span>
-          <span class="ptw-rating-text">4.9 ¬∑ 500+ Reviews (Google &amp; FB)</span>
+          <span class="ptw-stars">★★★★★</span>
+          <span class="ptw-rating-text">4.9 · 500+ Reviews (Google &amp; FB)</span>
         </div>
         <div class="ptw-trust-divider"></div>
-        <div class="ptw-trust-item">üöö Next-Day Warehouse Delivery</div>
+        <div class="ptw-trust-item">🚚 Next-Day Warehouse Delivery</div>
         <div class="ptw-trust-divider"></div>
-        <div class="ptw-trust-item">üí≥ Financing via Autologiq</div>
+        <div class="ptw-trust-item">💳 Financing via Autologiq</div>
         <div class="ptw-trust-divider"></div>
-        <div class="ptw-trust-item">üîß Free Install with Wheel Package</div>
+        <div class="ptw-trust-item">🔧 Free Install with Wheel Package</div>
       </div>
     </div>
 
@@ -237,7 +237,7 @@
   fillSelect("ratio", ratios);
   fillSelect("rim",   rims);
 
-  // ‚îÄ‚îÄ AUTO-FILL FROM URL ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+  // ── AUTO-FILL FROM URL ────────────────────────────────────────────────────
   (function(){
     function getSizeFromURL(){
       const sources = [
@@ -307,7 +307,7 @@
     return               (cost * 1.25).toFixed(2);
   }
 
-  // Unified price helpers ‚Äî in-stock sheet items are already final retail
+  // Unified price helpers — in-stock sheet items are already final retail
   // price (no markup applied); TDG items are cost and get marked up.
   function getListPrice(t){
     // Prefer a server-supplied retailPrice (no supplier cost needed in the browser);
@@ -407,7 +407,7 @@
       return {
         label:`${qty} in stock at our Waterloo shop`,
         className:"in",
-        note:"Ready for install ‚Äî no waiting on warehouse delivery.",
+        note:"Ready for install — no waiting on warehouse delivery.",
         urgency: qty <= 4 ? "Limited quantity in stock" : "",
         warehouseHtml:""
       };
@@ -430,7 +430,7 @@
     } else if(orangeville.length){
       label = "Available in ~2 business days";
     } else if(other.length){
-      label = "Available in 2‚Äì3 business days";
+      label = "Available in 2–3 business days";
     } else {
       label = "Currently unavailable";
     }
@@ -621,7 +621,7 @@
     currentSize     = size;
     allResults      = [];
     filteredResults = [];
-    document.getElementById("status").textContent = "Loading tires‚Ä¶";
+    document.getElementById("status").textContent = "Loading tires…";
     document.getElementById("results").innerHTML  = "";
     resetFilterUI();
     scrollToResults();
@@ -737,15 +737,15 @@
       const badges    = getSalesBadges(t);
       const typeLabel = getDisplaySeason(t);
       const sizeLabel = t.specs?.size||t.specifications?.size||currentSize;
-      const orderMsg  = `${t.brand} ${t.model} (${currentSize}) tire ‚Äî ${price}${onSale?` (${PROMO.month} ${PROMO.pct}% off, was $${listUnit.toFixed(2)})`:''} + HST/tire.${set4?` Set of 4: $${set4} + HST.`:''}${otd?` Out-the-door for 4 (install, disposal & HST): ${money(otd.total)}.`:''}${deposit?` 50% deposit to order: $${deposit}.`:''} Please confirm availability and next steps.`;
+      const orderMsg  = `${t.brand} ${t.model} (${currentSize}) tire — ${price}${onSale?` (${PROMO.month} ${PROMO.pct}% off, was $${listUnit.toFixed(2)})`:''} + HST/tire.${set4?` Set of 4: $${set4} + HST.`:''}${otd?` Out-the-door for 4 (install, disposal & HST): ${money(otd.total)}.`:''}${deposit?` 50% deposit to order: $${deposit}.`:''} Please confirm availability and next steps.`;
       const orderSummary = escapeHtml(orderMsg);
 
       const badgeHtml = (isBest || isPopular || isLT || t.isStock || onSale) ? `
         <div class="ptw-badge-wrap">
-          ${onSale    ? `<span class="ptw-badge ptw-badge-sale">üçÅ ${PROMO.pct}% off ¬∑ ${PROMO.month}</span>` : ""}
-          ${t.isStock  ? `<span class="ptw-badge ptw-badge-instock">‚úÖ In Stock Now</span>` : ""}
-          ${isBest    ? `<span class="ptw-badge ptw-badge-best">‚≠ê Best Value</span>` : ""}
-          ${isPopular ? `<span class="ptw-badge ptw-badge-popular">üî• Most Popular</span>` : ""}
+          ${onSale    ? `<span class="ptw-badge ptw-badge-sale">🍁 ${PROMO.pct}% off · ${PROMO.month}</span>` : ""}
+          ${t.isStock  ? `<span class="ptw-badge ptw-badge-instock">✅ In Stock Now</span>` : ""}
+          ${isBest    ? `<span class="ptw-badge ptw-badge-best">⭐ Best Value</span>` : ""}
+          ${isPopular ? `<span class="ptw-badge ptw-badge-popular">🔥 Most Popular</span>` : ""}
           ${isLT      ? `<span class="ptw-badge ptw-badge-lt">LT</span>` : ""}
         </div>` : "";
 
@@ -775,15 +775,15 @@
                     ? `<div class="otd-row"><span>4 tires (list price)</span><span>${money(otdList.tires)}</span></div>
                   <div class="otd-row otd-disc"><span>${PROMO.month} ${PROMO.pct}% off tires</span><span>&minus;${money(otdList.tires - otd.tires)}</span></div>`
                     : `<div class="otd-row"><span>4 tires</span><span>${money(otd.tires)}</span></div>`}
-                  <div class="otd-row"><span>Installation (4 √ó $${otd.installEach})</span><span>${money(otd.install)}</span></div>
-                  <div class="otd-row"><span>Old tire disposal (4 √ó $${DISPOSAL_FEE})</span><span>${money(otd.disposal)}</span></div>
+                  <div class="otd-row"><span>Installation (4 × $${otd.installEach})</span><span>${money(otd.install)}</span></div>
+                  <div class="otd-row"><span>Old tire disposal (4 × $${DISPOSAL_FEE})</span><span>${money(otd.disposal)}</span></div>
                   <div class="otd-row"><span>HST (13%)</span><span>${money(otd.hst)}</span></div>
                   <div class="otd-row"><span>Total</span><span>${money(otd.total)}</span></div>
                 </details>
                 ${rebateTxt ? `<div class="otd-rebate">Plus ${escapeHtml(rebateTxt.toLowerCase())} back from ${escapeHtml(t.brand)} on qualifying models</div>` : ""}
               </div>` : ""}
               ${deposit ? `<div class="deposit">50% Deposit: <strong>$${deposit}</strong></div>` : ""}
-              ${monthly ? `<div class="ptw-financing" onclick="window.open('https://www.autologiq.ca','_blank')">üí≥ From $${monthly}/mo for 36 months with Autologiq</div>` : ""}
+              ${monthly ? `<div class="ptw-financing" onclick="window.open('https://www.autologiq.ca','_blank')">💳 From $${monthly}/mo for 36 months with Autologiq</div>` : ""}
             </div>
             <div class="stock ${avail.className}">${escapeHtml(avail.label)}</div>
             ${avail.urgency?`<div class="urgency">${escapeHtml(avail.urgency)}</div>`:""}
@@ -800,11 +800,11 @@
               <div><strong>Warranty:</strong> ${(t.specs?.warrantyMileage||t.specifications?.warrantyMileage)?escapeHtml(t.specs?.warrantyMileage||t.specifications?.warrantyMileage)+" km":"N/A"}</div>
             </div>
             <div class="actions">
-              <a class="callbtn" href="tel:+12266981667" target="_top">üìû Call</a>
-              <button type="button" class="wabtn" data-summary="${orderSummary}" onclick="openTireOrder(this)">üì© Message Us</button>
+              <a class="callbtn" href="tel:+12266981667" target="_top">📞 Call</a>
+              <button type="button" class="wabtn" data-summary="${orderSummary}" onclick="openTireOrder(this)">📩 Message Us</button>
             </div>
             <button type="button" class="quotebtn" data-summary="${orderSummary}" onclick="openTireOrder(this)">
-              üì© Get a Free Quote
+              📩 Get a Free Quote
             </button>
           </div>
         </div>`;
@@ -818,7 +818,7 @@
       .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
   }
 
-  // ‚îÄ‚îÄ ORDER MODAL ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+  // ── ORDER MODAL ───────────────────────────────
   let ptwCurSummary='';
   function openTireOrder(btn){
     ptwCurSummary=btn.getAttribute('data-summary');
@@ -863,7 +863,7 @@
           name, phone, email,
           tire:ptwCurSummary,
           note,
-          _subject:'New Tire Order Request ‚Äî '+name
+          _subject:'New Tire Order Request — '+name
         })
       });
       if(res.ok){
@@ -878,7 +878,7 @@
       btn.disabled=false;btn.textContent='Send Request';
     }
   }
-  (function(){ const el=document.getElementById("ptwPromo"); if(el && promoActive()){ el.textContent="üçÅ "+PROMO.month+" special: "+PROMO.pct+"% off the tire price on every tire. Prices below already include the discount."; el.style.display="inline-block"; } })();
+  (function(){ const el=document.getElementById("ptwPromo"); if(el && promoActive()){ el.textContent="🍁 "+PROMO.month+" special: "+PROMO.pct+"% off the tire price on every tire. Prices below already include the discount."; el.style.display="inline-block"; } })();
 </script>
 </body>
 </html>
