@@ -18,11 +18,11 @@
           <div class="ptwFg"><label>Email (optional)</label><input type="email" id="ptwOemail" autocomplete="email"></div>
           <div class="ptwFg"><label>Note (optional)</label><textarea id="ptwOnote" rows="2" placeholder="Vehicle, timeline, questions..."></textarea></div>
           <button class="ptwSend" type="submit" id="ptwOsendbtn">Send Request</button>
-          <div class="ptwErr" id="ptwOerr">Something went wrong — please call 226-698-1667 instead.</div>
+          <div class="ptwErr" id="ptwOerr">Something went wrong ‚Äî please call 226-698-1667 instead.</div>
         </form>
       </div>
       <div class="ptwOk" id="ptwOok" style="display:none">
-        <h3>Request Sent ✓</h3>
+        <h3>Request Sent ‚úì</h3>
         <p>We'll text or call you shortly to confirm availability and next steps.</p>
       </div>
     </div>
@@ -32,17 +32,18 @@
       <div class="ptw-kicker">President Tire & Wheels</div>
       <h1>Tires in Waterloo, Kitchener & Cambridge</h1>
       <p>Browse live tire inventory by size, compare brands, and reserve your tires today.</p>
+      <div class="ptw-promo" id="ptwPromo" style="display:none"></div>
       <div class="ptw-trust-bar">
         <div class="ptw-trust-item">
-          <span class="ptw-stars">★★★★★</span>
-          <span class="ptw-rating-text">4.9 · 500+ Reviews (Google &amp; FB)</span>
+          <span class="ptw-stars">‚òÖ‚òÖ‚òÖ‚òÖ‚òÖ</span>
+          <span class="ptw-rating-text">4.9 ¬∑ 500+ Reviews (Google &amp; FB)</span>
         </div>
         <div class="ptw-trust-divider"></div>
-        <div class="ptw-trust-item">🚚 Next-Day Warehouse Delivery</div>
+        <div class="ptw-trust-item">üöö Next-Day Warehouse Delivery</div>
         <div class="ptw-trust-divider"></div>
-        <div class="ptw-trust-item">💳 Financing via Autologiq</div>
+        <div class="ptw-trust-item">üí≥ Financing via Autologiq</div>
         <div class="ptw-trust-divider"></div>
-        <div class="ptw-trust-item">🔧 Free Install with Wheel Package</div>
+        <div class="ptw-trust-item">üîß Free Install with Wheel Package</div>
       </div>
     </div>
 
@@ -199,6 +200,14 @@
   .ptwOk{text-align:center;padding:20px 0}
   .ptwOk h3{color:#D6472A;font-size:18px;margin-bottom:8px}
   .ptwOk p{color:#5B6167;font-size:13px}
+  .ptw-badge-sale{background:#D6472A;color:#FFFFFF;}
+  .was{color:#8B9096;text-decoration:line-through;font-weight:600;font-size:.62em;margin-right:4px;}
+  .was-row{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+  .was-row .was{font-size:16px;margin-right:0;}
+  .save-pill{background:#FDECE8;color:#B63A20;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;}
+  .otd-total .was{font-size:14px;}
+  .otd-disc span{color:#B63A20;font-weight:700;}
+  .ptw-promo{display:inline-block;background:#D6472A;color:#fff;font-weight:700;font-size:15px;padding:10px 18px;border-radius:999px;margin:0 0 16px 0;}
 </style>
 
 <script>
@@ -228,7 +237,7 @@
   fillSelect("ratio", ratios);
   fillSelect("rim",   rims);
 
-  // ── AUTO-FILL FROM URL ────────────────────────────────────────────────────
+  // ‚îÄ‚îÄ AUTO-FILL FROM URL ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
   (function(){
     function getSizeFromURL(){
       const sources = [
@@ -298,11 +307,26 @@
     return               (cost * 1.25).toFixed(2);
   }
 
-  // Unified price helpers — in-stock sheet items are already final retail
+  // Unified price helpers ‚Äî in-stock sheet items are already final retail
   // price (no markup applied); TDG items are cost and get marked up.
-  function getUnitPrice(t){
+  function getListPrice(t){
+    // Prefer a server-supplied retailPrice (no supplier cost needed in the browser);
+    // fall back to the old cost + markup only until the server sends retailPrice.
+    if(t.isStock) return t.price == null ? null : Number(t.price);
+    if(t.retailPrice != null) return Number(t.retailPrice);
     if(t.price == null) return null;
-    return t.isStock ? Number(t.price) : Number(getRetailPrice(t.price));
+    return Number(getRetailPrice(t.price));
+  }
+  // ---- Monthly promo: percent off the tire price only (install, disposal and HST are added after) ----
+  const PROMO = { pct: 5, label: "5% off tires", month: "October", start: "2026-10-01", end: "2026-10-31" };
+  function promoActive(){
+    const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/Toronto" });
+    return today >= PROMO.start && today <= PROMO.end;
+  }
+  function getUnitPrice(t){
+    const list = getListPrice(t);
+    if(list == null || !(list > 0) || !promoActive()) return list;
+    return Math.round(list * (100 - PROMO.pct)) / 100;
   }
   function getSetOf4(t){
     const unit = getUnitPrice(t);
@@ -318,8 +342,8 @@
     const m = String(sizeStr||"").toUpperCase().match(/R\s*(\d{2}(?:\.\d)?)/);
     return m ? Number(m[1]) : null;
   }
-  function getOutTheDoor(t, sizeStr){
-    const unit = getUnitPrice(t);
+  function getOutTheDoor(t, sizeStr, useList){
+    const unit = useList ? getListPrice(t) : getUnitPrice(t);
     if(unit == null || !(unit > 0)) return null;
     const rim = getRimSize(sizeStr);
     const installEach = (rim != null && rim >= 20) ? INSTALL_20_PLUS : INSTALL_UP_TO_19;
@@ -383,7 +407,7 @@
       return {
         label:`${qty} in stock at our Waterloo shop`,
         className:"in",
-        note:"Ready for install — no waiting on warehouse delivery.",
+        note:"Ready for install ‚Äî no waiting on warehouse delivery.",
         urgency: qty <= 4 ? "Limited quantity in stock" : "",
         warehouseHtml:""
       };
@@ -406,7 +430,7 @@
     } else if(orangeville.length){
       label = "Available in ~2 business days";
     } else if(other.length){
-      label = "Available in 2–3 business days";
+      label = "Available in 2‚Äì3 business days";
     } else {
       label = "Currently unavailable";
     }
@@ -494,7 +518,7 @@
   }
 
   function computeBadges(results){
-    const inStock = results.filter(t => Number(t.totalStock||0) > 0 && t.price != null && t.price > 0);
+    const inStock = results.filter(t => Number(t.totalStock||0) > 0 && getListPrice(t) != null && getListPrice(t) > 0);
     if(!inStock.length){ bestValueId = null; mostPopularId = null; return; }
     const sorted = [...inStock].sort((a,b) => getUnitPrice(a) - getUnitPrice(b));
     bestValueId = sorted[0]?.id || null;
@@ -597,7 +621,7 @@
     currentSize     = size;
     allResults      = [];
     filteredResults = [];
-    document.getElementById("status").textContent = "Loading tires…";
+    document.getElementById("status").textContent = "Loading tires‚Ä¶";
     document.getElementById("results").innerHTML  = "";
     resetFilterUI();
     scrollToResults();
@@ -699,25 +723,29 @@
       const isPopular = t.id === mostPopularId;
       const isLT      = getServiceType(t) === "LT";
       const unit      = getUnitPrice(t);
+      const listUnit  = getListPrice(t);
+      const onSale    = unit != null && listUnit != null && unit < listUnit;
       const price     = unit != null ? "$"+unit.toFixed(2) : "Call for price";
       const set4      = getSetOf4(t);
       const deposit   = getDepositAmt(t);
       const sizeForCalc = t.specs?.size||t.specifications?.size||currentSize;
       const otd       = getOutTheDoor(t, sizeForCalc);
+      const otdList   = onSale ? getOutTheDoor(t, sizeForCalc, true) : null;
       const monthly   = getMonthlyPayment(t, sizeForCalc);
       const rebateTxt = getBrandRebate(t.brand);
       const avail     = getAvailabilityInfo(t);
       const badges    = getSalesBadges(t);
       const typeLabel = getDisplaySeason(t);
       const sizeLabel = t.specs?.size||t.specifications?.size||currentSize;
-      const orderMsg  = `${t.brand} ${t.model} (${currentSize}) tire — ${price} + HST/tire.${set4?` Set of 4: $${set4} + HST.`:''}${otd?` Out-the-door for 4 (install, disposal & HST): ${money(otd.total)}.`:''}${deposit?` 50% deposit to order: $${deposit}.`:''} Please confirm availability and next steps.`;
+      const orderMsg  = `${t.brand} ${t.model} (${currentSize}) tire ‚Äî ${price}${onSale?` (${PROMO.month} ${PROMO.pct}% off, was $${listUnit.toFixed(2)})`:''} + HST/tire.${set4?` Set of 4: $${set4} + HST.`:''}${otd?` Out-the-door for 4 (install, disposal & HST): ${money(otd.total)}.`:''}${deposit?` 50% deposit to order: $${deposit}.`:''} Please confirm availability and next steps.`;
       const orderSummary = escapeHtml(orderMsg);
 
-      const badgeHtml = (isBest || isPopular || isLT || t.isStock) ? `
+      const badgeHtml = (isBest || isPopular || isLT || t.isStock || onSale) ? `
         <div class="ptw-badge-wrap">
-          ${t.isStock  ? `<span class="ptw-badge ptw-badge-instock">✅ In Stock Now</span>` : ""}
-          ${isBest    ? `<span class="ptw-badge ptw-badge-best">⭐ Best Value</span>` : ""}
-          ${isPopular ? `<span class="ptw-badge ptw-badge-popular">🔥 Most Popular</span>` : ""}
+          ${onSale    ? `<span class="ptw-badge ptw-badge-sale">üçÅ ${PROMO.pct}% off ¬∑ ${PROMO.month}</span>` : ""}
+          ${t.isStock  ? `<span class="ptw-badge ptw-badge-instock">‚úÖ In Stock Now</span>` : ""}
+          ${isBest    ? `<span class="ptw-badge ptw-badge-best">‚≠ê Best Value</span>` : ""}
+          ${isPopular ? `<span class="ptw-badge ptw-badge-popular">üî• Most Popular</span>` : ""}
           ${isLT      ? `<span class="ptw-badge ptw-badge-lt">LT</span>` : ""}
         </div>` : "";
 
@@ -736,22 +764,26 @@
             <div class="model">${escapeHtml(t.model||"")}</div>
             <div class="ptw-price-block">
               <div class="price-label">Per tire</div>
+              ${onSale ? `<div class="was-row"><span class="was">$${listUnit.toFixed(2)}</span><span class="save-pill">Save ${PROMO.pct}% in ${PROMO.month}</span></div>` : ""}
               <div class="price">${price}${unit!=null?`<span class="tax-note">+ HST</span>`:""}</div>
-              ${set4 ? `<div class="set4-label">Set of 4:</div><div class="set4">$${set4}<span class="tax-note">+ HST</span></div>` : ""}
+              ${set4 ? `<div class="set4-label">Set of 4:</div><div class="set4">${onSale?`<span class="was">$${(listUnit*4).toFixed(2)}</span> `:""}$${set4}<span class="tax-note">+ HST</span></div>` : ""}
               ${otd ? `<div class="otd">
-                <div class="otd-top"><span class="otd-label">Out-the-door, 4 tires</span><span class="otd-total">${money(otd.total)}</span></div>
+                <div class="otd-top"><span class="otd-label">Out-the-door, 4 tires</span><span class="otd-total">${otdList?`<span class="was">${money(otdList.total)}</span> `:""}${money(otd.total)}</span></div>
                 <div class="otd-sub">Includes installation, old tire disposal and HST</div>
                 <details><summary>See price breakdown</summary>
-                  <div class="otd-row"><span>4 tires</span><span>${money(otd.tires)}</span></div>
-                  <div class="otd-row"><span>Installation (4 × $${otd.installEach})</span><span>${money(otd.install)}</span></div>
-                  <div class="otd-row"><span>Old tire disposal (4 × $${DISPOSAL_FEE})</span><span>${money(otd.disposal)}</span></div>
+                  ${otdList
+                    ? `<div class="otd-row"><span>4 tires (list price)</span><span>${money(otdList.tires)}</span></div>
+                  <div class="otd-row otd-disc"><span>${PROMO.month} ${PROMO.pct}% off tires</span><span>&minus;${money(otdList.tires - otd.tires)}</span></div>`
+                    : `<div class="otd-row"><span>4 tires</span><span>${money(otd.tires)}</span></div>`}
+                  <div class="otd-row"><span>Installation (4 √ó $${otd.installEach})</span><span>${money(otd.install)}</span></div>
+                  <div class="otd-row"><span>Old tire disposal (4 √ó $${DISPOSAL_FEE})</span><span>${money(otd.disposal)}</span></div>
                   <div class="otd-row"><span>HST (13%)</span><span>${money(otd.hst)}</span></div>
                   <div class="otd-row"><span>Total</span><span>${money(otd.total)}</span></div>
                 </details>
                 ${rebateTxt ? `<div class="otd-rebate">Plus ${escapeHtml(rebateTxt.toLowerCase())} back from ${escapeHtml(t.brand)} on qualifying models</div>` : ""}
               </div>` : ""}
               ${deposit ? `<div class="deposit">50% Deposit: <strong>$${deposit}</strong></div>` : ""}
-              ${monthly ? `<div class="ptw-financing" onclick="window.open('https://www.autologiq.ca','_blank')">💳 From $${monthly}/mo for 36 months with Autologiq</div>` : ""}
+              ${monthly ? `<div class="ptw-financing" onclick="window.open('https://www.autologiq.ca','_blank')">üí≥ From $${monthly}/mo for 36 months with Autologiq</div>` : ""}
             </div>
             <div class="stock ${avail.className}">${escapeHtml(avail.label)}</div>
             ${avail.urgency?`<div class="urgency">${escapeHtml(avail.urgency)}</div>`:""}
@@ -768,11 +800,11 @@
               <div><strong>Warranty:</strong> ${(t.specs?.warrantyMileage||t.specifications?.warrantyMileage)?escapeHtml(t.specs?.warrantyMileage||t.specifications?.warrantyMileage)+" km":"N/A"}</div>
             </div>
             <div class="actions">
-              <a class="callbtn" href="tel:+12266981667" target="_top">📞 Call</a>
-              <button type="button" class="wabtn" data-summary="${orderSummary}" onclick="openTireOrder(this)">📩 Message Us</button>
+              <a class="callbtn" href="tel:+12266981667" target="_top">üìû Call</a>
+              <button type="button" class="wabtn" data-summary="${orderSummary}" onclick="openTireOrder(this)">üì© Message Us</button>
             </div>
             <button type="button" class="quotebtn" data-summary="${orderSummary}" onclick="openTireOrder(this)">
-              📩 Get a Free Quote
+              üì© Get a Free Quote
             </button>
           </div>
         </div>`;
@@ -786,7 +818,7 @@
       .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
   }
 
-  // ── ORDER MODAL ───────────────────────────────
+  // ‚îÄ‚îÄ ORDER MODAL ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
   let ptwCurSummary='';
   function openTireOrder(btn){
     ptwCurSummary=btn.getAttribute('data-summary');
@@ -831,7 +863,7 @@
           name, phone, email,
           tire:ptwCurSummary,
           note,
-          _subject:'New Tire Order Request — '+name
+          _subject:'New Tire Order Request ‚Äî '+name
         })
       });
       if(res.ok){
@@ -846,6 +878,7 @@
       btn.disabled=false;btn.textContent='Send Request';
     }
   }
+  (function(){ const el=document.getElementById("ptwPromo"); if(el && promoActive()){ el.textContent="üçÅ "+PROMO.month+" special: "+PROMO.pct+"% off the tire price on every tire. Prices below already include the discount."; el.style.display="inline-block"; } })();
 </script>
 </body>
 </html>
